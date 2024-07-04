@@ -1,0 +1,91 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* mypage_top */
+.mypage_top {
+  margin-top: 170px;
+  position: relative;
+  display: inline-block;
+  width: 186.73px;
+  height: 187.83px;
+  margin-bottom: 40px;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  display: block;
+}
+
+.profile-edit {
+  position: absolute;
+  width: 64.27px;
+  transform: translate(230%, -85%);
+}
+
+/* mypage_middle */
+.mypage_middle {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.mypage_middle-title {
+  color: #666666;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.mypage-middle-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.nickname-input,
+.crew-input {
+  width: 400px;
+  height: 60px;
+  border: 1px solid #c7c4c4;
+  border-radius: 10px;
+  color: #666666;
+  font-size: 18px;
+  margin-right: 10px;
+  padding: 20px;
+}
+
+.duplicate-check-btn,
+.leave-crew-btn {
+  width: 150px;
+  height: 60px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fd5e53;
+  border: 1px solid #fd5e53;
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+}
+
+#duplicate-check-msg {
+  display: none;
+  color: #fd5e53;
+  margin-top: 20px;
+}
+
+/* button */
+.mypage-complete-btn {
+  width: 400px;
+  height: 60px;
+  font-size: 18px;
+  color: white;
+  background-color: #fd5e53;
+  border: none;
+  border-radius: 10px;
+  margin: 40px 0;
+  cursor: pointer;
+}
