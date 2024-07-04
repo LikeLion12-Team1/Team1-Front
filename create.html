@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<link rel="stylesheet" href="css/styles.css" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SCREW</title>
+</head>
+<body>
+	<div class="top-bar">
+		<div class="logo">
+			<a href="#">
+				<img class="logo" src="logo.png">
+			</a>
+		</div>
+		<div class="nav-bar">
+			<a class="nav-link" href="#">HOME</a>
+			<a class="nav-link" href="#">CHALLENGE</a>
+			<a class="nav-link" href="#">CREW</a>
+			<a class="nav-link" href="#">MY</a>
+		</div>
+		<div class="nav-icon">
+			<svg width="25" height="46" viewBox="0 0 44 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M22 46C20.4875 46 19.1927 45.5496 18.1156 44.6488C17.0385 43.7479 16.5 42.665 16.5 41.4H27.5C27.5 42.665 26.9615 43.7479 25.8844 44.6488C24.8073 45.5496 23.5125 46 22 46ZM2.75 39.1C1.97083 39.1 1.31771 38.8796 0.790625 38.4388C0.263542 37.9979 0 37.4517 0 36.8C0 36.1483 0.263542 35.6021 0.790625 35.1613C1.31771 34.7204 1.97083 34.5 2.75 34.5H5.5V18.4C5.5 15.2183 6.64583 12.3913 8.9375 9.91875C11.2292 7.44625 14.2083 5.82667 17.875 5.06V3.45C17.875 2.49167 18.276 1.67708 19.0781 1.00625C19.8802 0.335417 20.8542 0 22 0C23.1458 0 24.1198 0.335417 24.9219 1.00625C25.724 1.67708 26.125 2.49167 26.125 3.45V4.1975C25.6667 4.96417 25.3229 5.76917 25.0938 6.6125C24.8646 7.45583 24.75 8.31833 24.75 9.2C24.75 12.3817 26.0906 15.0938 28.7719 17.3363C31.4531 19.5788 34.6958 20.7 38.5 20.7V34.5H41.25C42.0292 34.5 42.6823 34.7204 43.2094 35.1613C43.7365 35.6021 44 36.1483 44 36.8C44 37.4517 43.7365 37.9979 43.2094 38.4388C42.6823 38.8796 42.0292 39.1 41.25 39.1H2.75Z" fill="#1C1C1C"/>
+				<ellipse cx="36.5" cy="7.84091" rx="7.5" ry="7.84091" fill="#1C1C1C"/>
+			</svg>
+			<div class="gap"></div>
+			<svg width="25" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M22 22C28.0775 22 33 17.0775 33 11C33 4.9225 28.0775 0 22 0C15.9225 0 11 4.9225 11 11C11 17.0775 15.9225 22 22 22ZM22 27.5C14.6575 27.5 0 31.185 0 38.5V44H44V38.5C44 31.185 29.3425 27.5 22 27.5Z" fill="#1C1C1C"/>
+			</svg>
+		</div>
+	</div>
+
+	<div class="frame">
+		<div class="create-crew-content">
+			<div class="set-crew-img">
+				<p class="crew-info-font">대표 이미지 <a>*</a></p></p>
+				<div class="upload-img" id="show-image">
+					<svg id="camera-icon" width="44" height="20" viewBox="0 0 44 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M22.0009 29.0409C25.889 29.0409 29.0409 25.889 29.0409 22.0009C29.0409 18.1129 25.889 14.9609 22.0009 14.9609C18.1129 14.9609 14.9609 18.1129 14.9609 22.0009C14.9609 25.889 18.1129 29.0409 22.0009 29.0409Z" fill="#666666"/>
+						<path d="M15.4 0L11.374 4.4H4.4C1.98 4.4 0 6.38 0 8.8V35.2C0 37.62 1.98 39.6 4.4 39.6H39.6C42.02 39.6 44 37.62 44 35.2V8.8C44 6.38 42.02 4.4 39.6 4.4H32.626L28.6 0H15.4ZM22 33C15.928 33 11 28.072 11 22C11 15.928 15.928 11 22 11C28.072 11 33 15.928 33 22C33 28.072 28.072 33 22 33Z" fill="#666666"/>
+					</svg>
+					<input type="file" id="open-file" style="display: none;">
+				</div>
+	
+			</div>
+	
+			<div class="set-crewname">
+				<p class="crew-info-font">크루 이름 <a>*</a></p>
+				<div class="set-crewname2">
+					<form>
+						<input type="text" class="crewname-input" name="crewname">
+						<button type="button" class="crewname-overlap-check">중복확인</button>
+					</form>
+				</div>
+			</div>
+	
+			<div class="set-active-area">
+				<p class="crew-info-font">활동 지역 <a>*</a></p></p>
+				<div class="choice-all">
+					<div class="areas1">
+						<button type="button" class="area1">서울</button>
+						<button type="button" class="area2">인천/경기</button>
+						<button type="button" class="area3">강원</button>
+						<button type="button" class="area4">대전/충남</button>
+						<button type="button" class="area5">충북</button>
+					</div>
+					<div class="areas2">
+						<button type="button" class="area6">광주/전남</button>
+						<button type="button" class="area7">전북</button>
+						<button type="button" class="area8">부산/경남</button>
+						<button type="button" class="area9">대구/경북</button>
+					</div>
+				</div>
+			</div>
+	
+			<div class="set-sports-type">
+				<p class="crew-info-font">스포츠타입 <a>*</a></p></p>
+				<div class="choice-all">
+					<div class="areas1">
+						<button type="button" class="sport1">골프</button>
+						<button type="button" class="sport2">등산</button>
+						<button type="button" class="sport3">러닝</button>
+						<button type="button" class="sport4">배드민턴</button>
+						<button type="button" class="sport5">서핑</button>
+					</div>
+					<div class="areas2">
+						<button type="button" class="sport6">클라이밍</button>
+						<button type="button" class="sport7">축구</button>
+						<button type="button" class="sport8">테니스</button>
+						<button type="button" class="sport9">기타</button>
+					</div>
+				</div>
+			</div>
+	
+			<div class="create-btn">
+				<button type="button" class="create-crew">생성하기</button>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="js/create.js"></script>	
+</body>
+</html>
