@@ -1,0 +1,152 @@
+* {
+	box-sizing: border-box;
+}
+
+.content {
+	height: 100vh;
+	width: 100vw;
+}
+
+
+.content-section1, .content-section2, .content-section3 {
+	margin-left: 100px;
+	margin-right: 100px;
+}
+
+
+.content-section1 {
+	padding-top: 170px;
+	display: flex;
+}
+
+.content-section2 {
+	padding-top: 40px;
+	height: 612px;
+}
+
+.content-section3 {
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.area-box {
+	margin-right: 20px;
+}
+
+#area-select {
+	height: 40px;
+	width: 120px;
+	font-size: 14px;
+	padding-left: 10px;
+	color: #666666;
+	border: 1px solid #C7C4C4;
+	border-radius: 3px;
+}
+
+#sports-select {
+	height: 40px;
+	width: 150px;
+	font-size: 14px;
+	padding-left: 10px;
+	color: #666666;
+	border: 1px solid #C7C4C4;
+	border-radius: 3px;
+}
+
+.create-crew-btn {
+	margin-left: auto;
+}
+
+
+.create-crew-btn2 {
+	width: 130px;
+	height: 40px;
+	border: 0;
+	border-radius: 50px;
+	background-color: #FD5E53;
+	color: white;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.crew-list {
+	width: 340px;
+	display: flex;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 50px;
+}
+
+.crew-list-cont {
+	height: 220px;
+	width: 340px;
+	background-color: #DEDEDE;
+	display: flex;
+	align-items: end;
+	border-radius: 5px;
+}
+
+.crew-list-cont p {
+	position: relative;
+	font-size: 40px;
+	font-weight: bold;
+	color: white;
+	margin-bottom: 10px;
+	margin-left: 15px
+}
+
+#crew-img {
+	position: absolute;
+	height: 220px;
+	width: 340px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+.tag {
+	display: flex;
+	padding-top: 13px;
+
+}
+
+.tag p {
+	border: 1px solid #C7C4C4;
+	border-radius: 50px;
+	padding-top: 9px;
+	padding-bottom: 6px;
+	padding-left: 20px;
+	padding-right: 20px;
+	display: flex;
+	font-size: 13px;
+	color: #666666;
+}
+
+.tag p:first-child {
+	margin-right: 10px;
+}
+
+.pagination button {
+	height: 30px;
+	width: 30px;
+	font-size: 18px;
+	border-radius: 3px;
+	border: none;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+}
+
+.pagination p {
+	background-color: #FD5E53;
+	height: 30px;
+	width: 30px;
+}
+
+#first-btn, #last-btn {
+	margin-left: 10px;
+	margin-right: 10px;
+	cursor: pointer;
+}
