@@ -1,4 +1,12 @@
-/* path 눌렀을 때 */
+/* 사용자 아이콘 눌렀을 때 */
+document.addEventListener("DOMContentLoaded", function () {
+  const svgIcon = document.getElementById("#user-icon");
+
+  svgIcon.addEventListener("click", function () {
+    openUserInfo();
+  });
+});
+
 function openUserInfo() {
   const existingPopup = document.querySelector(".user-info-popup");
   if (existingPopup) {
@@ -74,8 +82,6 @@ function openUserInfo() {
 
   document.body.appendChild(popup);
 }
-const pathButton = document.querySelector("path");
-pathButton.addEventListener("click", openUserInfo);
 
 /* 프로필사진 변경 */
 const profileEditInput = document.getElementById("profile-edit-input");
