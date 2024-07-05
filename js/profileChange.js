@@ -69,9 +69,25 @@ function checkNicknameAvailability(nickname) {
   return;
 }
 
+/* 활동지역 버튼 */
+document.querySelectorAll(".area-btn").forEach((button) => {
+  button.addEventListener("click", function () {
+    document.querySelectorAll(".area-btn").forEach((btn) => {
+      btn.classList.remove("active");
+    });
+
+    this.classList.add("active");
+  });
+});
+
 /* 크루탈퇴 버튼 */
 const leaveCrewBtn = document.querySelector(".leave-crew-btn");
 leaveCrewBtn.addEventListener("click", function () {
-  leaveCrewBtn.style.color = "#C7C4C4";
-  leaveCrewBtn.style.borderColor = "#C7C4C4";
+  const confirmed = confirm("정말 탈퇴하시겠습니까?");
+
+  if (confirmed) {
+    leaveCrewBtn.textContent = "탈퇴완료";
+    leaveCrewBtn.style.color = "#C7C4C4";
+    leaveCrewBtn.style.borderColor = "#C7C4C4";
+  }
 });

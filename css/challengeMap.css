@@ -1,0 +1,31 @@
+.content {
+  display: flex;
+}
+
+.map {
+  margin-top: 90px;
+  flex-grow: 1;
+}
+
+/* sidebar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 90px;
+  width: 386px;
+  height: 842px;
+  background-color: #666666;
+  padding: 40px 30px;
+}
+
+.sidebar-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#sidebar-title,
+#rotate-icon {
+  font-size: 18px;
+  color: white;
+}
