@@ -1,0 +1,98 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+}
+.text-site-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.site-name {
+    text-align: center;
+    color: #fd5e53;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 135px;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-id {
+    width: 638px;
+    height: 99px;
+    color: #898989;
+    border-radius: 10px;
+    border: 1px solid #c7c4c4;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.login-pw {
+    width: 638px;
+    height: 99px;
+    color: #898989;
+    border-radius: 10px;
+    border: 1px solid #c7c4c4;
+    font-size: 20px;
+}
+
+.forgot-password {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 41px;
+}
+.questionmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: #fd5e53;
+    border-radius: 50%;
+    color: white;
+    margin-right: 10px;
+}
+.text-forgot-password {
+    display: flex;
+    align-items: center;
+    color: #898989;
+    text-decoration: none;
+    font-size: 16px;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-button .preview-main_login {
+    width: 645px;
+    height: 99px;
+    border-radius: 10px;
+    background-color: #fd5e53;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.create-account-button .create-account-text {
+    width: 645px;
+    height: 99px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid #fd5e53;
+    color: #fd5e53;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.login-button .preview-main_login:hover,
+.create-account-button .create-account-text:hover {
+    opacity: 0.8;
+}
