@@ -98,86 +98,70 @@ profileEditInput.addEventListener("change", function () {
   reader.readAsDataURL(selectedFile);
 });
 
-/* 지역, 스포츠타입 드롭다운 */
-const areaDropdown = document.getElementById("area-dropdown");
-const sportDropdown = document.getElementById("sport-dropdown");
-
-areaDropdown.addEventListener("change", function () {
-  updateSelectedOptionStyle(this);
+/* 중복확인 버튼 */
+const duplicateCheckMsg = document.getElementById("duplicate-check-msg");
+const duplicateCheckBtn = document.querySelector(".duplicate-check-btn");
+duplicateCheckBtn.addEventListener("click", function () {
+  // 중복 검사
+  const nicknameInput = document.querySelector(".nickname-input");
+  const enteredNickname = nicknameInput.value.trim();
+  if (enteredNickname === "") {
+    alert("닉네임을 입력해주세요.");
+    return;
+  }
+  checkNicknameAvailability(enteredNickname)
+    .then((isAvailable) => {
+      if (isAvailable) {
+        showDuplicateMessage(true);
+        setButtonStyle("#C7C4C4");
+      } else {
+        showDuplicateMessage(false);
+        restoreButtonStyle();
+      }
+      duplicateCheckMsg.style.display = "block";
+    })
+    .catch((error) => {
+      console.error("Error checking nickname:", error);
+    });
 });
-
-sportDropdown.addEventListener("change", function () {
-  updateSelectedOptionStyle(this);
-});
-
-function updateSelectedOptionStyle(dropdown) {
-  dropdown.querySelectorAll("option").forEach((option) => {
-    option.removeAttribute("selected");
-  });
-
-  const selectedOption = dropdown.options[dropdown.selectedIndex];
-  selectedOption.setAttribute("selected", "");
+// 메세지 표시
+function showDuplicateMessage(isAvailable) {
+  if (isAvailable) {
+    duplicateCheckMsg.innerHTML =
+      '<i class="fa-solid fa-circle-check"></i> 사용 가능한 닉네임입니다.';
+  } else {
+    duplicateCheckMsg.innerHTML =
+      '<i class="fa-solid fa-circle-xmark"></i> 사용 불가능한 닉네임입니다.';
+  }
+}
+// 버튼 스타일 설정
+function setButtonStyle(color) {
+  duplicateCheckBtn.style.color = color;
+  duplicateCheckBtn.style.borderColor = color;
+}
+// 버튼 스타일 복원
+function restoreButtonStyle() {
+  duplicateCheckBtn.style.color = "";
+  duplicateCheckBtn.style.borderColor = "";
+}
+// api 호출 함수
+function checkNicknameAvailability(nickname) {
+  return;
 }
 
-/* sidebar에서 정보보기 or 공유하기 클릭할 때 */
+/* 활동지역 선택 */
 document.addEventListener("DOMContentLoaded", function () {
-  const sidebarItems = document.querySelectorAll(".sidebar-item");
+  const areaBtns = document.querySelectorAll(".area-btn");
 
-  sidebarItems.forEach((item, index) => {
-    const shareButton = item.querySelector(".share-click");
-    const crewSelector = item.querySelector(".crew-selector");
-    const infoButton = item.querySelector(".info-click");
-    const infoDisplay = item.querySelector(".info-display");
-
-    /* 공유하기 눌렀을 때 -> 크루선택 */
-    shareButton.addEventListener("click", function () {
-      document.querySelectorAll(".crew-selector").forEach((selector) => {
-        if (selector !== crewSelector) {
-          selector.classList.remove("show");
-        }
+  areaBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      areaBtns.forEach(function (btn) {
+        btn.style.backgroundColor = "";
+        btn.style.color = "";
       });
 
-      document.querySelectorAll(".info-display").forEach((display) => {
-        if (display !== infoDisplay) {
-          display.classList.remove("show");
-        }
-      });
-
-      crewSelector.classList.toggle("show");
-      infoDisplay.classList.remove("show");
-    });
-
-    /* 정보보기 눌렀을 때 -> 챌린지 설명 보이도록 */
-    infoButton.addEventListener("click", function () {
-      document.querySelectorAll(".info-display").forEach((display) => {
-        if (display !== infoDisplay) {
-          display.classList.remove("show");
-        }
-      });
-
-      document.querySelectorAll(".crew-selector").forEach((selector) => {
-        if (selector !== crewSelector) {
-          selector.classList.remove("show");
-        }
-      });
-
-      infoDisplay.classList.toggle("show");
-      crewSelector.classList.remove("show");
-    });
-
-    document.addEventListener("click", function (event) {
-      const isClickedOutsideCrew =
-        !item.contains(event.target) && event.target !== shareButton;
-      const isClickedOutsideInfo =
-        !item.contains(event.target) && event.target !== infoButton;
-
-      if (isClickedOutsideCrew) {
-        crewSelector.classList.remove("show");
-      }
-
-      if (isClickedOutsideInfo) {
-        infoDisplay.classList.remove("show");
-      }
+      btn.style.backgroundColor = "#fd5e53";
+      btn.style.color = "white";
     });
   });
 });
