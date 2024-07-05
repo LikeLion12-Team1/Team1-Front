@@ -1,7 +1,9 @@
 const crewsPerPage = 8;
 let currentPage = 1;
+let currentRangeStart = 1;
+const pageRangeSize = 5;
 const crewData = [
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: '/img/logo.png'},
 	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
@@ -41,31 +43,48 @@ function displayCrews(page) {
 				<p># ${crew.tag2}</p>
 			</div>
         `;
-		crewContainer.appendChild(crewFrame);
-	});
+		crewFrame.addEventListener('click', () => {
+            window.location.href = '/html/crew-info.html';
+        });
+        crewContainer.appendChild(crewFrame);
+    });
 	updatePagination();
-
 }
 
 function updatePagination() {
 	const pageNumbers = document.getElementById('page-numbers');
 	pageNumbers.innerHTML = '';
 	const totalPages = Math.ceil(crewData.length / crewsPerPage);
+	const currentRangeEnd = Math.min(currentRangeStart + pageRangeSize -1, totalPages);
 
-	for (let i=1; i <= totalPages; i++) {
-		const pageNumber = document.createElement('button');
-		pageNumber.textContent = i;
-		pageNumber.style.cursor = 'pointer';
-		pageNumber.style.marginLeft = '5px';
-		pageNumber.style.marginRight = '5px';
+	const createButton = (i, onClick, disabled = false) => {
+		const button = document.createElement('button');
+		button.textContent = i;
+		button.style.cursor = 'pointer';
+		button.style.marginLeft = '5px';
+		button.style.marginRight = '5px';
+		button.disabled = disabled;
+		button.onclick = onClick;
+		return button;
+	};
 
-		pageNumber.onclick = () => goPage(i);
+	pageNumbers.appendChild(createButton('<<', goFirstPage, currentPage === 1));
+
+    //pageNumbers.appendChild(createButton('<', () => changePageRange(-1), currentPage === 1));
+
+	for (let i=currentRangeStart; i <= currentRangeEnd; i++) {
+		const pageNumber= createButton(i, () => goPage(i));
 		if (i === currentPage) {
 			pageNumber.style.backgroundColor = '#666666';
 			pageNumber.style.color = '#FFFFFF';
 		}
 		pageNumbers.appendChild(pageNumber);
 	}
+
+	//pageNumbers.appendChild(createButton('>', () => changePageRange(1), currentPage >= totalPages));
+
+    pageNumbers.appendChild(createButton('>>', goLastPage, currentPage === totalPages));
+
 	document.querySelector('#first-btn').disabled = currentPage === 1;
     document.querySelector('#last-btn').disabled = currentPage === totalPages;
 }
@@ -73,13 +92,24 @@ function updatePagination() {
 function goPage(page) {
 	currentPage = page;
 	displayCrews(page);
+	updateCurrentRange();
 }
 
-function changePage(direction) {
-	const newPage = currentPage + direction;
-	if (newPage > 0 && newPage <= Math.ceil(crewData.length / crewsPerPage)) {
-		goPage(newPage);
-	}
+function changePageRange(direction) {
+    const totalPages = Math.ceil(crewData.length / crewsPerPage);
+    const newRangeStart = currentRangeStart + direction * pageRangeSize;
+    if (newRangeStart > 0 && newRangeStart <= totalPages) {
+        currentRangeStart = newRangeStart;
+        updatePagination();
+    }
+}
+
+function updateCurrentRange() {
+    const totalPages = Math.ceil(crewData.length / crewsPerPage);
+    const currentRangeEnd = Math.min(currentRangeStart + pageRangeSize - 1, totalPages);
+    if (currentPage < currentRangeStart || currentPage > currentRangeEnd) {
+        currentRangeStart = Math.floor((currentPage - 1) / pageRangeSize) * pageRangeSize + 1;
+    }
 }
 
 function goFirstPage() {
