@@ -17,7 +17,7 @@ var mapContainer = document.getElementById("map"), // 지도를 표시할 div
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
 
-var imageSrc = "./img/marker.png",
+var imageSrc = "/img/marker.png",
   imageSize = new kakao.maps.Size(39, 56),
   imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지 옵션(마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정)
 
