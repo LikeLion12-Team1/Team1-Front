@@ -1,38 +1,102 @@
-/* 지도 */
-var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-var options = {
-  //지도를 생성할 때 필요한 기본 옵션
-  center: new kakao.maps.LatLng(37.566826, 126.9786567), //지도의 중심좌표
-  level: 3, //지도의 레벨(확대, 축소 정도)
-};
+/* 사용자 아이콘 눌렀을 때 */
+document.addEventListener("DOMContentLoaded", function () {
+  const svgIcon = document.getElementById("#user-icon");
 
-var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-/* 마커 표시 */
-var mapContainer = document.getElementById("map"), // 지도를 표시할 div
-  mapOption = {
-    center: new kakao.maps.LatLng(37.54699, 127.09598), // 지도의 중심좌표
-    level: 4, // 지도의 확대 레벨
-  };
-
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
-
-var imageSrc = "/img/marker.png",
-  imageSize = new kakao.maps.Size(39, 56),
-  imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지 옵션(마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정)
-
-// 마커의 이미지정보를 가지고 있는 마커이미지 생성
-var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-  markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치
-
-// 마커 생성
-var marker = new kakao.maps.Marker({
-  position: markerPosition,
-  image: markerImage, // 마커이미지 설정
+  svgIcon.addEventListener("click", function () {
+    openUserInfo();
+  });
 });
 
-// 마커가 지도 위에 표시되도록 설정
-marker.setMap(map);
+function openUserInfo() {
+  const existingPopup = document.querySelector(".user-info-popup");
+  if (existingPopup) {
+    document.body.removeChild(existingPopup);
+    return;
+  }
+
+  const popup = document.createElement("div");
+  popup.className = "user-info-popup";
+  popup.style.width = "204px";
+  popup.style.height = "270px";
+  popup.style.backgroundColor = "white";
+  popup.style.border = "1px solid #C7C4C4";
+  popup.style.borderRadius = "5px";
+  popup.style.display = "flex";
+  popup.style.flexDirection = "column";
+  popup.style.alignItems = "center";
+  popup.style.justifyContent = "center";
+  popup.style.padding = "40px";
+  popup.style.boxSizing = "border-box";
+  popup.style.position = "relative";
+
+  const profileImage = document.createElement("img");
+  profileImage.src = "/img/user-profile.png";
+  profileImage.style.width = "89px";
+  profileImage.style.height = "89px";
+  profileImage.style.marginBottom = "15px";
+  popup.appendChild(profileImage);
+
+  const nickname = document.createElement("div");
+  nickname.textContent = "SCREW1";
+  nickname.style.fontSize = "32px";
+  nickname.style.fontWeight = 700;
+  nickname.style.color = "#FD5E53";
+  nickname.style.marginBottom = "15px";
+  popup.appendChild(nickname);
+
+  const crewName = document.createElement("div");
+  crewName.textContent = "상명크루";
+  crewName.style.fontSize = "16px";
+  crewName.style.fontWeight = 400;
+  crewName.style.color = "#666666";
+  crewName.style.marginBottom = "30px";
+  popup.appendChild(crewName);
+
+  const linkContainer = document.createElement("div");
+  linkContainer.style.display = "flex";
+  linkContainer.style.justifyContent = "space-between";
+  linkContainer.style.width = "136px";
+
+  const profileChangeLink = document.createElement("a");
+  profileChangeLink.href = "/html/profileChange.html";
+  profileChangeLink.textContent = "프로필 변경";
+  profileChangeLink.style.fontSize = "13px";
+  profileChangeLink.style.color = "#666666";
+  linkContainer.appendChild(profileChangeLink);
+
+  const logoutLink = document.createElement("a");
+  logoutLink.href = "#";
+  logoutLink.textContent = "로그아웃";
+  logoutLink.style.fontSize = "13px";
+  logoutLink.style.color = "#FD5E53";
+  linkContainer.appendChild(logoutLink);
+
+  popup.appendChild(linkContainer);
+
+  const svgIcon = document.querySelector("svg");
+  const iconRect = svgIcon.getBoundingClientRect();
+
+  popup.style.position = "absolute";
+  popup.style.left = `${iconRect.right - 120}px`;
+  popup.style.top = `${iconRect.bottom + 5}px`;
+
+  document.body.appendChild(popup);
+}
+
+/* 프로필사진 변경 */
+const profileEditInput = document.getElementById("profile-edit-input");
+const profileImg = document.querySelector(".profile-img");
+
+profileEditInput.addEventListener("change", function () {
+  const selectedFile = profileEditInput.files[0];
+
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    profileImg.src = event.target.result;
+  };
+
+  reader.readAsDataURL(selectedFile);
+});
 
 /* 지역, 스포츠타입 드롭다운 */
 const areaDropdown = document.getElementById("area-dropdown");
@@ -117,3 +181,46 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+/* 크루 추가 및 탈퇴 */
+const crews = ["크루1", "크루2"]; // 실제 데이터에 맞게 수정
+
+function createCrewElement(crewName) {
+  const crewElement = document.createElement("div");
+  crewElement.classList.add("profileChange_middle-content");
+
+  const inputField = document.createElement("input");
+  inputField.type = "text";
+  inputField.classList.add("crew-input");
+  inputField.value = crewName;
+
+  const leaveButton = document.createElement("button");
+  leaveButton.classList.add("leave-crew-btn");
+  leaveButton.textContent = "크루탈퇴";
+
+  // 탈퇴 버튼 클릭 시
+  leaveButton.addEventListener("click", function () {
+    const confirmed = confirm("정말 탈퇴하시겠습니까?");
+
+    if (confirmed) {
+      leaveButton.textContent = "탈퇴완료";
+      leaveButton.style.color = "#C7C4C4";
+      leaveButton.style.borderColor = "#C7C4C4";
+      // 실제 탈퇴 동작 추가
+    }
+  });
+
+  crewElement.appendChild(inputField);
+  crewElement.appendChild(leaveButton);
+
+  return crewElement;
+}
+
+window.onload = function () {
+  const crewListContainer = document.getElementById("crew-list");
+
+  crews.forEach(function (crewName) {
+    const crewElement = createCrewElement(crewName);
+    crewListContainer.appendChild(crewElement);
+  });
+};
