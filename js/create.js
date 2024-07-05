@@ -24,6 +24,11 @@ function loadFile(input) {
 
 document.querySelectorAll('.choice-all button').forEach(function(button) {
 	button.addEventListener('click', function() {
-		this.classList.toggle('clicked');
+		let parent = this.parentNode.parentNode;
+
+        parent.querySelectorAll('button').forEach(function(btn) {
+        	btn.classList.remove('clicked');
+        });
+        this.classList.add('clicked');
 	});
 });
