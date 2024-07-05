@@ -1,0 +1,59 @@
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ch-pw {
+    width: 638px;
+    height: 99px;
+    color: #898989;
+    border-radius: 10px;
+    border: 1px solid #c7c4c4;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.confirm-pw {
+    width: 638px;
+    height: 99px;
+    color: #898989;
+    border-radius: 10px;
+    border: 1px solid #c7c4c4;
+    font-size: 20px;
+}
+.validation-icon-1 {
+    position: absolute;
+    font-size: 17px;
+    color: #fff;
+    background-color: #fd5e53;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    margin-left: 550px;
+    margin-bottom: 15px;
+}
+.validation-icon-2 {
+    position: absolute;
+    font-size: 17px;
+    color: #fff;
+    background-color: #fd5e53;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    margin-left: 550px;
+}
+
+.confirm-button .btn-confirm-pw {
+    width: 645px;
+    height: 99px;
+    border-radius: 10px;
+    background-color: #fd5e53;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.comfirm-button .btn-confirm-pw {
+    opacity: 0.8;
+}

@@ -1,0 +1,7 @@
+.fixed-container {
+    background-color: #fff; /* 임의의 배경색 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
