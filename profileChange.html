@@ -8,7 +8,7 @@
       src="https://kit.fontawesome.com/168f1e1640.js"
       crossorigin="anonymous"
     ></script>
-    <title>mypage</title>
+    <title>프로필변경</title>
   </head>
   <body>
     <div class="top-bar">
@@ -59,32 +59,53 @@
       </div>
     </div>
     <div class="container">
-      <div class="mypage_top">
+      <div class="profileChange_top">
         <img class="profile-img" src="./img/user-profile.png" />
         <label for="profile-edit-input" class="profile-edit">
           <input type="file" id="profile-edit-input" style="display: none" />
           <img src="./img/user-profile-edit.png" />
         </label>
       </div>
-      <div class="mypage_middle">
-        <div class="mypage_middle-title">닉네임</div>
-        <div class="mypage-middle-content">
-          <input type="text" class="nickname-input" />
-          <button class="duplicate-check-btn">중복확인</button>
+      <div class="profileChange_middle-wrap">
+        <div class="profileChange_middle">
+          <div class="profileChange_middle-title">닉네임</div>
+          <div class="profileChange_middle-content">
+            <input type="text" class="nickname-input" />
+            <button class="duplicate-check-btn">중복확인</button>
+          </div>
+          <div id="duplicate-check-msg"></div>
         </div>
-        <div id="duplicate-check-msg"></div>
-      </div>
-      <div class="mypage_middle">
-        <div class="mypage_middle-title">소속크루</div>
-        <div class="mypage-middle-content">
-          <input type="text" class="crew-input" />
-          <button class="leave-crew-btn">크루탈퇴</button>
+        <div class="profileChange_middle">
+          <div class="profileChange_middle-title">활동지역</div>
+          <div class="profileChange_area">
+            <div class="area-btn-top">
+              <button type="button" class="area-btn">서울</button>
+              <button type="button" class="area-btn">인천/경기</button>
+              <button type="button" class="area-btn">강원</button>
+              <button type="button" class="area-btn">대전/충남</button>
+              <button type="button" class="area-btn">충북</button>
+            </div>
+            <div class="area-btn-bottom">
+              <button type="button" class="area-btn">광주/전남</button>
+              <button type="button" class="area-btn">전북</button>
+              <button type="button" class="area-btn">부산/경남</button>
+              <button type="button" class="area-btn">대구/경북</button>
+            </div>
+          </div>
         </div>
+        <div class="profileChange_middle">
+          <div class="profileChange_middle-title">소속크루</div>
+          <div class="profileChange_middle-content">
+            <input type="text" class="crew-input" />
+            <button class="leave-crew-btn">크루탈퇴</button>
+          </div>
+        </div>
+        <button class="profileChange-complete-btn" onclick="location.href=''">
+          완료
+        </button>
       </div>
-      <button class="mypage-complete-btn" onclick="location.href=''">
-        완료
-      </button>
     </div>
-    <script src="./js/mypage.js"></script>
+
+    <script src="./js/profileChange.js"></script>
   </body>
 </html>

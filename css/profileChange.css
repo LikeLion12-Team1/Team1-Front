@@ -4,14 +4,14 @@
   align-items: center;
 }
 
-/* mypage_top */
-.mypage_top {
-  margin-top: 170px;
+/* profileChange_top */
+.profileChange_top {
+  margin-top: 140px;
   position: relative;
   display: inline-block;
   width: 186.73px;
   height: 187.83px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .profile-img {
@@ -28,22 +28,33 @@
   transform: translate(230%, -85%);
 }
 
-/* mypage_middle */
-.mypage_middle {
+/* profileChange_middle */
+.profileChange_middle-wrap {
   display: flex;
   flex-direction: column;
-  margin: 15px 0;
+  align-items: center;
 }
 
-.mypage_middle-title {
+.profileChange_middle {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.profileChange_middle-title {
+  display: flex;
+  justify-content: flex-start;
   color: #666666;
   font-size: 18px;
   margin-bottom: 15px;
 }
 
-.mypage-middle-content {
+.profileChange_middle-content,
+.area-btn-top {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+  width: 565.63px;
+  margin-bottom: 10px;
 }
 
 .nickname-input,
@@ -77,8 +88,35 @@
   margin-top: 20px;
 }
 
+.profileChange_area {
+  display: flex;
+  flex-direction: column;
+  width: 565.63px;
+}
+
+.profileChange_area button {
+  border: 1px solid #c7c4c4;
+  border-radius: 10px;
+  color: #666666;
+  background-color: white;
+  font-size: 18px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.profileChange_area button.active {
+  color: white;
+  background-color: #fd5e53;
+  border: none;
+  border-radius: 10px;
+}
+
+.area-btn-bottom button {
+  margin-right: 18px;
+}
+
 /* button */
-.mypage-complete-btn {
+.profileChange-complete-btn {
   width: 400px;
   height: 60px;
   font-size: 18px;
@@ -86,6 +124,6 @@
   background-color: #fd5e53;
   border: none;
   border-radius: 10px;
-  margin: 40px 0;
+  margin: 30px 0;
   cursor: pointer;
 }
