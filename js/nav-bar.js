@@ -11,10 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-});
 
-/* 사용자 아이콘 눌렀을 때 */
-document.addEventListener("DOMContentLoaded", function () {
+  /* 사용자 아이콘 눌렀을 때 */
   const userIcon = document.querySelector(".user-icon");
   if (userIcon) {
     let isClicked = false;
@@ -24,16 +22,19 @@ document.addEventListener("DOMContentLoaded", function () {
       userIcon
         .querySelector("path")
         .setAttribute("fill", isClicked ? "#fd5e53" : "#1C1C1C");
-      openUserInfo();
+      if (isClicked) {
+        openUserInfo(userIcon);
+      } else {
+        closeUserInfo();
+      }
     });
   }
 });
 
-function openUserInfo() {
+function openUserInfo(triggerElement) {
   const existingPopup = document.querySelector(".user-info-popup");
   if (existingPopup) {
     document.body.removeChild(existingPopup);
-    return;
   }
 
   const popup = document.createElement("div");
@@ -49,7 +50,7 @@ function openUserInfo() {
   popup.style.justifyContent = "center";
   popup.style.padding = "40px";
   popup.style.boxSizing = "border-box";
-  popup.style.position = "relative";
+  popup.style.position = "absolute";
 
   const profileImage = document.createElement("img");
   profileImage.src = "/img/user-profile.png";
@@ -95,12 +96,23 @@ function openUserInfo() {
 
   popup.appendChild(linkContainer);
 
-  const svgIcon = document.querySelector("svg");
-  const iconRect = svgIcon.getBoundingClientRect();
+  const iconRect = triggerElement.getBoundingClientRect();
+  const popupWidth = 204;
+  const popupHeight = 270;
+  const popupLeft = iconRect.left - 50 + (iconRect.width - popupWidth) / 2;
+  const popupTop = iconRect.bottom + 10;
 
-  popup.style.position = "absolute";
-  popup.style.left = `${iconRect.right - 120}px`;
-  popup.style.top = `${iconRect.bottom + 5}px`;
+  popup.style.left = `${popupLeft}px`;
+  popup.style.top = `${popupTop}px`;
+
+  popup.style.zIndex = "999";
 
   document.body.appendChild(popup);
+}
+
+function closeUserInfo() {
+  const existingPopup = document.querySelector(".user-info-popup");
+  if (existingPopup) {
+    document.body.removeChild(existingPopup);
+  }
 }
