@@ -1,0 +1,95 @@
+.mypage-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.section_left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-top: 90px;
+}
+
+.mypage-tree1 {
+  margin-top: 50px;
+  width: 300px;
+  z-index: 2;
+}
+
+.mypage-earth {
+  position: relative;
+  top: -85px;
+  width: 400px;
+  z-index: 1;
+}
+
+.section_right {
+  margin-top: 190px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mycrew,
+.mychallenge {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+}
+
+.mycrew-title,
+.mychallenge-title {
+  width: 100%;
+  height: 40px;
+  background-color: #114232;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+  margin: 20px 0;
+}
+
+.mycrew-content,
+.mychallenge-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 20px 0;
+}
+
+.mycrew-content img,
+.mychallenge-content img {
+  width: 6px;
+  height: 45px;
+}
+
+.mycrew-content-date,
+.mychallenge-content-date {
+  color: #666666;
+  padding: 0 20px;
+}
+
+.mychallege-bottom {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  color: #c7c4c4;
+  margin-top: 30px;
+}
+
+.new-challenge {
+  width: 33.5px;
+  height: 26.8px;
+  color: white;
+  background-color: #87a922;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
