@@ -3,7 +3,7 @@ let currentPage = 1;
 let currentRangeStart = 1;
 const pageRangeSize = 5;
 const crewData = [
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: '/img/logo.png'},
+	{name: '처음', tag1: '서울', tag2: '등산', img: '/img/logo.png'},
 	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
@@ -20,7 +20,40 @@ const crewData = [
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''}
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '강원', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '인천/경기', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '강원', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '인천/경기', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '끝', tag1: '서울', tag2: '등산', img: ''}
 ];
 
 function displayCrews(page) {
