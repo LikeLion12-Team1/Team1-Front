@@ -1,10 +1,17 @@
 /* 사용자 아이콘 눌렀을 때 */
 document.addEventListener("DOMContentLoaded", function () {
-  const svgIcon = document.getElementById("#user-icon");
+  const userIcon = document.getElementById("user-icon");
+  if (userIcon) {
+    let isClicked = false;
 
-  svgIcon.addEventListener("click", function () {
-    openUserInfo();
-  });
+    userIcon.addEventListener("click", function () {
+      isClicked = !isClicked;
+      userIcon
+        .querySelector("path")
+        .setAttribute("fill", isClicked ? "#fd5e53" : "#1C1C1C");
+      openUserInfo();
+    });
+  }
 });
 
 function openUserInfo() {

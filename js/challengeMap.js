@@ -55,6 +55,22 @@ function updateSelectedOptionStyle(dropdown) {
   selectedOption.setAttribute("selected", "");
 }
 
+/* rotate-icon 눌렀을 때 -> sidebar item 새로고침 */
+document.addEventListener("DOMContentLoaded", function () {
+  const rotateIcon = document.getElementById("rotate-icon");
+  rotateIcon.addEventListener("click", function () {
+    refreshSidebarItems();
+  });
+
+  function refreshSidebarItems() {
+    const sidebarItems = document.querySelectorAll(".sidebar-item");
+    sidebarItems.forEach((item) => {
+      //  각 sidebar-item을 새로고침하는 로직 추가
+      console.log("Refreshing sidebar item:", item);
+    });
+  }
+});
+
 /* sidebar에서 정보보기 or 공유하기 클릭할 때 */
 document.addEventListener("DOMContentLoaded", function () {
   const sidebarItems = document.querySelectorAll(".sidebar-item");
@@ -115,5 +131,23 @@ document.addEventListener("DOMContentLoaded", function () {
         infoDisplay.classList.remove("show");
       }
     });
+  });
+});
+
+/* progress bar */
+document.addEventListener("DOMContentLoaded", function () {
+  const progressBars = document.querySelectorAll(".progress");
+
+  progressBars.forEach((bar) => {
+    const value = parseInt(bar.getAttribute("value"), 10);
+
+    const percentSpan = bar.nextElementSibling;
+    percentSpan.textContent = `${value}%`;
+
+    if (value <= 50) {
+      bar.style.background = `linear-gradient(90deg, #fcdc2a 0%, #87a922 ${value}%, #fd5e53 ${value}%)`;
+    } else {
+      bar.style.background = `linear-gradient(90deg, #fcdc2a 0%, #87a922 50%, #fd5e53 ${value}%)`;
+    }
   });
 });
