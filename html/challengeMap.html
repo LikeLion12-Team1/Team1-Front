@@ -8,7 +8,7 @@
       src="https://kit.fontawesome.com/168f1e1640.js"
       crossorigin="anonymous"
     ></script>
-    <title>challenge map</title>
+    <title>챌린지화면</title>
   </head>
   <body>
     <div class="top-bar">
@@ -19,15 +19,24 @@
       </div>
       <div class="nav-bar">
         <a class="nav-link" href="#">HOME</a>
-        <a class="nav-link" href="#">CHALLENGE</a>
-        <a class="nav-link" href="#">CREW</a>
+        <a
+          class="nav-link"
+          href="/html/challengeMap.html"
+          style="
+            color: #fd5e53;
+            text-decoration: underline;
+            text-underline-offset: 5px;
+          "
+          >CHALLENGE</a
+        >
+        <a class="nav-link" href="/html/crew.html">CREW</a>
         <a class="nav-link" href="#">MY</a>
       </div>
       <div class="nav-icon">
         <svg
           width="25"
-          height="46"
-          viewBox="0 0 44 46"
+          height="44"
+          viewBox="0 0 44 44"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -45,11 +54,13 @@
         </svg>
         <div class="gap"></div>
         <svg
+          class="user-icon"
           width="25"
           height="44"
           viewBox="0 0 44 44"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          style="cursor: pointer"
         >
           <path
             d="M22 22C28.0775 22 33 17.0775 33 11C33 4.9225 28.0775 0 22 0C15.9225 0 11 4.9225 11 11C11 17.0775 15.9225 22 22 22ZM22 27.5C14.6575 27.5 0 31.185 0 38.5V44H44V38.5C44 31.185 29.3425 27.5 22 27.5Z"
@@ -253,18 +264,53 @@
       <div class="map-wrap">
         <div id="map" class="map"></div>
         <div class="challenge-info">
-          <div class="challenge-item">
-            <!-- 챌린지 정보 1 -->
-          </div>
-          <div class="challenge-item">
-            <!-- 챌린지 정보 2 -->
-          </div>
-          <div class="challenge-item">
-            <!-- 챌린지 정보 3 -->
-          </div>
           <button class="btn-prev">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
+          <div class="challenge-item-wrap">
+            <div class="challenge-item">
+              <img src="/img/challenge-default.png" />
+              <div class="crew-name"></div>
+              <div class="crew-num">n명 참여중</div>
+              <div class="progress-bar">
+                <progress
+                  class="progress"
+                  value="25"
+                  min="0"
+                  max="100"
+                ></progress>
+                <span class="percent"></span>
+              </div>
+            </div>
+            <div class="challenge-item">
+              <img src="/img/상명크루.png" />
+              <div class="crew-name">상명크루</div>
+              <div class="crew-num">10명 참여중</div>
+              <div class="progress-bar">
+                <progress
+                  class="progress"
+                  value="50"
+                  min="0"
+                  max="100"
+                ></progress>
+                <span class="percent"></span>
+              </div>
+            </div>
+            <div class="challenge-item">
+              <img src="/img/challenge-default.png" />
+              <div class="crew-name"></div>
+              <div class="crew-num">n명 참여중</div>
+              <div class="progress-bar">
+                <progress
+                  class="progress"
+                  value="75"
+                  min="0"
+                  max="100"
+                ></progress>
+                <span class="percent"></span>
+              </div>
+            </div>
+          </div>
           <button class="btn-next">
             <i class="fa-solid fa-chevron-right"></i>
           </button>
@@ -276,6 +322,7 @@
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4d57b40cb374f6d12f0f3395e83bbdaf&libraries=clusterer"
     ></script>
+    <script src="/js/nav-bar.js"></script>
     <script src="/js/challengeMap.js"></script>
   </body>
 </html>
