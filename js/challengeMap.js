@@ -1,59 +1,46 @@
-/* 지도 */
-var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-var options = {
-  //지도를 생성할 때 필요한 기본 옵션
-  center: new kakao.maps.LatLng(37.566826, 126.9786567), //지도의 중심좌표
-  level: 3, //지도의 레벨(확대, 축소 정도)
-};
-
-var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-/* 마커 표시 */
-var mapContainer = document.getElementById("map"), // 지도를 표시할 div
-  mapOption = {
-    center: new kakao.maps.LatLng(37.54699, 127.09598), // 지도의 중심좌표
-    level: 4, // 지도의 확대 레벨
+document.addEventListener("DOMContentLoaded", function () {
+  var mapContainer = document.getElementById("map");
+  var mapOptions = {
+    center: new kakao.maps.LatLng(37.54699, 127.09598), // 초기 지도 중심 좌표
+    level: 3, // 지도의 초기 확대 레벨
   };
 
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+  var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성
 
-var imageSrc = "/img/marker.png",
-  imageSize = new kakao.maps.Size(39, 56),
-  imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지 옵션(마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정)
+  var markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커 위치
+  var markerImage = new kakao.maps.MarkerImage(
+    "/img/marker.png",
+    new kakao.maps.Size(39, 56),
+    { offset: new kakao.maps.Point(27, 69) }
+  );
 
-// 마커의 이미지정보를 가지고 있는 마커이미지 생성
-var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-  markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치
-
-// 마커 생성
-var marker = new kakao.maps.Marker({
-  position: markerPosition,
-  image: markerImage, // 마커이미지 설정
-});
-
-// 마커가 지도 위에 표시되도록 설정
-marker.setMap(map);
-
-/* 지역, 스포츠타입 드롭다운 */
-const areaDropdown = document.getElementById("area-dropdown");
-const sportDropdown = document.getElementById("sport-dropdown");
-
-areaDropdown.addEventListener("change", function () {
-  updateSelectedOptionStyle(this);
-});
-
-sportDropdown.addEventListener("change", function () {
-  updateSelectedOptionStyle(this);
-});
-
-function updateSelectedOptionStyle(dropdown) {
-  dropdown.querySelectorAll("option").forEach((option) => {
-    option.removeAttribute("selected");
+  var marker = new kakao.maps.Marker({
+    position: markerPosition,
+    image: markerImage,
   });
 
-  const selectedOption = dropdown.options[dropdown.selectedIndex];
-  selectedOption.setAttribute("selected", "");
-}
+  marker.setMap(map); // 마커를 지도에 표시
+});
+
+/* 지역, 스포츠타입 드롭다운 */
+document.addEventListener("DOMContentLoaded", function () {
+  const dropdowns = document.querySelectorAll(".dropdown");
+
+  dropdowns.forEach((dropdown) => {
+    dropdown.addEventListener("change", function () {
+      updateSelectedOptionStyle(this);
+    });
+  });
+
+  function updateSelectedOptionStyle(dropdown) {
+    dropdown.querySelectorAll("option").forEach((option) => {
+      option.removeAttribute("selected");
+    });
+
+    const selectedOption = dropdown.options[dropdown.selectedIndex];
+    selectedOption.setAttribute("selected", "");
+  }
+});
 
 /* rotate-icon 눌렀을 때 -> sidebar item 새로고침 */
 document.addEventListener("DOMContentLoaded", function () {
@@ -75,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const sidebarItems = document.querySelectorAll(".sidebar-item");
 
-  sidebarItems.forEach((item, index) => {
+  sidebarItems.forEach((item) => {
     const shareButton = item.querySelector(".share-click");
     const crewSelector = item.querySelector(".crew-selector");
     const infoButton = item.querySelector(".info-click");
@@ -143,11 +130,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const percentSpan = bar.nextElementSibling;
     percentSpan.textContent = `${value}%`;
-
-    if (value <= 50) {
-      bar.style.background = `linear-gradient(90deg, #fcdc2a 0%, #87a922 ${value}%, #fd5e53 ${value}%)`;
-    } else {
-      bar.style.background = `linear-gradient(90deg, #fcdc2a 0%, #87a922 50%, #fd5e53 ${value}%)`;
-    }
   });
 });
