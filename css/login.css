@@ -1,9 +1,9 @@
-body {
+/* body {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 150px;
-}
+} */
 .text-site-name {
     display: flex;
     align-items: center;

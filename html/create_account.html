@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="/css/styles.css" />
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Comptible" content="IE=edge" />
         <meta name="viewport" content="width=deviec-width, inital-scale=1.0" />
@@ -18,51 +18,63 @@
                 <div class="divider"></div>
                 <div class="container-create-account">
                     <div class="create-email">
-                        <span class="create-email-text">이메일 <span style="color: #fd5e53">*</span></span>
-                        <input
-                            class="create-email-box"
-                            type="text"
-                            name="userName"
-                            placeholder=" 예: screw@naver.com"
-                        />
-                        <div class="validation-icon" id="validation-icon">
-                            <i class="fa-solid fa-check"></i>
+                        <p class="create-email-text">이메일 <a>*</a></p>
+                        <div class="create-email-2">
+                            <form>
+                                <input
+                                    type="text"
+                                    class="create-email-box"
+                                    name="userName"
+                                    placeholder=" 예: screw@naver.com"
+                                />
+                                <button type="button" class="double-check-email">중복확인</button>
+                            </form>
                         </div>
-                        <input class="double-check-email" type="button" value="중복확인" />
-                        <span class="err-create-email"></span>
                     </div>
                     <div class="create-password">
-                        <span class="create-password-text">비밀번호 <span style="color: #fd5e53">*</span></span>
-                        <input class="create-password-box" type="text" name="userPassword" />
-                        <div class="validation-icon" id="validation-icon">
-                            <i class="fa-solid fa-check"></i>
+                        <p class="create-password-text">비밀번호 <a>*</a></p>
+                        <div class="create-password-2">
+                            <form>
+                                <input class="create-password-box" type="text" name="userPassword" />
+                                <div class="validation-icon" id="validation-icon">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <span class="err-create-pw"></span>
+                            </form>
                         </div>
-                        <span class="err-create-pw"></span>
                     </div>
                     <div class="double-check-pw">
-                        <span class="double-check-pw-text">비밀번호 재확인 <span style="color: #fd5e53">*</span></span>
-                        <input class="double-check-pw-box" type="text" name="userPassword" />
-                        <div class="validation-icon" id="validation-icon">
-                            <i class="fa-solid fa-check"></i>
+                        <p class="double-check-pw-text">비밀번호 재확인 <a>*</a></p>
+                        <div class="double-check-pw-2">
+                            <form>
+                                <input class="double-check-pw-box" type="text" name="userPassword" />
+                                <div class="validation-icon" id="validation-icon">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <span class="err-dc-pw"></span>
+                            </form>
                         </div>
-                        <span class="err-dc-pw"></span>
                     </div>
                     <div class="active-area">
-                        <span class="active-area-text">활동 지역 <span style="color: #fd5e53">*</span></span>
+                        <p class="active-area-text">활동 지역 <a>*</a></p>
                         <div class="active-area-btn">
-                            <input class="seoul" type="button" value="서울" />
-                            <input class="incheon" type="button" value="인천/경기" />
-                            <input class="kangwon" type="button" value="강원" />
-                            <input class="daejeon" type="button" value="대전/충남" />
-                            <input class="chungbuk" type="button" value="충북" />
-                            <input class="gwangju" type="button" value="광주/전남" />
-                            <input class="jeonbuk" type="button" value="전북" />
-                            <input class="busan" type="button" value="부산/경남" />
-                            <input class="daegu" type="button" value="대구/경북" />
+                            <div class="areas1">
+                                <button type="button" class="area1">서울</button>
+                                <button type="button" class="area2">인천/경기</button>
+                                <button type="button" class="area3">강원</button>
+                                <button type="button" class="area4">대전/충남</button>
+                                <button type="button" class="area5">충북</button>
+                            </div>
+                            <div class="areas2">
+                                <button type="button" class="area6">광주/전남</button>
+                                <button type="button" class="area7">전북</button>
+                                <button type="button" class="area8">부산/경남</button>
+                                <button type="button" class="area9">대구/경북</button>
+                            </div>
                         </div>
                     </div>
                     <div class="join-btn">
-                        <a href="home.html">
+                        <a href="/html/home.html">
                             <input class="join-check-btn" type="button" value="가입하기" />
                         </a>
                     </div>
