@@ -59,3 +59,32 @@
 .pb-white img {
   width: 160px;
 }
+
+@media (max-width: 1024px) {
+  .pb-green,
+  .pb-white {
+    padding: 20px;
+  }
+
+  .plantbook-header {
+    padding: 50px 20px;
+  }
+}
+
+@media (max-width: 1020px) {
+  .pb-green ul,
+  .pb-white ul {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .pb-green li,
+  .pb-white li {
+    margin-bottom: 20px;
+  }
+
+  .plantbook-header {
+    padding: 30px 20px;
+  }
+}
