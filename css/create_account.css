@@ -3,38 +3,23 @@
     justify-content: right;
     color: #c7c4c4;
 }
-.container-create-account > div {
+.container-create-account {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.container-create-account > div > span {
-    width: 150px;
-    text-align: left;
+    flex-direction: column;
+    height: 600px;
+    width: 680px;
+    justify-content: space-around;
+    margin: auto;
 }
 
-.create-email-box,
 .create-password-box,
 .double-check-pw-box,
 .double-check-email {
     width: 480px;
-    height: 99px;
-    padding: 10px;
+    height: 60px;
     border: 1px solid #c7c4c4;
     border-radius: 10px;
     font-size: 16px;
-}
-.double-check-email {
-    width: 120px;
-    height: 99px;
-    border: 1px solid #fd5e53;
-    border-radius: 10px;
-    background-color: #fd5e53;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: 10px;
 }
 
 .validation-icon {
@@ -43,28 +28,21 @@
     display: none;
 }
 
-.active-area-btn {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 10px;
-    width: 480px;
-}
-
-.active-area-btn input[type='button'] {
-    width: calc(33.33% - 10px); /* 3 buttons per row with a gap */
-    padding: 10px;
+.active-area-btn button {
+    height: 50px;
+    font-size: 17px;
+    color: #666666;
+    border-radius: 5px;
     border: 1px solid #c7c4c4;
-    border-radius: 10px;
-    background-color: #fff;
+    background-color: white;
+    margin-right: 7px;
     cursor: pointer;
-    font-size: 16px;
-    text-align: center;
 }
 
-.active-area-btn input[type='button']:hover {
+.active-area-btn button.clicked {
     background-color: #fd5e53;
-    color: #fff;
+    color: white;
+    border: 1px solid #fd5e53;
 }
 
 .join-btn {
@@ -75,16 +53,107 @@
 }
 
 .join-check-btn {
-    width: 100%;
-    height: 99px;
-    border-radius: 10px;
+    width: 350px;
+    height: 60px;
+    border-radius: 5px;
+    font-size: 17px;
+    border: 0;
     background-color: #fd5e53;
-    border: none;
     color: white;
-    font-size: 20px;
+    align-items: center;
+    padding-top: 5px;
     cursor: pointer;
 }
 
 .join-check-btn:hover {
     opacity: 0.8;
+}
+
+.create-email {
+    display: flex;
+    flex-direction: row;
+}
+
+.create-email-text {
+    color: #666666;
+    font-size: 18px;
+    width: 164px;
+    padding-top: 30px;
+    padding-left: 10px;
+}
+
+.create-email-text a {
+    color: #fd5e53;
+}
+
+.double-check-email {
+    height: 60px;
+    width: 130px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #fd5e53;
+    margin-left: 12px;
+    cursor: pointer;
+}
+
+.create-email-box {
+    font-size: 18px;
+    width: 360px;
+    height: 60px;
+    border-radius: 10px;
+    border: 1px solid #c7c4c4;
+    padding-left: 10px;
+    margin-top: 5px;
+}
+
+.create-password {
+    display: flex;
+    flex-direction: row;
+}
+
+.create-password-text {
+    color: #666666;
+    font-size: 18px;
+    width: 164px;
+    padding-top: 17px;
+    padding-left: 10px;
+}
+
+.create-password-text a {
+    color: #fd5e53;
+}
+
+.double-check-pw {
+    display: flex;
+    flex-direction: row;
+}
+
+.double-check-pw-text {
+    color: #666666;
+    font-size: 18px;
+    width: 164px;
+    padding-top: 17px;
+    padding-left: 10px;
+}
+
+.double-check-pw-text a {
+    color: #fd5e53;
+}
+
+.active-area {
+    display: flex;
+    flex-direction: row;
+}
+
+.active-area-text {
+    color: #666666;
+    font-size: 18px;
+    width: 164px;
+    padding-top: 17px;
+    padding-left: 10px;
+}
+
+.active-area-text a {
+    color: #fd5e53;
 }

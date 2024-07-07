@@ -1,25 +1,58 @@
-@import "reset.css";
+@import 'reset.css';
 
-@import "nav-bar.css";
+@import 'nav-bar.css';
 
-@import "create-crew.css";
+@import 'create-crew.css';
 
-@import "profileChange.css";
+@import 'profileChange.css';
 
-@import "challengeMap.css";
+@import 'challengeMap.css';
 
-@import "search-crew.css";
+@import 'search-crew.css';
 
-@import "crew-info.css";
+@import 'crew-info.css';
 
-@import "crew-plant.css";
+@import 'crew-plant.css';
 
-@import "mypage.css";
+@import 'mypage.css';
 
-@import "mypage_success.css";
+@import 'mypage_success.css';
 
-@import "mypage_manager.css";
+@import 'mypage_manager.css';
 
-@import "mypageList_manager.css";
+@import 'mypageList_manager.css';
+
+@import 'login.css';
+
+@import 're_pw.css';
+
+@import 'create_account.css';
+
+@import 'forgot-password.css';
+
+@import 'view_size.css';
+
+@import 'home.css';
+
+@font-face {
+    font-family: 'Giants-Inline';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Inline.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+    font-family: 'Giants-Inline';
+}
+
+body {
+    font-family: 'Pretendard-Regular';
+}
 
 @import "plantbook.css";
