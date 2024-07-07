@@ -54,3 +54,5 @@ h1 {
 body {
     font-family: 'Pretendard-Regular';
 }
+
+@import "plantbook.css";
