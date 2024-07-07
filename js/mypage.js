@@ -1,0 +1,88 @@
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("http://localhost:8080/api/v1/user/my")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.isSuccess) {
+        populateMyCrew(data.result.myCrewPreviewList);
+        populateMyChallenge(data.result.myChallengePreviewList);
+      } else {
+        console.error("데이터를 가져오는데 실패했습니다:", data.message);
+      }
+    })
+    .catch((error) => console.error("에러:", error));
+
+  // crew
+  function populateMyCrew(myCrewList) {
+    const myCrewContainer = document.querySelector(".mycrew ul");
+    myCrewContainer.innerHTML = "";
+
+    myCrewList.forEach((crew) => {
+      const li = document.createElement("li");
+      li.className = "mycrew-content";
+
+      const img = document.createElement("img");
+      img.src = "/img/mypage-green.png";
+
+      const dateDiv = document.createElement("div");
+      dateDiv.className = "mycrew-content-date";
+      dateDiv.textContent = formatCrewDate(crew.createAt, crew.inactiveDate);
+
+      const crewDiv = document.createElement("div");
+      crewDiv.className = "mycrew-content-crew";
+      crewDiv.textContent = `${crew.crewName} 크루`;
+
+      li.appendChild(img);
+      li.appendChild(dateDiv);
+      li.appendChild(crewDiv);
+      myCrewContainer.appendChild(li);
+    });
+  }
+
+  // challenge
+  function populateMyChallenge(myChallengeList) {
+    const myChallengeContainer = document.querySelector(".mychallenge ul");
+    myChallengeContainer.innerHTML = "";
+
+    myChallengeList.forEach((challenge) => {
+      const div = document.createElement("div");
+      div.className = "mychallenge-content";
+
+      const img = document.createElement("img");
+      img.src = getChallengeImage(challenge.status);
+
+      const dateDiv = document.createElement("div");
+      dateDiv.className = "mychallenge-content-date";
+      dateDiv.textContent = `${challenge.startAt} - ${challenge.untilWhen}`;
+
+      const challengeDiv = document.createElement("div");
+      challengeDiv.className = "mychallenge-content-crew";
+      challengeDiv.textContent = `${challenge.challengeName} 챌린지`;
+
+      div.appendChild(img);
+      div.appendChild(dateDiv);
+      div.appendChild(challengeDiv);
+      myChallengeContainer.appendChild(div);
+    });
+  }
+
+  // crew 날짜 형식화 (YYYY-MM-DD)
+  // null인 경우 ing 표시
+  function formatCrewDate(createAt, inactiveDate) {
+    const createDate = new Date(createAt).toISOString().split("T")[0];
+    const inactive = inactiveDate
+      ? new Date(inactiveDate).toISOString().split("T")[0]
+      : "ing";
+    return `${createDate} - ${inactive}`;
+  }
+
+  function getChallengeImage(status) {
+    switch (status) {
+      case "성공":
+        return "/img/mypage-lightgreen.png";
+      case "실패":
+        return "/img/mypage-yellow.png";
+      default:
+        return "/img/mypage-red.png";
+    }
+  }
+});
