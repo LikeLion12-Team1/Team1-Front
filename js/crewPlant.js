@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
 		const personalPlant = document.createElement('div');
         personalPlant.className = 'personal-plant';
-        personalPlant.style.backgroundImage = 'url(/img/plant.png)';
+        personalPlant.style.backgroundImage = 'url(/img/plant_unlock/flower4.png)';
 
         personalPlant.style.left = `${40+ earthRadius + x}px`;
         personalPlant.style.top = `${40 + earthRadius + y}px`;
