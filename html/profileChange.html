@@ -13,15 +13,15 @@
   <body>
     <div class="top-bar">
       <div class="logo">
-        <a href="#">
+        <a href="/html/home.html">
           <img class="logo" src="/img/logo.png" />
         </a>
       </div>
       <div class="nav-bar">
-        <a class="nav-link" href="#">HOME</a>
+        <a class="nav-link" href="/html/home.html">HOME</a>
         <a class="nav-link" href="/html/challengeMap.html">CHALLENGE</a>
         <a class="nav-link" href="/html/crew.html">CREW</a>
-        <a class="nav-link" href="#">MY</a>
+        <a class="nav-link" href="/html/mypage.html">MY</a>
       </div>
       <div class="nav-icon">
         <svg
@@ -60,7 +60,7 @@
         </svg>
       </div>
     </div>
-    <div class="container">
+    <div class="profileChange-container">
       <div class="profileChange_top">
         <img class="profile-img" src="/img/user-profile.png" />
         <label for="profile-edit-input" class="profile-edit">
@@ -107,7 +107,14 @@
         </button>
       </div>
     </div>
-
+    <div class="modal">
+      <div class="modal-content">
+        <div class="trashcan"><i class="fa-solid fa-trash-can"></i></div>
+        <p>정말 탈퇴하시겠습니까?</p>
+        <button id="confirmSecession">탈퇴</button>
+        <button id="cancelSecession">취소</button>
+      </div>
+    </div>
     <script src="/js/nav-bar.js"></script>
     <script src="/js/profileChange.js"></script>
   </body>

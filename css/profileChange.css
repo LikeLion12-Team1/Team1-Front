@@ -1,4 +1,4 @@
-.container {
+.profileChange-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,6 +26,7 @@
   position: absolute;
   width: 64.27px;
   transform: translate(230%, -85%);
+  cursor: pointer;
 }
 
 /* profileChange_middle */
@@ -126,4 +127,68 @@
   border-radius: 10px;
   margin: 30px 0;
   cursor: pointer;
+}
+
+/* modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 400px;
+  height: 290px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.trashcan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: white;
+  background-color: #fd5e53;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.modal-content p {
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.modal button {
+  width: 200px;
+  margin: 10px 5px 0 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#confirmSecession {
+  background-color: #fd5e53;
+  color: white;
+}
+
+#cancelSecession {
+  background-color: #f4f4f4;
+  color: #666666;
 }
