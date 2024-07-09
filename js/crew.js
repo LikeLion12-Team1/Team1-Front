@@ -1,7 +1,12 @@
-const crewsPerPage = 8;
-let currentPage = 1;
+const maxContent = 8;
+let page = 1;
 let currentRangeStart = 1;
-const pageRangeSize = 5;
+const maxPage = 5;
+
+
+
+
+
 const crewData = [
 	{name: '처음', tag1: '서울', tag2: '등산', img: '/img/logo.png'},
 	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
@@ -10,7 +15,7 @@ const crewData = [
 	{name: '상명크루', tag1: '강원', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '인천/경기', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루8', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
@@ -18,7 +23,7 @@ const crewData = [
 	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루16', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
@@ -26,7 +31,7 @@ const crewData = [
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '강원', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '인천/경기', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루24', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
@@ -34,14 +39,15 @@ const crewData = [
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루32', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
+	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '강원', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '인천/경기', tag2: '등산', img: ''},
+	{name: '상명크루40', tag1: '인천/경기', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
@@ -49,9 +55,36 @@ const crewData = [
 	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
+	{name: '상명크루48', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루56', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
+	{name: '상명크루64', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루72', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
+	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
 	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
 	{name: '끝', tag1: '서울', tag2: '등산', img: ''}
 ];
@@ -59,8 +92,8 @@ const crewData = [
 function displayCrews(page) {
 	const crewContainer = document.getElementById('crewContainer');
 	crewContainer.innerHTML = '';
-	const start = crewsPerPage * (page-1);
-	const end = start + crewsPerPage;
+	const start = maxContent * (page-1);
+	const end = start + maxContent;
 	const crewsToShow = crewData.slice(start, end);
 
 	crewsToShow.forEach(crew => {
@@ -87,8 +120,8 @@ function displayCrews(page) {
 function updatePagination() {
 	const pageNumbers = document.getElementById('page-numbers');
 	pageNumbers.innerHTML = '';
-	const totalPages = Math.ceil(crewData.length / crewsPerPage);
-	const currentRangeEnd = Math.min(currentRangeStart + pageRangeSize -1, totalPages);
+	const totalPages = Math.ceil(crewData.length / maxContent);
+	const currentRangeEnd = Math.min(currentRangeStart + maxPage -1, totalPages);
 
 	const createButton = (i, onClick, disabled = false) => {
 		const button = document.createElement('button');
@@ -101,57 +134,43 @@ function updatePagination() {
 		return button;
 	};
 
-	pageNumbers.appendChild(createButton('<<', goFirstPage, currentPage === 1));
-
-    //pageNumbers.appendChild(createButton('<', () => changePageRange(-1), currentPage === 1));
+    pageNumbers.appendChild(createButton('<', () => changePageRange(-1), currentRangeStart === 1));
 
 	for (let i=currentRangeStart; i <= currentRangeEnd; i++) {
 		const pageNumber= createButton(i, () => goPage(i));
-		if (i === currentPage) {
+		if (i === page) {
 			pageNumber.style.backgroundColor = '#666666';
 			pageNumber.style.color = '#FFFFFF';
 		}
 		pageNumbers.appendChild(pageNumber);
 	}
-
-	//pageNumbers.appendChild(createButton('>', () => changePageRange(1), currentPage >= totalPages));
-
-    pageNumbers.appendChild(createButton('>>', goLastPage, currentPage === totalPages));
-
-	document.querySelector('#first-btn').disabled = currentPage === 1;
-    document.querySelector('#last-btn').disabled = currentPage === totalPages;
+	pageNumbers.appendChild(createButton('>', () => changePageRange(1), currentRangeEnd >= totalPages));
 }
 
-function goPage(page) {
-	currentPage = page;
-	displayCrews(page);
+function goPage(pageNumber) {
+	page = pageNumber;
 	updateCurrentRange();
+	displayCrews(page);
+	updatePagination();
 }
 
 function changePageRange(direction) {
-    const totalPages = Math.ceil(crewData.length / crewsPerPage);
-    const newRangeStart = currentRangeStart + direction * pageRangeSize;
+    const totalPages = Math.ceil(crewData.length / maxContent);
+    const newRangeStart = currentRangeStart + direction * maxPage;
     if (newRangeStart > 0 && newRangeStart <= totalPages) {
         currentRangeStart = newRangeStart;
+		page = currentRangeStart;
+		displayCrews(page);
         updatePagination();
     }
 }
 
 function updateCurrentRange() {
-    const totalPages = Math.ceil(crewData.length / crewsPerPage);
-    const currentRangeEnd = Math.min(currentRangeStart + pageRangeSize - 1, totalPages);
-    if (currentPage < currentRangeStart || currentPage > currentRangeEnd) {
-        currentRangeStart = Math.floor((currentPage - 1) / pageRangeSize) * pageRangeSize + 1;
+    const totalPages = Math.ceil(crewData.length / maxContent);
+    const currentRangeEnd = Math.min(currentRangeStart + maxPage - 1, totalPages);
+    if (page < currentRangeStart || page > currentRangeEnd) {
+        currentRangeStart = Math.floor((page - 1) / maxPage) * maxPage + 1;
     }
+	updatePagination();
 }
-
-function goFirstPage() {
-	goPage(1);
-}
-
-function goLastPage() {
-	const totalPages = Math.ceil(crewData.length / crewsPerPage);
-	goPage(totalPages);
-}
-
-displayCrews(currentPage);
+displayCrews(page);

@@ -2,20 +2,31 @@
 	box-sizing: border-box;
 }
 
-.crew-content {
+html,
+body {
+    height: 100%;
+}
+
+.search-frame {
 	height: 100vh;
 	width: 100vw;
+	display: flex;
+	justify-content: center;
 }
 
+.crew-content {
+	height: 100vh;
+	width: 1508px;
+	padding-top: 170px;
+	margin-left: 85px;
+	margin-right: 85px;
+}
 
 .content-section1, .content-section2, .content-section3 {
-	margin-left: 100px;
-	margin-right: 100px;
+	width: 1508px;
 }
 
-
 .content-section1 {
-	padding-top: 170px;
 	display: flex;
 }
 
@@ -57,7 +68,6 @@
 .create-crew-btn {
 	margin-left: auto;
 }
-
 
 .create-crew-btn2 {
 	width: 130px;
@@ -144,10 +154,4 @@
 	background-color: #FD5E53;
 	height: 30px;
 	width: 30px;
-}
-
-#first-btn, #last-btn {
-	margin-left: 10px;
-	margin-right: 10px;
-	cursor: pointer;
 }
