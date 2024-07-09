@@ -20,10 +20,10 @@ duplicateCheckBtn.addEventListener("click", function () {
   // 중복 검사
   const nicknameInput = document.querySelector(".nickname-input");
   const enteredNickname = nicknameInput.value.trim();
-  if (enteredNickname === "") {
-    alert("닉네임을 입력해주세요.");
-    return;
-  }
+  // if (enteredNickname === "") {
+  //   alert("닉네임을 입력해주세요.");
+  //   return;
+  // }
   checkNicknameAvailability(enteredNickname)
     .then((isAvailable) => {
       if (isAvailable) {

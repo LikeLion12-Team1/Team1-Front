@@ -120,15 +120,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-/* progress bar */
-document.addEventListener("DOMContentLoaded", function () {
-  const progressBars = document.querySelectorAll(".progress");
-
-  progressBars.forEach((bar) => {
-    const value = parseInt(bar.getAttribute("value"), 10);
-
-    const percentSpan = bar.nextElementSibling;
-    percentSpan.textContent = `${value}%`;
-  });
-});
