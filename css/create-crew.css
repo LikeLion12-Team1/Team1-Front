@@ -12,6 +12,10 @@ body {
     width: 100vw;
 }
 
+.crewname-frame {
+    height: 80px;
+}
+
 .create-crew-content {
     display: flex;
     flex-direction: column;
@@ -56,17 +60,41 @@ body {
     cursor: pointer;
 }
 
+#check-overlap {
+	display: flex;
+	margin-top: 10px;
+    margin-left: 168px;
+    display: none;
+
+}
+
+#check-overlap-message {
+    font-size: 15px;
+    width: 200px;
+	color: #FD5E53;
+    display: flex;
+    margin-left: 10px;
+    padding-top: 1px;
+}
+
+#get-btn {
+    height: 50px;
+    width: 130px;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #fd5e53;
+    background-color: white;
+    border: 1px solid #fd5e53;
+    margin-left: 18px;
+    cursor: pointer;    
+}
+
 .upload-img {
     background-color: #d9d9d9;
     height: 160px;
     width: 350px;
     border-radius: 5px;
     text-align: center;
-    cursor: pointer;
-}
-
-#camera-icon {
-    margin-top: 73px;
 }
 
 .set-crew-img {

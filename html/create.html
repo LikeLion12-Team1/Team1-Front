@@ -36,24 +36,35 @@
 			<div class="set-crew-img">
 				<p class="crew-info-font">대표 이미지 <a>*</a></p></p>
 				<div class="upload-img" id="show-image">
-					<svg id="camera-icon" width="44" height="20" viewBox="0 0 44 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<!-- <svg id="camera-icon" width="44" height="20" viewBox="0 0 44 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M22.0009 29.0409C25.889 29.0409 29.0409 25.889 29.0409 22.0009C29.0409 18.1129 25.889 14.9609 22.0009 14.9609C18.1129 14.9609 14.9609 18.1129 14.9609 22.0009C14.9609 25.889 18.1129 29.0409 22.0009 29.0409Z" fill="#666666"/>
 						<path d="M15.4 0L11.374 4.4H4.4C1.98 4.4 0 6.38 0 8.8V35.2C0 37.62 1.98 39.6 4.4 39.6H39.6C42.02 39.6 44 37.62 44 35.2V8.8C44 6.38 42.02 4.4 39.6 4.4H32.626L28.6 0H15.4ZM22 33C15.928 33 11 28.072 11 22C11 15.928 15.928 11 22 11C28.072 11 33 15.928 33 22C33 28.072 28.072 33 22 33Z" fill="#666666"/>
-					</svg>
+					</svg> -->
 					<input type="file" id="open-file" style="display: none;">
 				</div>
-	
-			</div>
-	
-			<div class="set-crewname">
-				<p class="crew-info-font">크루 이름 <a>*</a></p>
-				<div class="set-crewname2">
-					<form>
-						<input type="text" class="crewname-input" name="crewname">
-						<button type="button" class="crewname-overlap-check">중복확인</button>
-					</form>
+				<div id="get-img">
+					<button type="button" id="get-btn">가져오기</button>
 				</div>
 			</div>
+			
+			<div class="crewname-frame">
+				<div class="set-crewname">
+					<p class="crew-info-font">크루 이름 <a>*</a></p>
+					<div class="set-crewname2">
+						<form>
+							<input type="text" class="crewname-input" name="crewname">
+							<button type="button" class="crewname-overlap-check">중복확인</button>
+						</form>
+					</div>
+				</div>
+				<div id="check-overlap">
+					<svg id="check-icon" width="17" height="17" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M13 0C5.824 0 0 5.824 0 13C0 20.176 5.824 26 13 26C20.176 26 26 20.176 26 13C26 5.824 20.176 0 13 0ZM10.4 19.5L3.9 13L5.733 11.167L10.4 15.821L20.267 5.954L22.1 7.8L10.4 19.5Z" fill="#FD5E53"/>
+					</svg>
+					<p id="check-overlap-message">사용 가능한 이름입니다.</p>
+				</div>
+			</div>
+			
 	
 			<div class="set-active-area">
 				<p class="crew-info-font">활동 지역 <a>*</a></p></p>
@@ -98,8 +109,8 @@
 			</div>
 		</div>
 	</div>
-
-	<script src="/js/create.js"></script>	
+	
 	<script src="/js/nav-bar.js"></script>
+	<script src="/js/create.js"></script>
 </body>
 </html>
