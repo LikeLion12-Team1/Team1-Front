@@ -99,14 +99,30 @@ function createCrewElement(crewName) {
 
   // 탈퇴 버튼 클릭 시
   leaveButton.addEventListener("click", function () {
-    const confirmed = confirm("정말 탈퇴하시겠습니까?");
+    const modal = document.querySelector(".modal");
+    const confirmButton = document.getElementById("confirmSecession");
+    const cancelButton = document.getElementById("cancelSecession");
 
-    if (confirmed) {
+    // 모달 열기
+    modal.style.display = "block";
+
+    confirmButton.onclick = function () {
       leaveButton.textContent = "탈퇴완료";
       leaveButton.style.color = "#C7C4C4";
       leaveButton.style.borderColor = "#C7C4C4";
       // 실제 탈퇴 동작 추가
-    }
+      modal.style.display = "none"; // 모달 닫기
+    };
+
+    cancelButton.onclick = function () {
+      modal.style.display = "none"; // 모달 닫기
+    };
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none"; // 모달 닫기
+      }
+    };
   });
 
   crewElement.appendChild(inputField);
