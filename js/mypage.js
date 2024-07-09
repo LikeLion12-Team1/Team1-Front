@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (data.isSuccess) {
         populateMyCrew(data.result.myCrewPreviewList);
         populateMyChallenge(data.result.myChallengePreviewList);
+        updateTokenCount(data.result.tokenCount);
       } else {
         console.error("데이터를 가져오는데 실패했습니다:", data.message);
       }
@@ -44,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
     myChallengeContainer.innerHTML = "";
 
     myChallengeList.forEach((challenge) => {
-      const div = document.createElement("div");
-      div.className = "mychallenge-content";
+      const li = document.createElement("li");
+      li.className = "mychallenge-content";
 
       const img = document.createElement("img");
       img.src = getChallengeImage(challenge.status);
@@ -58,12 +59,50 @@ document.addEventListener("DOMContentLoaded", function () {
       challengeDiv.className = "mychallenge-content-crew";
       challengeDiv.textContent = `${challenge.challengeName} 챌린지`;
 
+      const countSpan = document.createElement("span");
+      countSpan.className = "mychallenge-content-count";
+      countSpan.textContent = `${challenge.completedCount}/${challenge.requiredCount}`;
+
       div.appendChild(img);
       div.appendChild(dateDiv);
       div.appendChild(challengeDiv);
+      div.appendChild(countSpan);
       myChallengeContainer.appendChild(div);
     });
   }
+
+  // token 수 업데이트
+  function updateTokenCount(tokenCount) {
+    const tokenElement = document.querySelector(".mypage-token span");
+    tokenElement.textContent = `${tokenCount}/5`;
+    if (tokenCount >= 5) {
+      document.querySelector(".mypage-token").style.color = "#114232";
+    }
+  }
+
+  // modal toggle
+  function toggleModal(display) {
+    const modal = document.querySelector(".mypage-modal");
+    modal.style.display = display ? "block" : "none";
+  }
+
+  // modal 이벤트 핸들러
+  const giftIcon = document.querySelector(".fa-solid.fa-gift");
+  giftIcon.addEventListener("click", () => toggleModal(true));
+
+  const moveToPlantbookButton = document.getElementById("moveToPlantbook");
+  const cancelMoveToPlantbookButton = document.getElementById(
+    "cancelMoveToPlantbook"
+  );
+
+  moveToPlantbookButton.addEventListener("click", () => {
+    window.location.href = "/html/plantbook.html";
+    toggleModal(false);
+  });
+
+  cancelMoveToPlantbookButton.addEventListener("click", () =>
+    toggleModal(false)
+  );
 
   // crew 날짜 형식화 (YYYY-MM-DD)
   // null인 경우 ing 표시

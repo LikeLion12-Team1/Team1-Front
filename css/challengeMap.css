@@ -242,7 +242,7 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   width: 370px;
-  height: 280px;
+  height: 260px;
   box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
   position: relative;
   display: flex;
@@ -257,8 +257,8 @@
 
 .crew-name {
   position: absolute;
-  bottom: 90px;
-  left: 20px;
+  bottom: 70px;
+  left: 25px;
   font-size: 25px;
   font-weight: bold;
   color: white;
@@ -266,31 +266,8 @@
 }
 
 .crew-num {
-  font-size: 14px;
+  font-size: 15px;
   color: #666666;
   margin-top: 20px;
   margin-bottom: 15px;
-}
-
-.progress-bar {
-  position: relative;
-  width: 100%;
-}
-
-.progress {
-  appearance: none;
-  width: 260px;
-  height: 15px;
-}
-
-.progress::-webkit-progress-bar {
-  background-color: #dedede;
-}
-
-.progress::-webkit-progress-value {
-  background: #fd5e53;
-}
-
-.percent {
-  margin-left: 10px;
 }

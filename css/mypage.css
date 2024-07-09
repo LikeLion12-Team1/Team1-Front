@@ -72,6 +72,11 @@
   padding: 0 20px;
 }
 
+.mychallenge-content-count {
+  color: #114232;
+  margin-left: 20px;
+}
+
 .mychallege-bottom {
   display: flex;
   justify-content: center;
@@ -92,4 +97,59 @@
   justify-content: center;
   align-items: center;
   margin-left: 20px;
+}
+
+.mypage-token {
+  display: flex;
+  justify-content: flex-end;
+  color: #c7c4c4;
+  font-size: 17px;
+  margin-right: 10px;
+}
+
+/* modal */
+.mypage-modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+.mypage-modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 400px;
+  height: 290px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mypage-modal button {
+  width: 200px;
+  margin: 10px 5px 0 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#moveToPlantbook {
+  background-color: #87a922;
+  color: white;
+}
+
+#cancelMoveToPlantbook {
+  background-color: #f4f4f4;
+  color: #666666;
 }
