@@ -2,21 +2,32 @@
 	box-sizing: border-box;
 }
 
+html,
+body {
+    height: 100%;
+}
+
+.info-frame {
+	height: 100vh;
+    width: 100vw;
+	display: flex;
+	justify-content: center;
+}
+
 .info-content {
 	height: 100vh;
-	width: 100vw;
+	width: 1050px;
 	padding-top: 250px;
 }
 
-.info-content-section1, .info-content-section2 {
-	margin-left: 335px;
-	margin-right: 335px;
-}
+
 
 .info-content-section1 {
 	height: 400px;
 	display: flex;
 	justify-content: space-between;
+	margin: 0;
+	width: 1050px;
 }
 
 .info-content-section2 {
@@ -24,8 +35,7 @@
 	justify-content: center;
 	margin-top: 50px;
 	height: 70px;
-	width: 1008px;
-	
+	width: 1050px;
 }
 
 #crew-join-btn {
@@ -52,7 +62,6 @@
 
 .display-crew-info {
 	width: 500px;
-	margin-left: 50px;
 }
 
 .crew-active-imgs {
