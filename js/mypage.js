@@ -1,14 +1,52 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-accesstoken =
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaml5ZW9uMjdAbmF2ZXIuY29tIiwiaWF0IjoxNzIwNjE3ODY2LCJleHAiOjE3MjkyNTc4NjZ9.7MEwo0ZWHp0tqT9TOdGkNTGDIw_TUMF6v74e6CdwcKU";
+
+// 기존에 제공된 쿠키 설정 함수
+function setCookie(name, value, days) {
+  var expires = "";
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+// 기존에 제공된 쿠키 가져오는 함수
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var cookies = document.cookie.split(";");
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    while (cookie.charAt(0) === " ") {
+      cookie = cookie.substring(1, cookie.length);
+    }
+    if (cookie.indexOf(nameEQ) === 0) {
+      return cookie.substring(nameEQ.length, cookie.length);
+    }
+  }
+  return null;
+}
+
+// 쿠키 삭제 함수 추가
+function deleteCookie(name) {
+  document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
+}
 
 document.addEventListener("DOMContentLoaded", function () {
+  const accessToken = getCookie("accessToken");
+
+  if (!accessToken) {
+    window.location.href = "/html/login.html";
+    return;
+  }
+
   fetchUserData();
 
   function fetchUserData() {
     fetch(API_SERVER_DOMAIN + `/api/v1/user/my`, {
+      method: "GET",
       headers: {
-        Authorization: "Bearer " + accesstoken,
+        Authorization: "Bearer " + accessToken,
       },
     })
       .then((response) => response.json())
@@ -24,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("에러:", error));
   }
 
-  // crew
+  // crew data
   function populateMyCrew(myCrewList) {
     const myCrewContainer = document.querySelector(".mycrew ul");
     myCrewContainer.innerHTML = "";
@@ -51,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // challenge
+  // challenge data
   function populateMyChallenge(myChallengeList) {
     const myChallengeContainer = document.querySelector(".mychallenge ul");
     myChallengeContainer.innerHTML = "";
@@ -138,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return `${createDate} - ${inactive}`;
   }
 
+  // 챌린지 상태에 따른 이미지 경로 반환 함수
   function getChallengeImage(status) {
     switch (status) {
       case "성공":
@@ -147,5 +186,15 @@ document.addEventListener("DOMContentLoaded", function () {
       default:
         return "/img/mypage-red.png";
     }
+  }
+
+  // 로그아웃 버튼 이벤트 핸들러 추가
+  const logoutButton = document.querySelector(".logout-button");
+  if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+      deleteCookie("accessToken");
+      deleteCookie("refreshToken");
+      window.location.href = "/html/login.html";
+    });
   }
 });
