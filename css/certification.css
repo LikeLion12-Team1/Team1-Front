@@ -29,7 +29,7 @@
     margin-bottom: 20px;
     flex-direction: column;
 }
-.login-id-check {
+.doublecheck-id {
     width: 100%;
     height: 80px;
     border: 1px solid transparent;
@@ -38,12 +38,12 @@
     padding-left: 20px;
     padding-top: 15px;
 }
-.err_email {
+.err_certification {
     color: #fd5e53;
     margin-left: 20px;
 }
 
-.err-email-div {
+.err-doublecheck {
     display: flex;
     width: 638px;
     height: 100%;
@@ -57,7 +57,7 @@
     padding-bottom: 15px;
 }
 
-.validation-icon {
+.validation-icon-1 {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -73,7 +73,17 @@
     opacity: 0;
 }
 
-.submit-button {
+.re-send-c-code {
+    color: #fd5e53;
+    font-size: 17px;
+    display: flex;
+    margin-bottom: 15px;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.submit-button-re-pw {
     width: 638px;
     height: 99px;
     background-color: #fd5e53;
