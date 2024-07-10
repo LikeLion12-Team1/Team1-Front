@@ -3,10 +3,6 @@ let page = 1;
 let currentRangeStart = 1;
 const maxPage = 5;
 
-
-
-
-
 const crewData = [
 	{name: '처음', tag1: '서울', tag2: '등산', img: '/img/logo.png'},
 	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},

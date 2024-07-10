@@ -45,72 +45,75 @@
             </div>
         </div>
 
-        <div class="community-frame">
-            <div class="community-section">
-                <div class="community-section1">
-                    <div class="comm-sec1-top">
-                        <div id="life-btn">
-                            <p class="small-circle1"></p>
-                            <p class="life-btn2">일상</p>
-                        </div>
-                        <div id="certification-btn">
-                            <p class="small-circle2"></p>
-                            <p class="certification-btn2">인증</p>
-                        </div>
-                    </div>
-                    <div class="comm-sec1-mid">
-                        <textarea id="input-text" type="text" name="communityText" placeholder="글 입력"></textarea>
-                    </div>
-                    <div class="comm-sec1-bottom">
-                        <img id="add-img" src="/img/add-img.png" />
-                        <input type="file" id="open-file" style="display: none" />
-                        <div id="show-img"></div>
-                        <button class="post-btn" type="button">게시</button>
-                    </div>
-                </div>
-                <div class="community-section2">
-                    <select id="comm-select">
-                        <option value="글 전체">글 전체</option>
-                        <option value="일상">일상</option>
-                        <option value="인증">인증</option>
-                    </select>
-                </div>
-                <div class="community-section3" id="post-container">
-                    <hr />
-                    <div class="comm-sec3-top">
-                        <img src="/img/user-profile.png" />
-                        <p id="comm-crew-name">AAA123</p>
-                        <p id="small-circle3"></p>
-                        <p id="post-time">5분 전</p>
-                        <p id="slash">/</p>
-                        <p id="lifeOrCertification">일상</p>
-                        <p id="reported">신고된 글</p>
-                        <button class="post-delete" type="button">삭제</button>
-                    </div>
-                    <div class="comm-sec3-mid">
-                        <p id="post-text">안녕하세요^^.....</p>
-                        <img id="comm-crew-img" src="/img/상명크루.png" />
-                    </div>
-                    <div class="comm-sec3-bottom">
-                        <img id="heart" src="/img/empty-heart.png" />
-                        <img id="comment" src="/img/comment.png" />
-                    </div>
-                </div>
-                <div id="report-frame" style="display: none">
-                    <div id="report-frame2">
-                        <p>신고 사유</p>
-                        <div id="report-frame3">
-                            <textarea id="input-text2" type="text" name="reportReason" placeholder="글 입력"></textarea>
-                            <div id="btn-range">
-                                <button id="report-btn" type="button">신고</button>
-                                <button id="cancel-btn" type="button">취소</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+	<div class="community-frame">
+		<div class="community-section">
+			<div class="community-section1">
+				<div class="comm-sec1-top">
+					<div id="life-btn">
+						<p class="small-circle1"></p>
+						<p class="life-btn2">일상</p>
+					</div>
+					<div id="certification-btn">
+						<p class="small-circle2"></p>
+						<p class="certification-btn2">인증</p>
+					</div>
+				</div>
+				<div class="comm-sec1-mid">
+					<textarea id="input-text" type="text" name="communityText" placeholder="글 입력"></textarea>
+				</div>
+				<div class="comm-sec1-bottom">
+					<img id="add-img" src="/img/add-img.png">
+					<input type="file" id="open-file" style="display: none;">
+					<div id="show-img"></div>
+					<button class="post-btn" type="button">게시</button>
+				</div>
+			</div>
+			<div class="community-section2">
+				<select id="comm-select">
+					<option value="글 전체">글 전체</option>
+					<option value="일상">일상</option>
+					<option value="인증">인증</option>
+				</select>
+			
+			</div>
+			<div class="community-section3" id="post-container">
+				<hr>
+				<div class="comm-sec3-top">
+					<img src="/img/user-profile.png">
+					<p id="comm-crew-name">AAA123</p>
+					<p id="small-circle3"></p>
+					<p id="post-time">5분 전</p>
+					<p id="slash">/</p>
+					<p id="lifeOrCertification">일상</p>
+					<p id="reported">신고된 글</p>
+					<button class="post-delete" type="button">삭제</button>
+				</div>
+				<div class="comm-sec3-mid">
+					<p id="post-text">안녕하세요^^.....</p>
+					<img id="comm-crew-img" src="/img/상명크루.png">
+				</div>
+				<div class="comm-sec3-bottom">
+					<img id="heart" src="/img/empty-heart.png">
+					<img id="comment" src="/img/comment.png">
+				</div>
+			</div>
+			<div id="report-frame" style="display: none;">
+				<div id="report-frame2">
+					<p>신고 사유</p>
+					<div id="report-frame3">
+						<textarea id="input-text2" type="text" name="reportReason" placeholder="글 입력"></textarea>
+						<div id="btn-range">
+							<button id="report-btn" type="button">신고</button>
+							<button id="cancel-btn" type="button">취소</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="report-reason-frame" style="display: none;">
+				<p>신고사유 ) 부적절한 홍보 게시글입니다.</p>
+			</div>
+		</div>
+	</div>
         <script src="/js/nav-bar.js"></script>
         <script src="/js/community_manager.js"></script>
     </body>
