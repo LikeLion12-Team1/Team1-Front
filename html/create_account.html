@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="/css/styles.css" />
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Comptible" content="IE=edge" />
-        <meta name="viewport" content="width=deviec-width, inital-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="https://kit.fontawesome.com/8d049b55ed.js" crossorigin="anonymous"></script>
         <title>SCREW</title>
     </head>
@@ -13,7 +13,7 @@
             <div class="text-site-name" id="site-name-container">
                 <h1 class="site-name" id="site-name">SCREW</h1>
             </div>
-            <form class="user" id="create-account-form" onsubmit>
+            <form class="user" id="create-account-form" onsubmit="return false;">
                 <p class="notice-ment" style="color: #c7c4c4"><span style="color: #fd5e53">*</span> 필수입력사항</p>
                 <div class="divider"></div>
                 <div class="container-create-account">
@@ -21,16 +21,21 @@
                         <p class="create-email-text">이메일 <a>*</a></p>
                         <div class="create-email-2">
                             <form>
-                                <input
-                                    type="text"
-                                    class="create-email-box"
-                                    name="userName"
-                                    placeholder=" 예: screw@naver.com"
-                                />
                                 <div class="validation-icon-4" id="validation-icon-4">
                                     <i class="fa-solid fa-check"></i>
                                 </div>
-                                <button type="button" class="double-check-email">중복확인</button>
+                                <input
+                                    type="text"
+                                    class="create-email-box"
+                                    id="create-email-box"
+                                    name="userEmail"
+                                    placeholder=" 예: screw@naver.com"
+                                    oninput="validateEmail()"
+                                />
+                                <button type="button" class="double-check-email" onclick="checkEmail()">
+                                    중복확인
+                                </button>
+                                <span class="err-create-id" id="err-create-id"></span>
                             </form>
                         </div>
                     </div>
@@ -38,11 +43,17 @@
                         <p class="create-password-text">비밀번호 <a>*</a></p>
                         <div class="create-password-2">
                             <form>
-                                <input class="create-password-box" type="text" name="userPassword" />
                                 <div class="validation-icon-5" id="validation-icon-5">
                                     <i class="fa-solid fa-check"></i>
                                 </div>
-                                <span class="err-create-pw"></span>
+                                <input
+                                    class="create-password-box"
+                                    type="password"
+                                    id="create-password-box"
+                                    name="userPassword"
+                                    oninput="validatePassword()"
+                                />
+                                <span class="err-create-pw" id="err-create-pw"></span>
                             </form>
                         </div>
                     </div>
@@ -50,39 +61,46 @@
                         <p class="double-check-pw-text">비밀번호 재확인 <a>*</a></p>
                         <div class="double-check-pw-2">
                             <form>
-                                <input class="double-check-pw-box" type="text" name="userPassword" />
                                 <div class="validation-icon-6" id="validation-icon-6">
                                     <i class="fa-solid fa-check"></i>
                                 </div>
-                                <span class="err-dc-pw"></span>
+                                <input
+                                    class="double-check-pw-box"
+                                    type="password"
+                                    id="double-check-pw-box"
+                                    name="userPasswordConfirm"
+                                    oninput="validateConfirmPassword()"
+                                />
+                                <span class="err-dc-pw" id="err-dc-pw"></span>
                             </form>
                         </div>
                     </div>
                     <div class="active-area">
                         <p class="active-area-text">활동 지역 <a>*</a></p>
-                        <div class="active-area-btn">
+                        <div class="active-area-btn" id="active-area-btn">
                             <div class="areas1">
-                                <button type="button" class="area1">서울</button>
-                                <button type="button" class="area2">인천/경기</button>
-                                <button type="button" class="area3">강원</button>
-                                <button type="button" class="area4">대전/충남</button>
-                                <button type="button" class="area5">충북</button>
+                                <button type="button" class="area1" onclick="selectArea('서울')">서울</button>
+                                <button type="button" class="area2" onclick="selectArea('인천/경기')">인천/경기</button>
+                                <button type="button" class="area3" onclick="selectArea('강원')">강원</button>
+                                <button type="button" class="area4" onclick="selectArea('대전/충남')">대전/충남</button>
+                                <button type="button" class="area5" onclick="selectArea('충북')">충북</button>
                             </div>
                             <div class="areas2">
-                                <button type="button" class="area6">광주/전남</button>
-                                <button type="button" class="area7">전북</button>
-                                <button type="button" class="area8">부산/경남</button>
-                                <button type="button" class="area9">대구/경북</button>
+                                <button type="button" class="area6" onclick="selectArea('광주/전남')">광주/전남</button>
+                                <button type="button" class="area7" onclick="selectArea('전북')">전북</button>
+                                <button type="button" class="area8" onclick="selectArea('부산/경남')">부산/경남</button>
+                                <button type="button" class="area9" onclick="selectArea('대구/경북')">대구/경북</button>
                             </div>
                         </div>
                     </div>
                     <div class="join-btn">
-                        <a href="/html/home.html">
-                            <input class="join-check-btn" type="button" value="가입하기" />
-                        </a>
+                        <a href="login.html"
+                            ><input class="join-check-btn" id="join-check-btn" type="button" value="가입하기" disabled
+                        /></a>
                     </div>
                 </div>
             </form>
         </div>
+        <script src="/js/create_account.js"></script>
     </body>
 </html>

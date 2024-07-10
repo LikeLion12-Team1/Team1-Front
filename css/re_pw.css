@@ -4,33 +4,55 @@
     justify-content: center;
 }
 .ch-pw {
-    width: 638px;
+    width: 636px;
     height: 99px;
     color: #898989;
     border-radius: 10px;
-    border: 1px solid #c7c4c4;
+    border: none;
     font-size: 20px;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
+    padding-top: 45px;
+    padding-left: 10px;
 }
 .confirm-pw {
-    width: 638px;
-    height: 99px;
+    width: 636px;
+    height: 97px;
     color: #898989;
     border-radius: 10px;
-    border: 1px solid #c7c4c4;
+    border: none;
     font-size: 20px;
+    margin-top: 20px;
+    padding-left: 10px;
 }
-.validation-icon-1 {
-    position: absolute;
-    font-size: 17px;
-    color: #fff;
-    background-color: #fd5e53;
-    width: 20px;
-    height: 20px;
-    border-radius: 50px;
-    margin-left: 550px;
-    margin-bottom: 15px;
+
+.new-password-div {
+    display: flex;
+    width: 638px;
+    height: 110px;
+    font-size: 20px;
+    color: #c7c4c4;
+    border: 1px solid #c7c4c4;
+    border-radius: 10px;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 15px;
 }
+
+.new-password-dc-pw {
+    display: flex;
+    width: 638px;
+    height: 110px;
+    font-size: 20px;
+    color: #c7c4c4;
+    border: 1px solid #c7c4c4;
+    border-radius: 10px;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 15px;
+}
+
 .validation-icon-2 {
     position: absolute;
     font-size: 17px;
@@ -39,14 +61,43 @@
     width: 20px;
     height: 20px;
     border-radius: 50px;
-    margin-left: 550px;
+    margin-left: 580px;
+    margin-top: 45px;
+    opacity: 0;
+}
+.validation-icon-3 {
+    position: absolute;
+    font-size: 17px;
+    color: #fff;
+    background-color: #fd5e53;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    margin-left: 580px;
+    margin-top: 45px;
+    opacity: 0;
+}
+
+.err_pw {
+    display: flex;
+    color: #fd5e53;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.err_confirm {
+    display: flex;
+    color: #fd5e53;
+    font-size: 20px;
+    margin-left: 10px;
 }
 
 .confirm-button .btn-confirm-pw {
     width: 645px;
     height: 99px;
     border-radius: 10px;
-    background-color: #fd5e53;
+    background-color: #c7c4c4;
     border: none;
     color: white;
     font-size: 20px;
@@ -56,4 +107,15 @@
 
 .comfirm-button .btn-confirm-pw {
     opacity: 0.8;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #fff inset;
+    -webkit-text-fill-color: #000;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
 }

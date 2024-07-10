@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     height: 600px;
-    width: 680px;
+    width: 700px;
     justify-content: space-around;
     margin: auto;
 }
@@ -20,12 +20,6 @@
     border: 1px solid #c7c4c4;
     border-radius: 10px;
     font-size: 16px;
-}
-
-.validation-icon-5 {
-    margin-left: 10px;
-    color: green;
-    display: none;
 }
 
 .active-area-btn button {
@@ -58,7 +52,7 @@
     border-radius: 5px;
     font-size: 17px;
     border: 0;
-    background-color: #fd5e53;
+    background-color: #c7c4c4;
     color: white;
     align-items: center;
     padding-top: 5px;
@@ -91,8 +85,9 @@
     width: 130px;
     font-size: 16px;
     border-radius: 5px;
-    color: #fff;
-    background-color: #fd5e53;
+    color: #c7c4c4;
+    border: 1px solid #c7c4c4;
+    background-color: #fff;
     margin-left: 12px;
     cursor: pointer;
 }
@@ -156,4 +151,79 @@
 
 .active-area-text a {
     color: #fd5e53;
+}
+
+.validation-icon-4 {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #fff;
+    background-color: #fd5e53;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    margin-left: 330px;
+    margin-top: 28px;
+    opacity: 0;
+}
+
+.validation-icon-5 {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #fff;
+    background-color: #fd5e53;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    margin-left: 440px;
+    margin-top: 23px;
+    opacity: 0;
+}
+
+.validation-icon-6 {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #fff;
+    background-color: #fd5e53;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    margin-left: 440px;
+    margin-top: 23px;
+    opacity: 0;
+}
+
+.err-create-id {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    color: #fd5e53;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.err-create-pw {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    color: #fd5e53;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.err-dc-pw {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    color: #fd5e53;
+    margin-top: 10px;
+    margin-left: 10px;
 }

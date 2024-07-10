@@ -1,14 +1,14 @@
 let testCertificationCode = '123456';
 let certificationCodeTimeout;
 
-function startCertificationCodeTimeout() {
-    certificationCodeTimeout = setTimeout(() => {
-        testCertificationCode = ''; // Invalidate the certification code after 5 minutes
-        alert('인증코드의 유효시간이 만료되었습니다. 인증코드를 다시 요청해주세요.');
-        document.querySelector('.validation-icon-1').style.opacity = '0';
-        document.querySelector('.submit-button-re-pw').disabled = true;
-    }, 300000); // 300,000 milliseconds = 5 minutes
-}
+// function startCertificationCodeTimeout() {
+//     certificationCodeTimeout = setTimeout(() => {
+//         testCertificationCode = ''; // Invalidate the certification code after 5 minutes
+//         alert('인증코드의 유효시간이 만료되었습니다. 인증코드를 다시 요청해주세요.');
+//         document.querySelector('.validation-icon-1').style.opacity = '0';
+//         document.querySelector('.submit-button-re-pw').disabled = true;
+//     }, 300000); // 300,000 milliseconds = 5 minutes
+// }
 
 function onchangeCertificationCode() {
     let inputCertificationCode = document.querySelector('#certification-code').value;
