@@ -34,7 +34,6 @@
                                 name="userPassword"
                                 onchange="loginEmailPw()"
                                 placeholder="비밀번호"
-                                disabled
                             />
                         </div>
                     </div>
@@ -49,9 +48,9 @@
                             ><input
                                 class="preview-main_login"
                                 type="button"
-                                disabled="disabled"
                                 onchange="loginEmailPw()"
                                 value="로그인"
+                                onclick="submitLoginForm(event)"
                         /></a>
                     </div>
                     <div class="create-account-button">

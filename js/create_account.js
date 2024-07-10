@@ -1,3 +1,5 @@
+var API_SERVER_DOMAIN = 'http://15.164.41.239:8080';
+
 const passwordValidationIcon4 = document.querySelector('#validation-icon-4');
 
 function validateEmail() {
@@ -152,4 +154,45 @@ function validatePasswordFormat(password) {
 function validateConfirmPasswordFormat(confirmPassword) {
     const password = document.querySelector('#create-password-box').value;
     return confirmPassword === password;
+}
+
+function submitCreateForm(event) {
+    console.log('Dd');
+    event.preventDefault(); // 기본 제출 동작을 막습니다.
+
+    // 사용자가 입력한 이메일과 비밀번호, 지역을 가져옵니다.
+    var email = document.querySelector('.create-email-box').value;
+    var password = document.querySelector('.create-password-box').value;
+    var region = document.querySelector('.area.clicked').value;
+
+    console.log(email);
+    console.log(password);
+    console.log(region);
+
+    // 서버에 회원가입 요청을 보냅니다.
+    fetch(API_SERVER_DOMAIN + '/api/v1/auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            region: region,
+        }),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('회원가입 실패');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            // 회원가입이 성공하면 다음 동작을 수행합니다.
+            window.location.replace('/html/login.html');
+        })
+        .catch((error) => {
+            alert('회원가입에 실패하였습니다.', error);
+            // 로그인 실패 시 사용자에게 메시지를 표시하는 등의 동작을 수행할 수 있습니다.
+        });
 }

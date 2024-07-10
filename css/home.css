@@ -1,8 +1,14 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
 .preview-under {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    margin-top: 20px;
+    width: 90%;
     margin-bottom: 20px;
 }
 
@@ -83,23 +89,76 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 80px;
+    width: 100%;
 }
 
 .preview-upper {
     display: flex;
     width: 100%;
     margin-top: 60px;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 30px;
 }
 
-.preview-calendar {
+.preview-upper-left {
+    position: relative;
+    text-align: center; /* For centering the images horizontally */
+    margin-left: 110px;
+}
+
+.home-crew-plant {
+    position: relative;
+    height: 600px;
+}
+
+.home-crew-plant .pre-myplant-back-img {
+    width: 100%;
+    height: 600px;
+    display: block;
+}
+
+.pre-myplant-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 50px;
+}
+
+.pre-myplant-img .myplant-img {
+    max-width: 100%;
+    height: auto;
+}
+
+.home-crew-plant-img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.plant-text {
+    width: 180px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.open-myplant {
+    margin-bottom: 20px;
     margin-left: 30px;
 }
 
+.preview-calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 75.5%;
+    position: relative;
+}
+
 .container-cal {
-    width: 1155px;
-    height: 750px;
+    width: 1230px;
+    height: 600px;
     display: flex;
     border-radius: 10px;
     background-color: #eaeaea;
