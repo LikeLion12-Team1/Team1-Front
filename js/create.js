@@ -1,3 +1,6 @@
+let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
+let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpeXI3NzczQG5hdmVyLmNvbSIsImlhdCI6MTcyMDYxNzEzMCwiZXhwIjoxNzIwNzAzNTMwfQ.ybCxePsWl8P3ds15BC2lPUOjBpo8Qp6lbrQPDjhW0A0";
+
 document.getElementById('get-btn').addEventListener('click', function() {
 	document.getElementById('open-file').click();
 });
@@ -33,18 +36,47 @@ document.querySelector('.crewname-overlap-check').addEventListener('click', func
 		alert("크루 이름을 입력하세요.");
 	}
 	else {
-		let notAvailable = checkCrewName(crewName);
-		if (! notAvailable) {
-			document.getElementById('check-overlap-message').textContent = '사용 가능한 이름입니다.';
-			document.getElementById('check-icon').style.display = 'block';
-			document.getElementById('check-overlap').style.display = 'block';
-		}
-		else {
-			document.getElementById('check-overlap-message').textContent = '다른 이름을 사용해주세요.';
-			document.getElementById('check-overlap').style.display = 'block';
-			document.getElementById('check-icon').style.display = 'none';
-		}
-		document.getElementById('check-overlap').style.display = 'flex';
+		fetch(`/api/v1/crews/check/${crewName}`, {
+            method: 'GET',
+            headers: {
+                Authorization: "Bearer " + accessToken,
+            }
+        })
+		.then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+		.then(data => {
+			if (data.available) {
+				document.getElementById('check-overlap-message').textContent = '사용 가능한 이름입니다.';
+				document.getElementById('check-icon').style.display = 'block';
+				document.getElementById('check-overlap').style.display = 'block';
+				document.getElementById('check-overlap').style.display = 'flex';
+			} else {
+				document.getElementById('check-overlap-message').textContent = '다른 이름을 사용해주세요.';
+				document.getElementById('check-overlap').style.display = 'block';
+				document.getElementById('check-icon').style.display = 'none';
+				document.getElementById('check-overlap').style.display = 'flex';
+			}
+		})
+		.catch(error => {
+            console.error('Error:', error);
+            alert('크루 이름 중복 확인에 실패했습니다.');
+        });
+		// let notAvailable = checkCrewName(crewName);
+		// if (! notAvailable) {
+		// 	document.getElementById('check-overlap-message').textContent = '사용 가능한 이름입니다.';
+		// 	document.getElementById('check-icon').style.display = 'block';
+		// 	document.getElementById('check-overlap').style.display = 'block';
+		// }
+		// else {
+		// 	document.getElementById('check-overlap-message').textContent = '다른 이름을 사용해주세요.';
+		// 	document.getElementById('check-overlap').style.display = 'block';
+		// 	document.getElementById('check-icon').style.display = 'none';
+		// }
+		// document.getElementById('check-overlap').style.display = 'flex';
 	}
 });
 

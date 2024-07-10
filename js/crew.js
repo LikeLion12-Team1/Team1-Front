@@ -1,94 +1,71 @@
+let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
+let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpeXI3NzczQG5hdmVyLmNvbSIsImlhdCI6MTcyMDYzMDk1NSwiZXhwIjoxNzI5MjcwOTU1fQ.44Tf9Mc8vwSglM-_S1toLTbrW2494ovmlHk9QfVgo48";
+let crewData = [];
+let originalCrewData = [];
+
 const maxContent = 8;
 let page = 1;
 let currentRangeStart = 1;
 const maxPage = 5;
 
-const crewData = [
-	{name: '처음', tag1: '서울', tag2: '등산', img: '/img/logo.png'},
-	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '강원', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '인천/경기', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루8', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루16', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '강원', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '인천/경기', tag2: '등산', img: ''},
-	{name: '상명크루24', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루32', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '강원', tag2: '클라이밍', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '강원', tag2: '등산', img: ''},
-	{name: '상명크루40', tag1: '인천/경기', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
-	{name: '상명크루48', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루56', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
-	{name: '상명크루64', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루72', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '부산/경남', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '충북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '대구/경북', tag2: '등산', img: ''},
-	{name: '상명크루', tag1: '서울', tag2: '등산', img: ''},
-	{name: '끝', tag1: '서울', tag2: '등산', img: ''}
-];
+document.addEventListener('DOMContentLoaded', () => {
+	initializeFilters();
+	getCrewList();
+});
+
+function initializeFilters() {
+	document.getElementById('area-select').addEventListener('change', getFilteredCrewList);
+	document.getElementById('sports-select').addEventListener('change', getFilteredCrewList);
+}
+
+function getCrewList() {
+	fetch(API_SERVER_DOMAIN + '/api/v1/crews', {
+		method: "GET",
+		headers: {
+			Authorization: "Bearer " + accessToken,
+		},
+	}).then(response => {
+		if (!response.ok) {
+			throw new Error('Failed to fetch crew list');
+		}
+		return response.json();
+	}).then((data) => {
+		if (data.isSuccess) {
+			crewData = data.result;
+			originalCrewData = crewData.slice();
+			displayCrews(page);
+		} else {
+			throw new Error('Request failed: ' + data.message);
+		}
+	}).catch(error => {
+		console.error('Error fetching crew list:', error);
+	});
+}
+
+function getFilteredCrewList() {
+	const selectedRegion = document.getElementById('area-select').value;
+	const selectedSports = document.getElementById('sports-select').value;
+
+	let filteredData = originalCrewData.slice();
+
+	// 지역 필터가 적용된 경우
+	if (selectedRegion !== '지역 전체') {
+		filteredData = filteredData.filter(crew => crew.region === selectedRegion);
+	}
+
+	// 스포츠 타입 필터가 적용된 경우
+	if (selectedSports !== '스포츠타입 전체') {
+		filteredData = filteredData.filter(crew => crew.sportsCategory === selectedSports);
+	}
+
+	crewData = filteredData;
+	displayCrews(page);
+}
 
 function displayCrews(page) {
 	const crewContainer = document.getElementById('crewContainer');
 	crewContainer.innerHTML = '';
-	const start = maxContent * (page-1);
+	const start = maxContent * (page - 1);
 	const end = start + maxContent;
 	const crewsToShow = crewData.slice(start, end);
 
@@ -101,15 +78,15 @@ function displayCrews(page) {
 				<p>${crew.name}</p>
 			</div>
 			<div class="tag">
-				<p># ${crew.tag1}</p>
-				<p># ${crew.tag2}</p>
+				<p># ${crew.region}</p>
+				<p># ${crew.sportsCategory}</p>
 			</div>
         `;
 		crewFrame.addEventListener('click', () => {
-            window.location.href = '/html/crew-info.html';
-        });
-        crewContainer.appendChild(crewFrame);
-    });
+			window.location.href = '/html/crew-info.html';
+		});
+		crewContainer.appendChild(crewFrame);
+	});
 	updatePagination();
 }
 
@@ -117,7 +94,7 @@ function updatePagination() {
 	const pageNumbers = document.getElementById('page-numbers');
 	pageNumbers.innerHTML = '';
 	const totalPages = Math.ceil(crewData.length / maxContent);
-	const currentRangeEnd = Math.min(currentRangeStart + maxPage -1, totalPages);
+	const currentRangeEnd = Math.min(currentRangeStart + maxPage - 1, totalPages);
 
 	const createButton = (i, onClick, disabled = false) => {
 		const button = document.createElement('button');
@@ -130,10 +107,10 @@ function updatePagination() {
 		return button;
 	};
 
-    pageNumbers.appendChild(createButton('<', () => changePageRange(-1), currentRangeStart === 1));
+	pageNumbers.appendChild(createButton('<', () => changePageRange(-1), currentRangeStart === 1));
 
-	for (let i=currentRangeStart; i <= currentRangeEnd; i++) {
-		const pageNumber= createButton(i, () => goPage(i));
+	for (let i = currentRangeStart; i <= currentRangeEnd; i++) {
+		const pageNumber = createButton(i, () => goPage(i));
 		if (i === page) {
 			pageNumber.style.backgroundColor = '#666666';
 			pageNumber.style.color = '#FFFFFF';
@@ -151,22 +128,23 @@ function goPage(pageNumber) {
 }
 
 function changePageRange(direction) {
-    const totalPages = Math.ceil(crewData.length / maxContent);
-    const newRangeStart = currentRangeStart + direction * maxPage;
-    if (newRangeStart > 0 && newRangeStart <= totalPages) {
-        currentRangeStart = newRangeStart;
+	const totalPages = Math.ceil(crewData.length / maxContent);
+	const newRangeStart = currentRangeStart + direction * maxPage;
+	if (newRangeStart > 0 && newRangeStart <= totalPages) {
+		currentRangeStart = newRangeStart;
 		page = currentRangeStart;
 		displayCrews(page);
-        updatePagination();
-    }
+		updatePagination();
+	}
 }
 
 function updateCurrentRange() {
-    const totalPages = Math.ceil(crewData.length / maxContent);
-    const currentRangeEnd = Math.min(currentRangeStart + maxPage - 1, totalPages);
-    if (page < currentRangeStart || page > currentRangeEnd) {
-        currentRangeStart = Math.floor((page - 1) / maxPage) * maxPage + 1;
-    }
+	const totalPages = Math.ceil(crewData.length / maxContent);
+	const currentRangeEnd = Math.min(currentRangeStart + maxPage - 1, totalPages);
+	if (page < currentRangeStart || page > currentRangeEnd) {
+		currentRangeStart = Math.floor((page - 1) / maxPage) * maxPage + 1;
+	}
 	updatePagination();
 }
-displayCrews(page);
+
+getCrewList();

@@ -199,15 +199,15 @@ function addPost(userImg, userName, postTime, lifeOrCertification, reported, tex
 	let postContainer = document.getElementById('post-container');
     postContainer.insertBefore(postDiv, postContainer.firstChild);
 
-// 	let reportReasonFrame = document.createElement('div');
-// 	reportReasonFrame.classList.add('report-reason-frame');
-// 	reportReasonFrame.innerHTML = '<p>신고사유 ) 부적절한 홍보 게시글입니다.</p>';
+	let reportReasonFrame = document.createElement('div');
+	reportReasonFrame.classList.add('report-reason-frame');
+	reportReasonFrame.innerHTML = '<p>신고사유 ) 부적절한 홍보 게시글입니다.</p>';
 
-// 	postDiv.appendChild(reportReasonFrame);
+	postDiv.appendChild(reportReasonFrame);
 
 
 
-// 	positionReportReasonFrame(postDiv, reportReasonFrame);
+	positionReportReasonFrame(postDiv, reportReasonFrame);
 }
 
 
