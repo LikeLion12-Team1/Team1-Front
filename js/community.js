@@ -188,6 +188,17 @@ function addPost(userImg, userName, postTime, lifeOrCertification, text, crewImg
 	`;
 	postDiv.appendChild(postBottomDiv);
 
+	let postBottomDiv2 = document.createElement('div');
+	postBottomDiv2.classList.add('comm-sec3-bottom2');
+	postBottomDiv2.innerHTML = `
+		<p>여러 명이 좋아합니다</p>
+	`;
+	postDiv.appendChild(postBottomDiv2);
+	
+
+
+
+
 	let postContainer = document.getElementById('post-container');
 	postContainer.insertBefore(postDiv, postContainer.firstChild);
 }
