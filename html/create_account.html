@@ -79,23 +79,29 @@
                         <p class="active-area-text">활동 지역 <a>*</a></p>
                         <div class="active-area-btn" id="active-area-btn">
                             <div class="areas1">
-                                <button type="button" class="area1" onclick="selectArea('서울')">서울</button>
-                                <button type="button" class="area2" onclick="selectArea('인천/경기')">인천/경기</button>
-                                <button type="button" class="area3" onclick="selectArea('강원')">강원</button>
-                                <button type="button" class="area4" onclick="selectArea('대전/충남')">대전/충남</button>
-                                <button type="button" class="area5" onclick="selectArea('충북')">충북</button>
+                                <button type="button" class="area" value="서울">서울</button>
+                                <button type="button" class="area" value="인천/경기">인천/경기</button>
+                                <button type="button" class="area" value="강원">강원</button>
+                                <button type="button" class="area" value="대전/충남">대전/충남</button>
+                                <button type="button" class="area" value="충북">충북</button>
                             </div>
                             <div class="areas2">
-                                <button type="button" class="area6" onclick="selectArea('광주/전남')">광주/전남</button>
-                                <button type="button" class="area7" onclick="selectArea('전북')">전북</button>
-                                <button type="button" class="area8" onclick="selectArea('부산/경남')">부산/경남</button>
-                                <button type="button" class="area9" onclick="selectArea('대구/경북')">대구/경북</button>
+                                <button type="button" class="area" value="광주/전남">광주/전남</button>
+                                <button type="button" class="area" value="전북">전북</button>
+                                <button type="button" class="area" value="부산/경남">부산/경남</button>
+                                <button type="button" class="area" value="대구/경북">대구/경북</button>
                             </div>
                         </div>
                     </div>
                     <div class="join-btn">
                         <a href="login.html"
-                            ><input class="join-check-btn" id="join-check-btn" type="button" value="가입하기" disabled
+                            ><input
+                                class="join-check-btn"
+                                id="join-check-btn"
+                                type="button"
+                                onclick="submitCreateForm(event)"
+                                value="가입하기"
+                                disabled
                         /></a>
                     </div>
                 </div>
