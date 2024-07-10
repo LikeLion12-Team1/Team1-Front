@@ -1,3 +1,4 @@
+/* 지도 */
 document.addEventListener("DOMContentLoaded", function () {
   var mapContainer = document.getElementById("map");
   var mapOptions = {
@@ -119,4 +120,46 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+});
+
+/* challenge-item-wrap에 슬라이드 기능 */
+document.addEventListener("DOMContentLoaded", function () {
+  const prevButton = document.querySelector(".btn-prev");
+  const nextButton = document.querySelector(".btn-next");
+  const challengeItemWrap = document.querySelector(".challenge-item-wrap");
+  const slides = document.querySelectorAll(".challenge-item");
+  const slideWidth = 400;
+  const visibleSlides = 3;
+  let currentIndex = 0;
+
+  updateButtonState();
+
+  prevButton.addEventListener("click", function () {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateSlide();
+    }
+  });
+
+  nextButton.addEventListener("click", function () {
+    if (currentIndex < slides.length - visibleSlides) {
+      currentIndex++;
+      updateSlide();
+    }
+  });
+
+  function updateSlide() {
+    challengeItemWrap.style.transform = `translateX(-${
+      currentIndex * slideWidth
+    }px)`;
+    updateButtonState();
+  }
+
+  function updateButtonState() {
+    prevButton.disabled = currentIndex === 0;
+    nextButton.disabled = currentIndex >= slides.length - visibleSlides;
+
+    prevButton.style.opacity = prevButton.disabled ? "0.5" : "1";
+    nextButton.style.opacity = nextButton.disabled ? "0.5" : "1";
+  }
 });

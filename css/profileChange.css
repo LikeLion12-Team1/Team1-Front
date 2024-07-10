@@ -54,13 +54,15 @@
 .area-btn-top {
   display: flex;
   justify-content: space-between;
-  width: 565.63px;
+  width: 100%;
+  min-width: 565.63px;
   margin-bottom: 10px;
 }
 
 .nickname-input,
 .crew-input {
-  width: 400px;
+  /* width: 400px; */
+  width: calc(100% - 170px);
   height: 60px;
   border: 1px solid #c7c4c4;
   border-radius: 10px;
@@ -86,13 +88,13 @@
 #duplicate-check-msg {
   display: none;
   color: #fd5e53;
-  margin-top: 20px;
 }
 
 .profileChange_area {
   display: flex;
   flex-direction: column;
-  width: 565.63px;
+  width: 100%;
+  min-width: 565.63px;
 }
 
 .profileChange_area button {
@@ -116,9 +118,17 @@
   margin-right: 18px;
 }
 
+.area-btn-bottom,
+.area-btn-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 /* button */
 .profileChange-complete-btn {
-  width: 400px;
+  width: 100%;
+  min-width: 400px;
   height: 60px;
   font-size: 18px;
   color: white;

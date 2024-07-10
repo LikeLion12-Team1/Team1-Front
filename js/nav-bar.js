@@ -88,7 +88,7 @@ function openUserInfo(triggerElement) {
   linkContainer.appendChild(profileChangeLink);
 
   const logoutLink = document.createElement("a");
-  logoutLink.href = "#";
+  logoutLink.href = "/html/login.html";
   logoutLink.textContent = "로그아웃";
   logoutLink.style.fontSize = "13px";
   logoutLink.style.color = "#FD5E53";
