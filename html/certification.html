@@ -3,8 +3,8 @@
     <head>
         <link rel="stylesheet" href="/css/styles.css" />
         <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Comptible" content="IE=edge" />
-        <meta name="viewport" content="width=deviec-width, inital-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>FindYourPassword</title>
     </head>
     <body>
@@ -17,20 +17,36 @@
                 <p class="ment-email">이메일로 받은 인증코드를 입력해주세요.</p>
                 <form class="user">
                     <div class="form-group">
-                        <input class="login-id" type="text" name="userName" placeholder="인증코드" />
-                        <div class="validation-icon" id="validation-icon">
-                            <i class="fa-solid fa-check"></i>
+                        <div class="err-doublecheck">
+                            <input
+                                class="doublecheck-id"
+                                type="text"
+                                name="userName"
+                                placeholder="인증코드"
+                                id="certification-code"
+                            />
+                            <div class="validation-icon-1" id="validation-icon-1">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="err_certification" id="err_certification"></span>
                         </div>
-                        <span class="err_certification"></span>
                     </div>
+                    <input class="re-send-c-code" type="button" value="인증코드 재전송" id="resend-code-button" />
                     <div class="form-group">
                         <a href="/html/re_pw.html">
-                            <input class="submit-button" type="button" value="비밀번호 재설정" />
+                            <input
+                                class="submit-button-re-pw"
+                                type="button"
+                                value="비밀번호 재설정"
+                                disabled
+                                id="submit-button-re-pw"
+                            />
                         </a>
                     </div>
                 </form>
             </div>
         </div>
         <script src="https://kit.fontawesome.com/8d049b55ed.js" crossorigin="anonymous"></script>
+        <script src="/js/certification.js"></script>
     </body>
 </html>

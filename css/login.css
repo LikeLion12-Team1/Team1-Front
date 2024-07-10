@@ -18,8 +18,8 @@
     justify-content: center;
 }
 .login-id {
-    width: 638px;
-    height: 99px;
+    width: 636px;
+    height: 97px;
     color: #898989;
     border-radius: 10px;
     border: 1px solid #c7c4c4;
@@ -28,11 +28,40 @@
 }
 .login-pw {
     width: 638px;
-    height: 99px;
+    height: 97px;
     color: #898989;
     border-radius: 10px;
     border: 1px solid #c7c4c4;
     font-size: 20px;
+}
+
+.err-msg-login {
+    display: flex;
+    color: #fd5e53;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.err-msg-id-div {
+    width: 638px;
+    height: 99px;
+    font-size: 20px;
+    color: #898989;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-bottom: 20px;
+}
+
+.err-msg-pw-div {
+    display: flex;
+    width: 638px;
+    height: 99px;
+    font-size: 20px;
+    color: #898989;
+    border-radius: 10px;
+    border: 1px solid black;
+    margin-bottom: 20px;
 }
 
 .forgot-password {
