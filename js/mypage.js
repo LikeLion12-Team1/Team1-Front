@@ -74,8 +74,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // token 수 업데이트
   function updateTokenCount(tokenCount) {
     const tokenElement = document.querySelector(".mypage-token span");
-    tokenElement.textContent = `${tokenCount}/5`;
-    if (tokenCount >= 5) {
+    tokenElement.textContent = `${tokenCount}/3`;
+    if (tokenCount >= 3) {
       document.querySelector(".mypage-token").style.color = "#114232";
     }
   }

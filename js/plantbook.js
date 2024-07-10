@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // token 개수 업데이트 함수
   function updateTokenCount(tokenCount) {
     const tokenElement = document.getElementById("tokenCount");
-    tokenElement.textContent = `${tokenCount}/5`;
-    if (tokenCount >= 5) {
+    tokenElement.textContent = `${tokenCount}/3`;
+    if (tokenCount >= 3) {
       tokenElement.style.color = "#114232";
     }
   }
