@@ -46,6 +46,8 @@
 	height: 10px;
 	border-radius: 50px;
 	margin-right: 7px;
+	margin-top: 1.5px;
+	border: 1px solid #FD5E53;
 }
 
 .life-btn2 {
@@ -58,6 +60,11 @@
 	height: 10px;
 	border-radius: 50px;
 	margin-right: 7px;
+	color: #666666;
+	margin-top: 1.5px;
+}
+
+.certification-btn2 {
 	color: #666666;
 }
 
@@ -148,7 +155,6 @@
 	margin-left: 10px;
 	margin-right: 10px;
 	margin-top: 19px;
-	
 }
 
 #report {
@@ -182,7 +188,6 @@
 .community-section3 hr {
 	margin-bottom: 30px;
 	border: 0.1px solid #C7C4C4;
-
 }
 
 .community-section3 {
@@ -195,12 +200,11 @@
 	padding-left: 12px;
 }
 
-#heart {
+.heart {
 	width: 25px;
 	height: 24px;
 	margin-right: 20px;
 	cursor: pointer;
-
 }
 
 #comment {
@@ -212,7 +216,7 @@
 }
 
 #post-text {
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	font-size: 15px;
 }
 
@@ -424,3 +428,31 @@
 	margin-top: 6px;
 	padding-top: 2px;
 }
+
+.report-reason-frame {
+	background-color: rgb(215, 215, 215);
+	width: 265px;
+	height: 60px;
+	position: absolute;
+	left: 300px;
+	border-radius: 10px;
+	border: 1px solid rgb(215, 215, 215);
+	bottom: 500px;
+	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+	font-size: 13px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.report-reason-frame:after {
+	border-top: 0px solid transparent;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 13px solid rgb(215, 215, 215);
+    content: "";
+    position: absolute;
+    bottom: 59px;
+    left: 20px;
+}
+

@@ -1,3 +1,38 @@
+// let lifeButton = 1;
+// let certificationButton = 0;
+
+//인증 버튼 클릭
+document.getElementById('certification-btn').addEventListener('click', function() {
+    let circle1 = document.querySelector('.small-circle1');
+    let lifeButtonText = document.querySelector('.life-btn2');
+    let circle2 = document.querySelector('.small-circle2');
+    let certificationButtonText = document.querySelector('.certification-btn2');
+
+    circle2.style.borderColor = "#FD5E53";
+    circle2.style.backgroundColor = "#FD5E53";
+    certificationButtonText.style.color = "#FD5E53";
+
+	circle1.style.borderColor = "#666666";
+    circle1.style.backgroundColor = "transparent";
+    lifeButtonText.style.color = "#666666";
+});
+
+//일상 버튼 클릭
+document.getElementById('life-btn').addEventListener('click', function() {
+    let circle1 = document.querySelector('.small-circle1');
+    let lifeButtonText = document.querySelector('.life-btn2');
+    let circle2 = document.querySelector('.small-circle2');
+    let certificationButtonText = document.querySelector('.certification-btn2');
+
+    circle1.style.borderColor = "#FD5E53";
+    circle1.style.backgroundColor = "#FD5E53";
+    lifeButtonText.style.color = "#FD5E53";
+
+	circle2.style.borderColor = "#666666";
+    circle2.style.backgroundColor = "transparent";
+    certificationButtonText.style.color = "#666666";
+});
+
 document.getElementById('add-img').addEventListener('click', function() {
 	document.getElementById('open-file').click();
 });
@@ -104,8 +139,8 @@ window.onclick = function(event) {
 	}
 };
 
-function toggleHeart() {
-	let heartImg = document.getElementById('heart');
+function toggleHeart(event) {
+	let heartImg = event.target;
 	let currentHeart = heartImg.src;
 	let fullHeartImg = "/img/full-heart.png";
     let emptyHeartImg = "/img/empty-heart.png";
@@ -148,7 +183,7 @@ function addPost(userImg, userName, postTime, lifeOrCertification, text, crewImg
 	let postBottomDiv = document.createElement('div');
 	postBottomDiv.classList.add('comm-sec3-bottom');
 	postBottomDiv.innerHTML = `
-		<img id="heart" src="/img/empty-heart.png" onclick="toggleHeart();">
+		<img class="heart" src="/img/empty-heart.png" onclick="toggleHeart(event);">
 		<img id="comment" src="/img/comment.png" onclick="postExpand();">
 	`;
 	postDiv.appendChild(postBottomDiv);
