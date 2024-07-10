@@ -102,10 +102,6 @@ function reportFunc() {
 	document.getElementById('report-frame').style.display = 'block';
 }
 
-function postExpand() {
-	document.getElementById('post-frame').style.display = 'block';
-}
-
 const reportFrame = document.getElementById('report-frame').innerHTML;
 const reportButton = document.getElementById('report');
 const frame = document.getElementById('report-frame');
@@ -184,7 +180,7 @@ function addPost(userImg, userName, postTime, lifeOrCertification, text, crewImg
 	postBottomDiv.classList.add('comm-sec3-bottom');
 	postBottomDiv.innerHTML = `
 		<img class="heart" src="/img/empty-heart.png" onclick="toggleHeart(event);">
-		<img id="comment" src="/img/comment.png" onclick="postExpand();">
+		<img id="comment" src="/img/comment.png" onclick="postExpand(event);">
 	`;
 	postDiv.appendChild(postBottomDiv);
 
@@ -195,10 +191,55 @@ function addPost(userImg, userName, postTime, lifeOrCertification, text, crewImg
 	`;
 	postDiv.appendChild(postBottomDiv2);
 	
-
-
-
-
 	let postContainer = document.getElementById('post-container');
 	postContainer.insertBefore(postDiv, postContainer.firstChild);
 }
+
+function addComment(event) {
+	let commentText = document.getElementById('comment-input').value.trim();
+	if (commentText === '') {
+		alert('댓글을 입력하세요.');
+		return;
+	}
+
+	let commentFrame = document.createElement('div');
+	commentFrame.classList.add('comment-frame');
+	commentFrame.innerHTML = `
+		<img src="/img/user-profile.png" />
+        <p>CCC123</p>
+        <p>우와..</p>
+	`;
+
+	let postRightMid = document.querySelector('.post-right-mid');
+	postRightMid.appendChild(commentFrame);
+
+	document.getElementById('comment-input').value = '';
+}
+
+function postExpand(event) {
+	let postFrame = document.getElementById('post-frame');
+	postFrame.style.display = 'block';
+	
+
+	document.getElementById('comment-input').value = '';
+	let postRightMid = document.querySelector('.post-right-mid');
+    postRightMid.innerHTML = '';
+
+	for (let i = 0; i < 10; i++) {
+        let commentFrame = document.createElement('div');
+        commentFrame.classList.add('comment-frame');
+        commentFrame.innerHTML = `
+            <img src="/img/user-profile.png" />
+            <p>AAA123</p>
+            <p>댓글 ${i + 1}</p>
+        `;
+        postRightMid.appendChild(commentFrame);
+    }
+	let commentPostButton = document.querySelector('.comment-post');
+	commentPostButton.removeEventListener('click', addComment);
+    commentPostButton.addEventListener('click', addComment);
+}
+
+document.querySelectorAll('.comm-sec3-bottom img#comment').forEach(commentIcon => {
+    commentIcon.addEventListener('click', postExpand);
+});

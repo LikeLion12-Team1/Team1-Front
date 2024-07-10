@@ -356,10 +356,22 @@
 	padding-top: 21px;
 	font-size: 18px;
 }
+.post-right-top2 {
+	margin-left: 25px;
+	font-size: 15px;
+	margin-top: 15px;
+	margin-right: 20px;
+	padding-bottom: 15px;
+	height: 45px;
+	overflow-y: auto;
+}
 
 .post-right-mid {
-	height: 435px;
+	height: 410px;
 	border-bottom: 1px solid #C7C4C4;
+	overflow-y: auto;
+	padding-bottom: 10px;
+	border-top: 1px solid #C7C4C4;
 }
 
 .comment-frame {
@@ -385,7 +397,7 @@
 
 .post-right-bottom {
 	padding-left: 20px;
-	padding-top: 13px;
+	padding-top: 5px;
 	display: flex;
 }
 
