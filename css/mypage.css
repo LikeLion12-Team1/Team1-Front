@@ -12,9 +12,10 @@
 }
 
 .mypage-tree1 {
-  margin-top: 50px;
+  margin-top: 100px;
   width: 300px;
   z-index: 2;
+  position: relative;
 }
 
 .mypage-earth {
@@ -25,7 +26,7 @@
 }
 
 .section_right {
-  margin-top: 190px;
+  margin-top: 160px;
   display: flex;
   flex-direction: column;
 }
@@ -34,7 +35,7 @@
 .mychallenge {
   display: flex;
   flex-direction: column;
-  width: 500px;
+  width: 600px;
 }
 
 .mycrew-title,
@@ -83,6 +84,7 @@
   flex-direction: row;
   color: #c7c4c4;
   margin-top: 30px;
+  padding-bottom: 30px;
 }
 
 .new-challenge {
@@ -144,12 +146,12 @@
   cursor: pointer;
 }
 
-#moveToPlantbook {
+.moveToPlantbook {
   background-color: #87a922;
   color: white;
 }
 
-#cancelMoveToPlantbook {
+.cancelMoveToPlantbook {
   background-color: #f4f4f4;
   color: #666666;
 }
