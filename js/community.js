@@ -1,8 +1,13 @@
-// let lifeButton = 1;
-// let certificationButton = 0;
+let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
+let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA2OTQ5NDEsImV4cCI6MTcyOTMzNDk0MX0.t6MFBkkqMJim_ib0YXOAlmRSAOEukIjwGBi73jOCItg";
+let lifeButton = 1;
+let certificationButton = 0;
 
 //인증 버튼 클릭
 document.getElementById('certification-btn').addEventListener('click', function() {
+	lifeButton = 0;
+	certificationButton = 1;
+	
     let circle1 = document.querySelector('.small-circle1');
     let lifeButtonText = document.querySelector('.life-btn2');
     let circle2 = document.querySelector('.small-circle2');
@@ -19,6 +24,9 @@ document.getElementById('certification-btn').addEventListener('click', function(
 
 //일상 버튼 클릭
 document.getElementById('life-btn').addEventListener('click', function() {
+	lifeButton = 1;
+	certificationButton = 0;
+
     let circle1 = document.querySelector('.small-circle1');
     let lifeButtonText = document.querySelector('.life-btn2');
     let circle2 = document.querySelector('.small-circle2');
@@ -33,10 +41,12 @@ document.getElementById('life-btn').addEventListener('click', function() {
     certificationButtonText.style.color = "#666666";
 });
 
+//이미지 업로드
 document.getElementById('add-img').addEventListener('click', function() {
 	document.getElementById('open-file').click();
 });
 
+//업로드 이미지 미리보기
 document.getElementById('open-file').addEventListener('change', function(event) {
 	const file = event.target.files[0];
 	const reader = new FileReader();
@@ -48,47 +58,57 @@ document.getElementById('open-file').addEventListener('change', function(event) 
 	reader.readAsDataURL(file);
 });
 
-document.querySelector('.post-btn').addEventListener('click', function() {
-	postData();
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.post-btn').addEventListener('click', function() {
+        postData();
+    });
 });
-
 
 function postData() {
 	let text = document.getElementById('input-text').value;
 	let image = document.getElementById('open-file').files[0];
-	let crewImg = image ? URL.createObjectURL(image) : '';
-	let userImg = 'img/user-profile.png';
-	let userName = 'AAA123';
-    let postTime = '방금 전';
-    let lifeOrCertification = '일상';
+	let category = lifeButton ? '일상' : '인증';
 
-	if (text.trim() === '' && !crewImg) {
+	if (text.trim() === '' && !image) {
 		alert('내용을 입력하거나 이미지를 추가해주세요.');
 		return;
 	}
 
-	addPost(userImg, userName, postTime, lifeOrCertification, text, crewImg);
+	let formData = new FormData();
+    formData.append('category', category);
+    formData.append('content', text);
+    if (image) {
+        formData.append('photo', image);
+    }
 
-	// let formData = new FormData();
-	// formData.append('text', text);
-	// if (image) {
-	// 	formData.append('image', image);
-	// }
-
-	// fetch('/', {
-	// 	method: 'POST',
-	// 	body: formData
-	// }).then(response => {
-	// 	if (response.ok) {
-	// 		clearInputs();
-	// 	} else {
-	// 		alert('오류가 발생했습니다. 다시 시도해주세요.');
-	// 	}
-	// }).catch(error => {
-	// 	console.error('Error:', error);
-	// 	alert('오류가 발생했습니다. 다시 시도해주세요.');
-	// });
-
+	fetch(API_SERVER_DOMAIN + `/api/v1/crews/posts`, {
+        method: 'POST',
+        headers: {
+            Authorization: "Bearer " + accessToken,
+        },
+        body: formData
+    })
+	.then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to create post.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.isSuccess) {
+			let nickname = data.result.nickname;
+            // let postTime = '방금 전';
+            let postImg = data.result.photoUrl || '';
+			
+            addPost(userName, category, text, postImg);
+            clearInputs();
+        } else {
+			throw new Error('오류가 발생했습니다. 다시 시도해주세요.');
+        }
+    }).catch(error => {
+          console.error('Error:', error);
+          alert('오류가 발생했습니다. 다시 시도해주세요.');
+    });
 	clearInputs();
 }
 
@@ -148,7 +168,7 @@ function toggleHeart(event) {
 	}
 }
 
-function addPost(userImg, userName, postTime, lifeOrCertification, text, crewImg) {
+function addPost(userImg, userName, postTime, lifeOrCertification, text, postImg) {
 	let postDiv = document.createElement('div');
 	postDiv.classList.add('community-section3');
 
@@ -171,7 +191,7 @@ function addPost(userImg, userName, postTime, lifeOrCertification, text, crewImg
 	postMidDiv.classList.add('comm-sec3-mid');
 	postMidDiv.innerHTML = `
 		<p id="post-text">${text}</p>
-		${crewImg ? `<img id="comm-crew-img" src="${crewImg}">` : ''}
+		${postImg ? `<img id="comm-crew-img" src="${postImg}">` : ''}
 	`;
 	
 	postDiv.appendChild(postMidDiv);

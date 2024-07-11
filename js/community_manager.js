@@ -205,9 +205,14 @@ function addPost(userImg, userName, postTime, lifeOrCertification, reported, tex
 
 	postDiv.appendChild(reportReasonFrame);
 
-
-
 	positionReportReasonFrame(postDiv, reportReasonFrame);
 }
 
-
+function positionReportReasonFrame(postDiv, reportReasonFrame) {
+    let postDivTop = postDiv.offsetTop;
+    let frameHeight = reportReasonFrame.offsetHeight;
+    let topPosition = postDivTop + frameHeight + 10;
+    reportReasonFrame.style.top = `${topPosition+10}px`;
+    reportReasonFrame.style.left = '568px';
+	reportReasonFrame.style.display = 'block';
+}

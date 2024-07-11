@@ -124,7 +124,7 @@ body {
     flex-direction: row;
 }
 
-.choice-all button {
+.choice-all1 button {
     height: 50px;
     font-size: 17px;
     color: #666666;
@@ -135,7 +135,24 @@ body {
     cursor: pointer;
 }
 
-.choice-all button.clicked {
+.choice-all2 button {
+    height: 50px;
+    font-size: 17px;
+    color: #666666;
+    border-radius: 5px;
+    border: 1px solid #c7c4c4;
+    background-color: white;
+    margin-right: 7px;
+    cursor: pointer;
+}
+
+.choice-all1 button.clicked {
+    background-color: #fd5e53;
+    color: white;
+    border: 1px solid #fd5e53;
+}
+
+.choice-all2 button.clicked {
     background-color: #fd5e53;
     color: white;
     border: 1px solid #fd5e53;
@@ -173,7 +190,7 @@ body {
     text-align: center;
 }
 
-.create-crew {
+#create-crew {
     width: 350px;
     height: 50px;
     border-radius: 5px;
