@@ -33,6 +33,28 @@ function deleteCookie(name) {
   document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
 }
 
+/* 크루원 목록 불러오기 함수 추가 */
+function loadCrewMembers() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const crewName = urlParams.get("crew_name");
+
+  fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.isSuccess) {
+        displayCrewMembers(data.result || []);
+      } else {
+        console.error("크루원 목록 불러오기 실패:", data.message);
+      }
+    })
+    .catch((error) => console.error("에러:", error));
+}
+
 /* 크루원 삭제 */
 document.addEventListener("DOMContentLoaded", function () {
   loadCrewMembers();
@@ -47,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-const deleteButtons = document.querySelectorAll(".member-delet-btn");
+
 const modal = document.querySelector(".modal");
 const confirmDeleteButton = document.getElementById("confirmDelete");
 const cancelDeleteButton = document.getElementById("cancelDelete");
@@ -55,33 +77,12 @@ const cancelDeleteButton = document.getElementById("cancelDelete");
 let currentListItem = null;
 
 // 크루원 삭제 버튼 클릭 이벤트 처리
-deleteButtons.forEach((button) => {
-  button.addEventListener("click", function () {
-    currentListItem = this.closest("li");
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("member-delete-btn")) {
+    currentListItem = event.target.closest("li");
     modal.style.display = "block";
-  });
+  }
 });
-
-// 크루원 목록 가져오기 및 표시
-function loadCrewMembers() {
-  fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crew_name}`, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + accessToken,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.isSuccess) {
-        const members =
-          data.result.adminMemberPreviewList.adminMemberPreviewList;
-        displayCrewMembers(members);
-      } else {
-        console.error("크루원 목록 조회 실패:", data.message);
-      }
-    })
-    .catch((error) => console.error("에러:", error));
-}
 
 // 크루원 목록 UI에 표시하기
 function displayCrewMembers(members) {
@@ -102,37 +103,28 @@ function displayCrewMembers(members) {
     li.appendChild(nickname);
 
     const deleteBtn = document.createElement("span");
-    deleteBtn.classList.add("member-delet-btn");
+    deleteBtn.classList.add("member-delete-btn");
     deleteBtn.innerHTML = `<i class="fa-solid fa-circle-xmark"></i>`;
     li.appendChild(deleteBtn);
 
     ul.appendChild(li);
   });
-
-  // 삭제 버튼 이벤트 다시 연결
-  const deleteButtons = document.querySelectorAll(".member-delet-btn");
-  deleteButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const currentListItem = this.closest("li");
-      const nickname = currentListItem
-        .querySelector(".member-content-nickname")
-        .textContent.trim();
-      deleteCrewMember(nickname);
-    });
-  });
 }
-
 // 크루원 삭제 요청 함수
 function deleteCrewMember(nickname) {
-  fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crew_name}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + accessToken,
-    },
-    body: JSON.stringify({
-      nickname: nickname,
-    }),
-  })
+  const urlParams = new URLSearchParams(window.location.search);
+  const crewName = urlParams.get("crew_name");
+  const userId = getUserIdFromNickname(nickname); // 닉네임 이용해서 userId 찾기
+
+  fetch(
+    API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}?user-id=${userId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  )
     .then((response) => response.json())
     .then((data) => {
       if (data.isSuccess) {

@@ -1,3 +1,5 @@
+let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
+
 /* 네비게이션 링크 클릭 이벤트 */
 document.addEventListener("DOMContentLoaded", function () {
   const navLinks = document.querySelectorAll(".nav-link");
@@ -23,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .querySelector("path")
         .setAttribute("fill", isClicked ? "#fd5e53" : "#1C1C1C");
       if (isClicked) {
-        openUserInfo(userIcon);
+        displayUserInfo(userIcon);
       } else {
         closeUserInfo();
       }
@@ -31,7 +33,28 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function openUserInfo(triggerElement) {
+function fetchUserProfile() {
+  fetch(API_SERVER_DOMAIN + "/api/v1/user/profile")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.isSuccess) {
+        const { nickname, profileImg, crewPreviewList } = data.result;
+        const crewName = crewPreviewList?.crewPreviewList[0]?.crewName || "";
+        const displayProfileImg = profileImg
+          ? API_SERVER_DOMAIN + profileImg
+          : "/img/user-profile.png";
+
+        displayUserInfo(nickname, profileImg, crewName);
+      } else {
+        console.error("사용자 프로필 가져오기 실패:", data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("사용자 프로필 가져오기 에러:", error);
+    });
+}
+
+function displayUserInfo(nickname, profileImg, crewName) {
   const existingPopup = document.querySelector(".user-info-popup");
   if (existingPopup) {
     document.body.removeChild(existingPopup);
@@ -53,27 +76,27 @@ function openUserInfo(triggerElement) {
   popup.style.position = "absolute";
 
   const profileImage = document.createElement("img");
-  profileImage.src = "/img/user-profile.png";
+  profileImage.src = profileImg;
   profileImage.style.width = "89px";
   profileImage.style.height = "89px";
   profileImage.style.marginBottom = "15px";
   popup.appendChild(profileImage);
 
-  const nickname = document.createElement("div");
-  nickname.textContent = "SCREW1";
-  nickname.style.fontSize = "32px";
-  nickname.style.fontWeight = 700;
-  nickname.style.color = "#FD5E53";
-  nickname.style.marginBottom = "15px";
-  popup.appendChild(nickname);
+  const nicknameElement = document.createElement("div");
+  nicknameElement.textContent = "SCREW1";
+  nicknameElement.style.fontSize = "32px";
+  nicknameElement.style.fontWeight = 700;
+  nicknameElement.style.color = "#FD5E53";
+  nicknameElement.style.marginBottom = "15px";
+  popup.appendChild(nicknameElement);
 
-  const crewName = document.createElement("div");
-  crewName.textContent = "상명크루";
-  crewName.style.fontSize = "16px";
-  crewName.style.fontWeight = 400;
-  crewName.style.color = "#666666";
-  crewName.style.marginBottom = "30px";
-  popup.appendChild(crewName);
+  const crewNameElement = document.createElement("div");
+  crewNameElement.textContent = crewName;
+  crewNameElement.style.fontSize = "16px";
+  crewNameElement.style.fontWeight = 400;
+  crewNameElement.style.color = "#666666";
+  crewNameElement.style.marginBottom = "30px";
+  popup.appendChild(crewNameElement);
 
   const linkContainer = document.createElement("div");
   linkContainer.style.display = "flex";
@@ -81,14 +104,14 @@ function openUserInfo(triggerElement) {
   linkContainer.style.width = "136px";
 
   const profileChangeLink = document.createElement("a");
-  profileChangeLink.href = "/html/profileChange.html";
+  profileChangeLink.href = API_SERVER_DOMAIN + "/html/profileChange.html";
   profileChangeLink.textContent = "프로필 변경";
   profileChangeLink.style.fontSize = "13px";
   profileChangeLink.style.color = "#666666";
   linkContainer.appendChild(profileChangeLink);
 
   const logoutLink = document.createElement("a");
-  logoutLink.href = "/html/login.html";
+  logoutLink.href = API_SERVER_DOMAIN + "/html/login.html";
   logoutLink.textContent = "로그아웃";
   logoutLink.style.fontSize = "13px";
   logoutLink.style.color = "#FD5E53";
@@ -96,7 +119,7 @@ function openUserInfo(triggerElement) {
 
   popup.appendChild(linkContainer);
 
-  const iconRect = triggerElement.getBoundingClientRect();
+  const iconRect = document.querySelector(".user-icon").getBoundingClientRect();
   const popupWidth = 204;
   const popupHeight = 270;
   const popupLeft = iconRect.left - 50 + (iconRect.width - popupWidth) / 2;
