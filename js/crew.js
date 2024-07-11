@@ -1,5 +1,5 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpeXI3NzczQG5hdmVyLmNvbSIsImlhdCI6MTcyMDYzMDk1NSwiZXhwIjoxNzI5MjcwOTU1fQ.44Tf9Mc8vwSglM-_S1toLTbrW2494ovmlHk9QfVgo48";
+let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA2ODgwMTYsImV4cCI6MTcyOTMyODAxNn0.fu1fqnyL3HNCQA7XwpquHjgT0PfP0POQdmfn-OhBxg8";
 let crewData = [];
 let originalCrewData = [];
 
@@ -74,7 +74,7 @@ function displayCrews(page) {
 		crewFrame.className = 'crew-frame';
 		crewFrame.innerHTML = `
 			<div class="crew-list-cont">
-				<img id="crew-img" src="${crew.img}">
+				<img id="crew-img" src="${crew.photoUrl}">
 				<p>${crew.name}</p>
 			</div>
 			<div class="tag">
@@ -83,6 +83,7 @@ function displayCrews(page) {
 			</div>
         `;
 		crewFrame.addEventListener('click', () => {
+			localStorage.setItem('selectedCrewId', crew.crewId);
 			window.location.href = '/html/crew-info.html';
 		});
 		crewContainer.appendChild(crewFrame);
@@ -148,3 +149,21 @@ function updateCurrentRange() {
 }
 
 getCrewList();
+
+
+//클릭한 크루..
+document.addEventListener('DOMContentLoaded', () => {
+    initializeCrewClickHandlers();
+});
+
+function initializeCrewClickHandlers() {
+    const crewFrames = document.querySelectorAll('.crew-frame');
+
+    crewFrames.forEach(crewFrame => {
+        crewFrame.addEventListener('click', () => {
+            const crewId = crewFrame.dataset.crewId; // crew.html에서 data-crew-id를 설정했다고 가정합니다
+            localStorage.setItem('selectedCrewId', crewId);
+            window.location.href = '/html/crew-info.html';
+        });
+    });
+}
