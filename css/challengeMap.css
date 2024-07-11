@@ -24,6 +24,7 @@
   height: 840px;
   background-color: #666666;
   padding: 40px;
+  overflow: visible;
 }
 
 .sidebar-top {
@@ -64,7 +65,8 @@
 /* sidebar-item */
 .sidebar-item-wrap {
   margin-top: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
+  overflow-y: auto;
 }
 
 .sidebar-item {
@@ -81,6 +83,7 @@
   margin: 20px 0;
   position: relative;
   overflow: visible;
+  cursor: pointer;
 }
 
 .item-title {
@@ -108,7 +111,7 @@
   width: 134px;
   border-radius: 10px;
   background-color: #666666;
-  z-index: 3;
+  z-index: 1000;
 }
 
 .crew-selector::after {
@@ -165,6 +168,7 @@
   z-index: 3;
   padding: 15px;
   color: white;
+  z-index: 1000;
 }
 
 .info-display.show {
@@ -266,21 +270,45 @@
 
 .challenge-item img {
   width: 330px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .crew-name {
   position: absolute;
-  bottom: 70px;
-  left: 25px;
+  bottom: 20px;
+  left: 30px;
   font-size: 25px;
   font-weight: bold;
   color: white;
   padding: 5px 15px;
 }
 
-.crew-num {
-  font-size: 15px;
-  color: #666666;
-  margin-top: 20px;
-  margin-bottom: 15px;
+.popup {
+  position: absolute;
+  z-index: 1000;
+  padding: 10px;
+  display: none;
+}
+
+.popup.show {
+  display: block;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#rotate-icon {
+  cursor: pointer;
+}
+
+#rotate-icon:active {
+  animation: rotate 0.5s linear;
 }

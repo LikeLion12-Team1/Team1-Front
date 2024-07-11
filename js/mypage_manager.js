@@ -1,4 +1,5 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
+const accessToken = getCookie("accessToken");
 
 // 기존에 제공된 쿠키 설정 함수
 function setCookie(name, value, days) {
@@ -33,30 +34,12 @@ function deleteCookie(name) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const accessToken = getCookie("accessToken");
-
   if (!accessToken) {
     window.location.href = "/html/login.html";
     return;
   }
 
   const managerIcons = document.querySelectorAll(".manager-icon");
-
-  // managerSpan 생성 및 이벤트 리스너 추가
-  managerIcons.forEach(function (icon) {
-    const managerSpan = document.createElement("span");
-    managerSpan.className = "manager-icon";
-    managerSpan.innerHTML = '<i class="fas fa-user-gear"></i>';
-
-    // managerSpan에 클릭 이벤트 리스너 추가
-    managerSpan.addEventListener("click", function () {
-      console.log("manager-icon 클릭");
-      window.location.href = "/html/mypageList_manager.html";
-    });
-
-    // 아이콘에 managerSpan 추가
-    icon.appendChild(managerSpan);
-  });
 
   fetchUserData();
 
@@ -71,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.isSuccess) {
           populateMyCrew(data.result.myCrewPreviewList);
           populateMyChallenge(data.result.myChallengePreviewList);
-          updateTokenCount(data.result.tokenCount);
+          updateTokenCount(data.result.userCount);
         } else {
           console.error("데이터를 가져오는데 실패했습니다:", data.message);
         }
@@ -98,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const crewDiv = document.createElement("div");
       crewDiv.className = "mycrew-content-crew";
       crewDiv.textContent = `${crew.crewName} 크루`;
+      crewDiv.dataset.crew_name = crew.crewName;
 
       const managerSpan = document.createElement("span");
       managerSpan.className = "manager-icon";
@@ -106,7 +90,24 @@ document.addEventListener("DOMContentLoaded", function () {
       // managerSpan에 클릭 이벤트 리스너 추가
       managerSpan.addEventListener("click", function () {
         console.log("manager-icon 클릭");
-        window.location.href = "/html/mypageList_manager.html";
+        const crewName = crewDiv.dataset.crew_name;
+        fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.isSuccess) {
+              window.location.href = `/html/mypageList_manager.html?crew=${crewName}`;
+            } else {
+              console.error(
+                "크루 데이터를 가져오는데 실패했습니다:",
+                data.message
+              );
+            }
+          })
+          .catch((error) => console.error("에러:", error));
       });
 
       li.appendChild(img);
@@ -126,12 +127,24 @@ document.addEventListener("DOMContentLoaded", function () {
       const li = document.createElement("li");
       li.className = "mychallenge-content";
 
+      const verifiedCount = challenge.verifiedCount ?? 0; // verifiedCount가 없으면 0으로 설정
+      const requiredVerificationCount =
+        challenge.requiredVerificationCount ?? 0; // requiredVerificationCount가 없으면 0으로 설정
+
+      let imgSrc = getChallengeImage(challenge.status);
+      if (challenge.verifiedCount === challenge.requiredVerificationCount) {
+        imgSrc = "/img/mypage-lightgreen.png";
+      }
+
       const img = document.createElement("img");
-      img.src = getChallengeImage(challenge.status);
+      img.src = imgSrc;
 
       const dateDiv = document.createElement("div");
       dateDiv.className = "mychallenge-content-date";
-      dateDiv.textContent = `${challenge.startAt} - ${challenge.untilWhen}`;
+
+      const startAt = challenge.startAt ? challenge.startAt : "ing";
+      const untilWhen = challenge.untilWhen ? challenge.untilWhen : "ing";
+      dateDiv.textContent = `${startAt} - ${untilWhen}`;
 
       const challengeDiv = document.createElement("div");
       challengeDiv.className = "mychallenge-content-crew";
@@ -139,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const countSpan = document.createElement("span");
       countSpan.className = "mychallenge-content-count";
-      countSpan.textContent = `${challenge.completedCount}/${challenge.requiredCount}`;
+      countSpan.textContent = `${verifiedCount}/${requiredVerificationCount}`;
 
       li.appendChild(img);
       li.appendChild(dateDiv);
@@ -151,20 +164,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // token 수 업데이트
-  function updateTokenCount(tokenCount) {
+  window.updateTokenCount = function updateTokenCount(userCount) {
     const tokenElement = document.querySelector(".mypage-token span");
-    if (typeof tokenCount === "number") {
-      tokenElement.textContent = `${tokenCount}/1`;
-      if (tokenCount >= 1) {
+    if (typeof userCount === "number") {
+      tokenElement.textContent = `${userCount}/1`;
+      if (userCount >= 1) {
         document.querySelector(".mypage-token").style.color = "#114232";
         toggleModal(true);
       } else {
         toggleModal(false);
       }
     } else {
-      console.warn("토큰 수가 유효하지 않습니다:", tokenCount);
+      console.warn("토큰 수가 유효하지 않습니다:", userCount);
     }
-  }
+  };
 
   // modal toggle
   function toggleModal(display) {
