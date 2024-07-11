@@ -153,6 +153,28 @@
     color: #fd5e53;
 }
 
+.area {
+    /* 기본 너비 설정 */
+    width: 83px; /* 글자 수가 2글자 이하인 경우 */
+}
+
+.area[value='서울'],
+.area[value='강원'],
+.area[value='충북'],
+.area[value='전북'] {
+    /* 2글자인 경우의 너비 설정 */
+    width: 83px;
+}
+
+.area[value='인천/경기'],
+.area[value='대전/충남'],
+.area[value='광주/전남'],
+.area[value='부산/경남'],
+.area[value='대구/경북'] {
+    /* 3글자인 경우의 너비 설정 */
+    width: 103px;
+}
+
 .validation-icon-4 {
     position: absolute;
     display: flex;
