@@ -13,7 +13,7 @@
                 <div class="text-site-name" id="site-name-container">
                     <h1 class="site-name" id="site-name">SCREW</h1>
                 </div>
-                <form class="user" id="ch-pw-form" onsubmit="submitLoginForm(event)">
+                <form class="user" id="ch-pw-form">
                     <div class="form-group" id="form-group-ch-pw">
                         <div class="new-password-div">
                             <input
@@ -22,7 +22,6 @@
                                 type="password"
                                 name="userPassword"
                                 placeholder="새 비밀번호"
-                                oninput="validatePassword()"
                             />
                             <div class="validation-icon-2" id="validation-icon-2">
                                 <i class="fa-solid fa-check"></i>
@@ -38,7 +37,6 @@
                                 type="password"
                                 name="confirmPassword"
                                 placeholder="비밀번호 재확인"
-                                oninput="validateConfirmPassword()"
                             />
                             <div class="validation-icon-3" id="validation-icon-3">
                                 <i class="fa-solid fa-check"></i>

@@ -1,54 +1,35 @@
 .home-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    /* width: 100%;
+    height: 100%; */
 }
 
 .preview-under {
     display: flex;
-    justify-content: space-between;
-    width: 90%;
     margin-bottom: 20px;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .preview-under-left,
 .preview-under-right {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 49.5%;
-    position: relative;
-}
-
-.preview-challenge img,
-.preview-crew img {
-    width: 100%;
-    height: auto;
-}
-
-.preview-challenge,
-.preview-crew {
+    /* align-items: center; */
+    /* width: 49.5%; */
+    width: 580px;
     position: relative;
 }
 
 .pre-challenge-intro,
 .pre-joincrew-intro {
-    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
-}
-
-.pre-challenge-text-img,
-.pre-joincrew-text-img {
-    margin-top: 30px;
-    width: 100%;
 }
 
 .pre-challenge-intro img,
@@ -59,24 +40,9 @@
     object-fit: contain;
 }
 
-.pre-challenge-text-img,
-.pre-joincrew-text-img,
-.pre-challenge-mid-img,
-.pre-joincrew-mid-img,
-.pre-challenge-arrow-img,
-.pre-joincrew-arrow-img {
-    margin-bottom: 20px;
-}
-
-.pre-challenge-arrow-img,
-.pre-joincrew-arrow-img {
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-.pre-challenge-arrow-img:hover,
-.pre-joincrew-arrow-img:hover {
-    transform: scale(1.1);
+.pre-challenge-img:hover,
+.pre-joincrew-img:hover {
+    opacity: 0.5;
 }
 
 :root {
@@ -86,24 +52,26 @@
 .home-group {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 80px;
+    margin-top: 100px;
+
     width: 100%;
 }
 
 .preview-upper {
     display: flex;
-    width: 100%;
+
     margin-top: 60px;
-    justify-content: space-around;
     margin-bottom: 30px;
+    justify-content: center;
+    width: 100%;
 }
 
 .preview-upper-left {
     position: relative;
-    text-align: center; /* For centering the images horizontally */
-    margin-left: 110px;
+    text-align: center;
+    margin-right: 50px;
 }
 
 .home-crew-plant {
@@ -157,7 +125,7 @@
 }
 
 .container-cal {
-    width: 1230px;
+    width: 1000px;
     height: 600px;
     display: flex;
     border-radius: 10px;
@@ -380,9 +348,18 @@
     color: #114232;
 }
 
-.calendar .goto-today button {
-    padding: 5px 10px;
+.goto-btn {
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    background-color: transparent;
+    cursor: pointer;
+    color: #a5a5a5;
+}
+
+.today-btn {
     border: 1px solid #a5a5a5;
+    padding: 10px 10px;
     border-radius: 5px;
     background-color: transparent;
     cursor: pointer;
@@ -398,6 +375,21 @@
     width: 40%;
     position: relative;
 }
+.edit-div {
+    width: 100%;
+    height: 51px;
+    display: flex;
+    justify-content: right;
+}
+
+.edit-btn {
+    margin-right: 10px;
+    width: 58px;
+    height: 51px;
+    border: none;
+    background-color: #eaeaea;
+    cursor: pointer;
+}
 
 .right .today-date {
     width: 100%;
@@ -407,7 +399,6 @@
     justify-content: space-between;
     padding: 0 20px;
     padding-left: 20px;
-    margin-top: 50px;
     margin-bottom: 20px;
     text-transform: capitalize;
 }
@@ -435,8 +426,8 @@
 
 .events .event {
     position: relative;
-    width: 450px;
-    height: 100px;
+    width: 380px;
+    height: 80px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -446,10 +437,11 @@
     background-color: white;
     border-radius: 10px;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .events .event:nth-child(even) {
-    background: transparent;
+    background-color: white;
 }
 
 .events .event:hover {
@@ -546,7 +538,7 @@
 
 .add-event-wrapper {
     position: absolute;
-    top: 400px;
+    top: 200px;
     right: 0;
     width: 100%;
     max-height: 0;
@@ -682,6 +674,9 @@
     padding-left: 8px;
 }
 
+.event.all-op {
+    border-left: 4px solid #114232;
+}
 .event.crew-op {
     border-left: 4px solid #fd5e53;
 }
@@ -690,4 +685,149 @@
 }
 .event.etc-op {
     border-left: 4px solid #fcdc2a;
+}
+
+.edit-event-form {
+    top: 30px;
+    right: 30px;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+    transition: max-height 0.5s ease;
+    z-index: 1;
+}
+
+.edit-event-form.active {
+    max-height: 1000px; /* 조정이 필요한 경우 값을 적절히 조절하세요 */
+}
+
+.edit-event-header {
+    width: 300px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    color: #373c4f;
+    border-bottom: 1px solid #f5f5f5;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.edit-event-header .close {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.edit-event-header .close:hover {
+    color: var(--primary-clr); /* Assuming --primary-clr is defined elsewhere */
+}
+
+.edit-event-header .title {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.edit-event-body {
+    width: 300px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px;
+}
+
+.edit-event-select {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f5f5f5;
+    font-weight: 400;
+    color: #373c4f;
+}
+
+.edit-event-input {
+    width: 300px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 3px;
+}
+
+.edit-event-input input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #f5f5f5;
+    padding-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #373c4f;
+}
+
+.edit-event-input input::placeholder {
+    color: #a5a5a5;
+}
+
+.edit-event-input i {
+    font-size: 1.5rem;
+    color: var(--primary-clr); /* Assuming --primary-clr is defined elsewhere */
+    cursor: pointer;
+}
+
+.edit-event-input i:hover {
+    color: #114232; /* Adjust hover color as needed */
+}
+
+.edit-event-category {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f5f5f5;
+    font-weight: 400;
+    color: #373c4f;
+}
+
+.edit-event-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #f5f5f5;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-top: 150px;
+}
+
+.save-edit-btn {
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    color: #fff;
+    background-color: var(--primary-clr); /* Assuming --primary-clr is defined elsewhere */
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid var(--primary-clr); /* Assuming --primary-clr is defined elsewhere */
+}
+
+.save-edit-btn:hover {
+    background-color: transparent;
+    color: var(--primary-clr); /* Assuming --primary-clr is defined elsewhere */
 }

@@ -372,3 +372,105 @@ function getEvents() {
     }
     eventsArr.push(...JSON.parse(localStorage.getItem('events')));
 }
+
+const editBtn = document.getElementById('edit-btn');
+
+editBtn.addEventListener('click', () => {
+    // 수정할 일정 정보를 가져옵니다.
+    const activeDayEvents = eventsArr.find(
+        (event) => event.day === activeDay && event.month === month + 1 && event.year === year
+    );
+    if (!activeDayEvents || activeDayEvents.events.length === 0) {
+        alert('No events to edit.');
+        return;
+    }
+
+    // 여기서 수정 폼을 생성하고 해당 일정 정보를 채워넣습니다.
+    const editForm = document.createElement('div');
+    editForm.classList.add('edit-event-form');
+    editForm.innerHTML = `
+        <div class="edit-event-header">
+            <div class="title">일정 수정</div>
+            <i class="fas fa-times close"></i>
+        </div>
+        <div class="edit-event-body">
+            <select class="edit-event-select">
+                ${activeDayEvents.events
+                    .map(
+                        (event, index) => `
+                    <option value="${index}">${event.title}</option>
+                `
+                    )
+                    .join('')}
+            </select>
+            <div class="edit-event-input">
+                <input type="text" placeholder="일정 제목" class="edit-event-name" value="${
+                    activeDayEvents.events[0].title
+                }" />
+            </div>
+            <div class="edit-event-input">
+                <input type="text" placeholder="시작 시간 ex) 14:00" class="edit-event-time-from" value="${
+                    activeDayEvents.events[0].time.split(' - ')[0]
+                }" />
+            </div>
+            <div class="edit-event-input">
+                <input type="text" placeholder="선택) 종료 시간 ex) 23:30" class="edit-event-time-to" value="${
+                    activeDayEvents.events[0].time.split(' - ')[1] || ''
+                }" />
+            </div>
+            <select class="edit-event-category">
+                <option disabled hidden>Select Category</option>
+                <option value="all-op" ${activeDayEvents.events[0].category === 'ALL' ? 'selected' : ''}>ALL</option>
+                <option value="crew-op" ${activeDayEvents.events[0].category === 'CREW' ? 'selected' : ''}>CREW</option>
+                <option value="challenge-op" ${
+                    activeDayEvents.events[0].category === 'CHALLENGE' ? 'selected' : ''
+                }>CHALLENGE</option>
+                <option value="etc-op" ${activeDayEvents.events[0].category === 'ETC' ? 'selected' : ''}>ETC</option>
+            </select>
+        </div>
+        <div class="edit-event-footer">
+            <button class="save-edit-btn">Save Changes</button>
+        </div>
+    `;
+
+    // 수정 폼을 edit-btn 옆에 추가합니다.
+    editBtn.parentNode.insertBefore(editForm, editBtn.nextSibling);
+
+    // 닫기 버튼 클릭 시 폼을 닫습니다.
+    const closeBtn = editForm.querySelector('.close');
+    closeBtn.addEventListener('click', () => {
+        editForm.remove();
+    });
+
+    // 선택한 이벤트 정보를 기준으로 폼을 업데이트합니다.
+    const selectEvent = editForm.querySelector('.edit-event-select');
+    selectEvent.addEventListener('change', (e) => {
+        const selectedIndex = e.target.value;
+        const selectedEvent = activeDayEvents.events[selectedIndex];
+        editForm.querySelector('.edit-event-name').value = selectedEvent.title;
+        editForm.querySelector('.edit-event-time-from').value = selectedEvent.time.split(' - ')[0];
+        editForm.querySelector('.edit-event-time-to').value = selectedEvent.time.split(' - ')[1] || '';
+        editForm.querySelector('.edit-event-category').value = selectedEvent.category;
+    });
+
+    // 수정된 내용을 저장하는 함수를 호출합니다.
+    const saveEditBtn = editForm.querySelector('.save-edit-btn');
+    saveEditBtn.addEventListener('click', () => {
+        const selectedIndex = selectEvent.value;
+        const editedTitle = editForm.querySelector('.edit-event-name').value;
+        const editedTimeFrom = editForm.querySelector('.edit-event-time-from').value;
+        const editedTimeTo = editForm.querySelector('.edit-event-time-to').value;
+        const editedCategory = editForm.querySelector('.edit-event-category').value;
+
+        // 유효성 검사 등을 수행하고 데이터를 수정합니다.
+        activeDayEvents.events[selectedIndex].title = editedTitle;
+        activeDayEvents.events[selectedIndex].time = `${editedTimeFrom} - ${editedTimeTo}`;
+        activeDayEvents.events[selectedIndex].category = editedCategory;
+
+        // 수정된 내용을 화면에 반영합니다.
+        updateEvents(activeDay);
+
+        // 수정 폼을 닫습니다.
+        editForm.remove();
+    });
+});
