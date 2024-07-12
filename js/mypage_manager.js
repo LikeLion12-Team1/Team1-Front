@@ -45,12 +45,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function fetchUserData() {
     fetch(API_SERVER_DOMAIN + `/api/v1/user/my`, {
+      method: "GET",
       headers: {
         Authorization: "Bearer " + accessToken,
       },
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.isSuccess) {
           populateMyCrew(data.result.myCrewPreviewList);
           populateMyChallenge(data.result.myChallengePreviewList);
@@ -91,23 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
       managerSpan.addEventListener("click", function () {
         console.log("manager-icon 클릭");
         const crewName = crewDiv.dataset.crew_name;
-        fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
-          headers: {
-            Authorization: "Bearer " + accessToken,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.isSuccess) {
-              window.location.href = `/html/mypageList_manager.html?crew=${crewName}`;
-            } else {
-              console.error(
-                "크루 데이터를 가져오는데 실패했습니다:",
-                data.message
-              );
-            }
-          })
-          .catch((error) => console.error("에러:", error));
+        window.location.href = `/html/mypageList_manager.html?crew/${crewName}`;
       });
 
       li.appendChild(img);

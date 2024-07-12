@@ -26,7 +26,9 @@ main {
   display: flex;
   flex-direction: column;
   width: 500px;
+  height: 500px;
   margin: 0 50px;
+  height: auto;
 }
 
 .member-title,
@@ -41,6 +43,13 @@ main {
   align-items: center;
   padding-left: 30px;
   margin: 20px 0;
+  flex-shrink: 0;
+}
+
+.member-list-container,
+.community-list-container {
+  overflow-y: auto;
+  height: 400px;
 }
 
 .member-content,
@@ -71,6 +80,7 @@ main {
 .member-delete-btn {
   color: #fd5e53;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .community-content-msg {
