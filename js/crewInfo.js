@@ -1,5 +1,5 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA2ODgwMTYsImV4cCI6MTcyOTMyODAxNn0.fu1fqnyL3HNCQA7XwpquHjgT0PfP0POQdmfn-OhBxg8";
+let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA3MzgxNTAsImV4cCI6MTcyOTM3ODE1MH0.UGQrbpmjf-hXyBXA25EKR9VK6JnuTo3WHWoePkcVdBI";
 
 document.addEventListener('DOMContentLoaded', () => {
     const crewId = localStorage.getItem('selectedCrewId');
@@ -53,10 +53,12 @@ function displayCrewDetails(crew) {
     const crewNameElement = document.querySelector('#infoCrewName p');
     crewNameElement.textContent = crew.crewName;
 
+    localStorage.setItem('crewName', crew.crewName);
+
     const info3Element = document.querySelector('.info3');
     if (info3Element) {
         info3Element.innerHTML = '';
-        crew.crewChallengePreviewList.crewChallengePreviewList.forEach(challenge => {
+        crew.crewChallengePreviewList.forEach(challenge => {
             const activeItem = document.createElement('div');
             activeItem.className = 'active-item';
             activeItem.innerHTML = `
@@ -98,7 +100,5 @@ function joinCrew() {
         }
     }).catch(error => {
         console.error('크루 가입 중 에러 발생:', error);
-        alert('크루 가입에 실패했습니다. 다시 시도해주세요');
     });
 }
-

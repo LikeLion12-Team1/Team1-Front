@@ -321,13 +321,13 @@
 	display: flex;
 }
 
-.post-expand-left {
+#post-expand-left {
 	height: 100%;
 	width: 70%;
 	border: 0.1px solid #C7C4C4;
 }
 
-.post-expand-left img {
+#post-expand-left img {
 	height: 100%;
 	width: 100%;
 }

@@ -1,5 +1,5 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA2ODgwMTYsImV4cCI6MTcyOTMyODAxNn0.fu1fqnyL3HNCQA7XwpquHjgT0PfP0POQdmfn-OhBxg8";
+let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA3MzgxNTAsImV4cCI6MTcyOTM3ODE1MH0.UGQrbpmjf-hXyBXA25EKR9VK6JnuTo3WHWoePkcVdBI";
 let crewData = [];
 let originalCrewData = [];
 
