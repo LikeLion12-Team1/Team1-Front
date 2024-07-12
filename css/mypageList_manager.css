@@ -87,10 +87,11 @@ main {
   width: 355px;
 }
 
-.moveToCommunity {
+.admission {
   color: #114232;
   transform: rotate(25deg);
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .footer {
