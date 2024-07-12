@@ -1,7 +1,9 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
 const accessToken = getCookie("accessToken");
+const parts = window.location.href.split("/");
+const crewName = parts[parts.length - 1];
 
-// 기존에 제공된 쿠키 설정 함수
+// 쿠키 관련 함수
 function setCookie(name, value, days) {
   var expires = "";
   if (days) {
@@ -12,7 +14,6 @@ function setCookie(name, value, days) {
   document.cookie = name + "=" + value + expires + "; path=/";
 }
 
-// 기존에 제공된 쿠키 가져오는 함수
 function getCookie(name) {
   var nameEQ = name + "=";
   var cookies = document.cookie.split(";");
@@ -28,145 +29,108 @@ function getCookie(name) {
   return null;
 }
 
-// 쿠키 삭제 함수 추가
 function deleteCookie(name) {
   document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
 }
 
-/* 크루원 목록 불러오기 함수 추가 */
-function loadCrewMembers() {
+function getUrlParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
-  const crewName = urlParams.get("crew_name");
+  return urlParams.get(param);
+}
 
+// 멤버 삭제 함수
+function deleteMember(crewName, userId) {
   fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
-    method: "GET",
+    method: "DELETE",
     headers: {
       Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify({ userId: userId }),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
     .then((data) => {
       if (data.isSuccess) {
-        displayCrewMembers(data.result || []);
+        console.log("멤버가 성공적으로 삭제되었습니다.");
+        fetchCrewData(crewName);
       } else {
-        console.error("크루원 목록 불러오기 실패:", data.message);
+        console.log(`삭제 실패: ${data.message}`);
       }
     })
-    .catch((error) => console.error("에러:", error));
-}
-
-/* 크루원 삭제 */
-document.addEventListener("DOMContentLoaded", function () {
-  loadCrewMembers();
-
-  // 로그아웃 버튼 이벤트 핸들러 추가
-  const logoutButton = document.querySelector(".logout-button");
-  if (logoutButton) {
-    logoutButton.addEventListener("click", () => {
-      deleteCookie("accessToken");
-      deleteCookie("refreshToken");
-      window.location.href = "/html/login.html";
+    .catch((error) => {
+      console.error("Error:", error);
     });
-  }
-});
-
-const modal = document.querySelector(".modal");
-const confirmDeleteButton = document.getElementById("confirmDelete");
-const cancelDeleteButton = document.getElementById("cancelDelete");
-
-let currentListItem = null;
-
-// 크루원 삭제 버튼 클릭 이벤트 처리
-document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("member-delete-btn")) {
-    currentListItem = event.target.closest("li");
-    modal.style.display = "block";
-  }
-});
-
-// 크루원 목록 UI에 표시하기
-function displayCrewMembers(members) {
-  const ul = document.querySelector(".member ul");
-  ul.innerHTML = ""; // 기존 목록 비우기
-
-  members.forEach((member) => {
-    const li = document.createElement("li");
-    li.classList.add("member-content");
-
-    const img = document.createElement("img");
-    img.src = `/img/mypage-yellow.png`;
-    li.appendChild(img);
-
-    const nickname = document.createElement("div");
-    nickname.classList.add("member-content-nickname");
-    nickname.textContent = member.nickname;
-    li.appendChild(nickname);
-
-    const deleteBtn = document.createElement("span");
-    deleteBtn.classList.add("member-delete-btn");
-    deleteBtn.innerHTML = `<i class="fa-solid fa-circle-xmark"></i>`;
-    li.appendChild(deleteBtn);
-
-    ul.appendChild(li);
-  });
 }
-// 크루원 삭제 요청 함수
-function deleteCrewMember(nickname) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const crewName = urlParams.get("crew_name");
-  const userId = getUserIdFromNickname(nickname); // 닉네임 이용해서 userId 찾기
 
-  fetch(
-    API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}?user-id=${userId}`,
-    {
-      method: "DELETE",
+document.addEventListener("DOMContentLoaded", () => {
+  function fetchCrewData(crewName) {
+    fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
+      method: "GET",
       headers: {
         Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
       },
-    }
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.isSuccess) {
-        currentListItem.remove();
-        console.log(`${nickname} 크루원이 삭제되었습니다.`);
-      } else {
-        console.error("크루원 삭제 실패:", data.message);
-      }
     })
-    .catch((error) => console.error("에러:", error));
-}
-
-// 취소 버튼 클릭 이벤트 처리
-cancelDeleteButton.addEventListener("click", function () {
-  modal.style.display = "none";
-});
-// 확인 버튼 클릭 이벤트 처리
-confirmDeleteButton.addEventListener("click", function () {
-  if (currentListItem) {
-    const nickname = currentListItem
-      .querySelector(".member-content-nickname")
-      .textContent.trim();
-    deleteCrewMember(nickname);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.isSuccess) {
+          displayCrewData(data.result.adminMemberPreviewList); //크루 정보를 화면에 표시
+        } else {
+          console.log(`데이터 가져오기 실패: ${data.message}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
-  modal.style.display = "none";
-});
 
-// 모달 외부 클릭 시 모달 닫기
-window.addEventListener("click", function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-});
+  // 크루 정보를 화면에 표시하는 함수
+  function displayCrewData(members) {
+    const memberContainer = document.querySelector(".member");
+    if (!memberContainer) {
+      console.error(".member 요소를 찾을 수 없습니다.");
+      return;
+    }
 
-/* 각 커뮤니티 게시물로 이동 */
+    // member-list-container가 없다면 생성
+    let listContainer = memberContainer.querySelector(".member-list-container");
+    if (!listContainer) {
+      listContainer = document.createElement("div");
+      listContainer.className = "member-list-container";
+      memberContainer.appendChild(listContainer);
+    }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const moveToCommunityButtons = document.querySelectorAll(".moveToCommunity");
+    let crewListContainer = memberContainer.querySelector("ul");
+    if (!crewListContainer) {
+      crewListContainer = document.createElement("ul");
+      memberContainer.appendChild(crewListContainer);
+    }
 
-  moveToCommunityButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      window.location.href = "/html/community_manager.html";
+    crewListContainer.innerHTML = "";
+
+    members.forEach((member) => {
+      const listItem = document.createElement("li");
+      listItem.className = "member-content";
+      listItem.innerHTML = `
+        <img src="/img/mypage-lightgreen.png" />
+        <div class="member-content-nickname">${member.nickname}</div>
+        <span class="member-delete-btn" onclick="deleteMember('${crewName}', '${member.userId}')">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </span>
+      `;
+      crewListContainer.appendChild(listItem);
     });
-  });
+  }
+
+  fetchCrewData(crewName);
 });
