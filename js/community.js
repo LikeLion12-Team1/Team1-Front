@@ -62,6 +62,8 @@ function fetchCrewPosts(crewName) {
     })
     .then(data => {
         if (data.isSuccess) {
+			const postContainer = document.getElementById('post-container');
+			postContainer.innerHTML='';
             data.result.postPreviewList.forEach(post => {
                 addPost(post.authorProfileImg, post.author, post.category, post.content, post.postImg, post.createdAt);
             });
@@ -73,6 +75,7 @@ function fetchCrewPosts(crewName) {
         console.error('Error fetching crew posts:', error);
     });
 }
+
 
 //인증 버튼 클릭
 document.getElementById('certification-btn').addEventListener('click', function() {
@@ -194,22 +197,19 @@ function postData() {
    	    }
 	})
 	.then(postData => {
-		if (postData.isSuccess && postData.result) {
-			let imageUrl = postData.result.postImg || '';
-			let nickname = postData.result.nickname || '알 수 없음';
-			let postCreatedAt = postData.result.postCreatedAt ? postData.result.postCreatedAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
-			
-			addPost("/img/user-profile.png", nickname, category, text, imageUrl, postCreatedAt);
-			clearInputs();
-		} else {
-			throw new Error('포스트 정보를 가져오는데 실패했습니다.');
-		}
-	})
-	.catch(error => {
+        if (postData.isSuccess) {
+            fetchCrewPosts(crewName); // Reload all posts
+            clearInputs();
+        } else {
+            throw new Error('포스트 정보를 가져오는데 실패했습니다.');
+        }
+    })
+    .catch(error => {
         console.error('Error:', error);
         alert('오류가 발생했습니다. 다시 시도해주세요.');
     });
 }
+
 function clearInputs() {
 	document.getElementById('input-text').value = '';
 	document.getElementById('open-file').value = '';
@@ -267,6 +267,8 @@ function toggleHeart(event) {
 }
 
 function addPost(userImg, userName, category, text, postImg, postCreatedAt) {
+	let formattedDate = postCreatedAt.substring(0, 10);
+
 	let postDiv = document.createElement('div');
 	postDiv.classList.add('community-section3');
 
@@ -278,7 +280,7 @@ function addPost(userImg, userName, category, text, postImg, postCreatedAt) {
 		<img id="userImg" src="${userImg}">
 		<p id="comm-crew-name">${userName}</p>
 		<p id="small-circle3"></p>
-		<p id="post-time">${postCreatedAt}</p>
+		<p id="post-time">${formattedDate}</p>
 		<p id="slash">/</p>
 		<p id="lifeOrCertification">${category}</p>
 		<p id="report" onclick="reportFunc();">신고하기</p>

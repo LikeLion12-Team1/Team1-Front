@@ -1,36 +1,3 @@
-let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-const accessToken = getCookie("accessToken");
-
-  /* 쿠키 관련 함수들 */
-function setCookie(name, value, days) {
-    var expires = "";
-    if (days) {
-    	var date = new Date();
-    	date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    	expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
-
-function getCookie(name) {
-    var nameEQ = name + "=";
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-      	var cookie = cookies[i];
-      	while (cookie.charAt(0) === " ") {
-        	cookie = cookie.substring(1, cookie.length);
-      	}
-      	if (cookie.indexOf(nameEQ) === 0) {
-        	return cookie.substring(nameEQ.length, cookie.length);
-     	}
-    }
-    return null;
-}
-
-function deleteCookie(name) {
-    document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
-}
-
 document.addEventListener("DOMContentLoaded", function() {
     const earth = document.querySelector('.plants');
     const peopleNum = 19;
@@ -38,77 +5,33 @@ document.addEventListener("DOMContentLoaded", function() {
     const plantWidth = 100;
     const plantHeight = 100;
 
+	const nicknames = [
+        "Alice", "Bob", "Charlie", "David", "Eve",
+        "Frank", "Grace", "Heidi", "Ivan", "Judy",
+        "Mallory", "Niaj", "Oscar", "Peggy", "Trent"
+    ];
 
-    crewId.forEach(async (crewId, i) => {
-        try {
-            // Fetch crew nickname data
-            const response = await fetch(`/api/v1/crews/${crewId}/crew-plant`);
-            const data = await response.json();
-
-            if (data.isSuccess && data.result.length > 0) {
-                const crewMemberName = data.result[0].crewMemberName;
-
-                const angle = (i / peopleNum) * 2 * Math.PI;
-                const x = earthRadius * Math.cos(angle) - plantWidth / 2;
-                const y = earthRadius * Math.sin(angle) - plantHeight / 2;
-
-                const nicknameDiv = document.createElement('div');
-                nicknameDiv.className = 'nickname';
-                nicknameDiv.textContent = crewMemberName;
-
-                const personalPlant = document.createElement('div');
-                personalPlant.className = 'personal-plant';
-
-                // Example: Assuming plant images are named plant1.png, plant2.png, etc.
-                personalPlant.style.backgroundImage = `url(/img/plant_unlock/plant${data.result[0].crewMemberMainPlantId}.png)`;
-                personalPlant.style.width = `${plantWidth}px`;
-                personalPlant.style.height = `${plantHeight}px`;
-
-                personalPlant.style.left = `${40 + earthRadius + x}px`;
-                personalPlant.style.top = `${40 + earthRadius + y}px`;
-
-                const rotation = (angle * 180 / Math.PI) + 90;
-                personalPlant.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-
-                personalPlant.appendChild(nicknameDiv);
-                earth.appendChild(personalPlant);
-            } else {
-                console.error(`Failed to fetch data for crew ID ${crewId}`);
-            }
-        } catch (error) {
-            console.error(`Error fetching data for crew ID ${crewId}:`, error);
-        }
-    });
-});
-
-
-	// const nicknames = [
-    //     "Alice", "Bob", "Charlie", "David", "Eve",
-    //     "Frank", "Grace", "Heidi", "Ivan", "Judy",
-    //     "Mallory", "Niaj", "Oscar", "Peggy", "Trent"
-    // ];
-
-    // for (let i = 0; i < peopleNum; i++) {
-
-    //     const angle = (i / peopleNum) * 2 * Math.PI;
-    //     const x = earthRadius * Math.cos(angle) - plantWidth / 2;
-    //     const y = earthRadius * Math.sin(angle) - plantHeight / 2;
-
-	// 	const nicknameDiv = document.createElement('div');
-    //     nicknameDiv.className = 'nickname';
-    //     nicknameDiv.textContent = nicknames[i % nicknames.length];
+    for (let i = 0; i < peopleNum; i++) {
         
-	// 	const personalPlant = document.createElement('div');
-    //     personalPlant.className = 'personal-plant';
-    //     personalPlant.style.backgroundImage = 'url(/img/plant_unlock/flower4.png)';
+        const angle = (i / peopleNum) * 2 * Math.PI;
+        const x = earthRadius * Math.cos(angle) - plantWidth / 2;
+        const y = earthRadius * Math.sin(angle) - plantHeight / 2;
 
-    //     personalPlant.style.left = `${40+ earthRadius + x}px`;
-    //     personalPlant.style.top = `${40 + earthRadius + y}px`;
+		const nicknameDiv = document.createElement('div');
+        nicknameDiv.className = 'nickname';
+        nicknameDiv.textContent = nicknames[i % nicknames.length];
+        
+		const personalPlant = document.createElement('div');
+        personalPlant.className = 'personal-plant';
+        personalPlant.style.backgroundImage = 'url(/img/plant_unlock/flower4.png)';
 
-	// 	const rotation = (angle * 180 / Math.PI) + 90;
-    //     personalPlant.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+        personalPlant.style.left = `${40+ earthRadius + x}px`;
+        personalPlant.style.top = `${40 + earthRadius + y}px`;
 
-    //     personalPlant.appendChild(nicknameDiv);
-    //     earth.appendChild(personalPlant);
-    // }
+		const rotation = (angle * 180 / Math.PI) + 90;
+        personalPlant.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
 
+        personalPlant.appendChild(nicknameDiv);
+        earth.appendChild(personalPlant);
+    }
+});
