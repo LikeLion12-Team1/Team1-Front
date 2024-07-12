@@ -187,9 +187,9 @@ function postData() {
 			} 
 			else {
 				// 이미지가 없는 경우
-				let postCreatedAt = data.result.postCreatedAt ? data.result.postCreatedAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
+				let postCreatedAt = data.result.createdAt ? data.result.createdAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
                 let nickname = data.result.nickname;
-                return { isSuccess: true, result: { postImg: '', nickname: nickname, postCreatedAt: postCreatedAt } };
+                return { isSuccess: true, result: { postImg: '', nickname: nickname, createdAt: createdAt } };
             }
 		} else {
     		throw new Error('오류가 발생했습니다. 다시 시도해주세요.');
@@ -338,13 +338,15 @@ function addComment(event) {
 
 function postExpand(event) {
 	let postId = event.target.getAttribute('postId');
-	console.log(event.target);
+	//console.log(event.target);
 	console.log(postId);
 
 	fetchPostDetails(postId)
 	.then(data => {
 		if (data.isSuccess) {
+			console.log(data.result);
 			displayPostDetails(data.result);
+			
 		} else {
 			throw new Error('Failed to fetch post details');
 		}
@@ -375,8 +377,9 @@ function fetchPostDetails(postId) {
     });
 }
 
+//->
 function displayPostDetails(postDetails) {
-	console.log(postDetails);
+	console.log(postDetails);  //ok
 
     let modal = document.getElementById('post-frame');
     modal.style.display = 'block';
