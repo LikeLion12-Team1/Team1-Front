@@ -117,36 +117,28 @@ document.querySelector('.crewname-input').addEventListener('click', function() {
 	document.getElementById('check-overlap').style.display = 'none';
 });
 
-// Function to handle button click for region selection
 document.querySelectorAll('.choice-all1 button').forEach(function(button) {
     button.addEventListener('click', function() {
-        // Remove 'clicked' class from all buttons in the same group
         document.querySelectorAll('.choice-all1 button').forEach(function(btn) {
             btn.classList.remove('clicked');
         });
-        // Add 'clicked' class to the clicked button
         this.classList.add('clicked');
     });
 });
 
-// Function to handle button click for sports category selection
 document.querySelectorAll('.choice-all2 button').forEach(function(button) {
     button.addEventListener('click', function() {
-        // Remove 'clicked' class from all buttons in the same group
         document.querySelectorAll('.choice-all2 button').forEach(function(btn) {
             btn.classList.remove('clicked');
         });
-        // Add 'clicked' class to the clicked button
         this.classList.add('clicked');
     });
 });
 
 function getSelections() {
-    // Get selected region
     let regionButton = document.querySelector('.choice-all1 button.clicked');
     let region = regionButton ? regionButton.textContent.trim() : null;
 
-    // Get selected sports category
     let sportsCategoryButton = document.querySelector('.choice-all2 button.clicked');
     let sportsCategory = sportsCategoryButton ? sportsCategoryButton.textContent.trim() : null;
 
@@ -155,22 +147,17 @@ function getSelections() {
 
 //생성하기 버튼 클릭
 document.getElementById('create-crew').addEventListener('click', function() {
-
+	
 	let { region, sportsCategory } = getSelections();
     
     if (!region || !sportsCategory) {
         alert("필수 항목을 확인하세요.");
         return;
     }
-
-    // Use region and sportsCategory for further processing (e.g., API request)
-    console.log('Selected Region:', region);
-    console.log('Selected Sports Category:', sportsCategory);
-
-
 	let crewName = document.querySelector('.crewname-input').value;
-	let photoUrl = document.getElementById('show-image').style.backgroundImage.replace('url("', '').replace('")', '');
-
+	let image = document.getElementById('open-file').files[0];
+	console.log(region);
+	console.log(sportsCategory);
 	fetch(API_SERVER_DOMAIN + '/api/v1/crews', {
 		method: 'POST',
 		headers: {
@@ -179,20 +166,39 @@ document.getElementById('create-crew').addEventListener('click', function() {
 		},
 		body: JSON.stringify({
 			name: crewName,
-			photoUrl: photoUrl,
 			region: region,
-			sportsCategory: sportsCategory
+			sportsCategory : sportsCategory,
 		})
 	})
-	.then(response => {
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
-		}
-		return response.json();
-	})
+	.then(response => response.json())
 	.then(data => {
 		console.log('크루 생성 완료:', data);
+		console.log(data);
+		console.log(data.result);
+		console.log(image);
+
 		alert('크루 생성이 완료되었습니다.');
+		let formData = new FormData();
+		formData.append('file', image);
+		fetch(API_SERVER_DOMAIN + `/api/v1/crews/${data.result}`, {
+			method: 'POST',
+			headers: {
+				Authorization: "Bearer " + accessToken,
+			},
+			body: formData
+		})
+		.then(response => response.json())
+		.then(data => {
+			console.log('크루 생성 완료:', data);
+			console.log(data);
+			console.log(data.result);
+	
+			alert('크루 생성이 완료되었습니다.');
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			alert('크루 생성에 실패했습니다.');
+		});
 	})
 	.catch(error => {
 		console.error('Error:', error);

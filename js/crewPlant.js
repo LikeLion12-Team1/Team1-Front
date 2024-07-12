@@ -1,6 +1,7 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-const accessToken = getCookie("accessToken");
 
+const accessToken = getCookie("accessToken");
+const crewId = localStorage.getItem('selectedCrewId');
   /* 쿠키 관련 함수들 */
 function setCookie(name, value, days) {
     var expires = "";
@@ -31,24 +32,34 @@ function deleteCookie(name) {
     document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
 }
 
+
 document.addEventListener("DOMContentLoaded", function() {
     const earth = document.querySelector('.plants');
-    const peopleNum = 19;
+    // const peopleNum = 4;
     const earthRadius = 230;
     const plantWidth = 100;
     const plantHeight = 100;
 
+    fetch(API_SERVER_DOMAIN + `/api/v1/crews/${crewId}/crew-plant`, {
+        method: "GET",
+        headers: {
+            Authorization: "Bearer " + accessToken,
+        },
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch');
+        }
+        return response.json();
+    }).then(data => {
+        if (data.isSuccess && data.result) {
+            const crewMembers = data.result;
 
-    crewId.forEach(async (crewId, i) => {
-        try {
-            // Fetch crew nickname data
-            const response = await fetch(`/api/v1/crews/${crewId}/crew-plant`);
-            const data = await response.json();
+            for (let i = 0; i < crewMembers.length; i++) {
+                const crewMember = crewMembers[i];
+                const crewMemberName = crewMember.crewMemberName;
+                const plantId = crewMember.crewMemberMainPlantId;
 
-            if (data.isSuccess && data.result.length > 0) {
-                const crewMemberName = data.result[0].crewMemberName;
-
-                const angle = (i / peopleNum) * 2 * Math.PI;
+                const angle = (i / crewMembers.length) * 2 * Math.PI;
                 const x = earthRadius * Math.cos(angle) - plantWidth / 2;
                 const y = earthRadius * Math.sin(angle) - plantHeight / 2;
 
@@ -59,10 +70,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 const personalPlant = document.createElement('div');
                 personalPlant.className = 'personal-plant';
 
-                // Example: Assuming plant images are named plant1.png, plant2.png, etc.
-                personalPlant.style.backgroundImage = `url(/img/plant_unlock/plant${data.result[0].crewMemberMainPlantId}.png)`;
-                personalPlant.style.width = `${plantWidth}px`;
-                personalPlant.style.height = `${plantHeight}px`;
+                
+
+
+
+                personalPlant.style.backgroundImage = `url(/img/plant_unlock/flower${plantId}.png)`; // Adjust URL as per your image path
 
                 personalPlant.style.left = `${40 + earthRadius + x}px`;
                 personalPlant.style.top = `${40 + earthRadius + y}px`;
@@ -72,24 +84,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 personalPlant.appendChild(nicknameDiv);
                 earth.appendChild(personalPlant);
-            } else {
-                console.error(`Failed to fetch data for crew ID ${crewId}`);
             }
-        } catch (error) {
-            console.error(`Error fetching data for crew ID ${crewId}:`, error);
+        } else {
+            console.error('Failed to fetch crew plant data:', data.message);
         }
+    })
+    .catch(error => {
+        console.error('Error fetching crew plant data:', error);
     });
 });
-
-
 	// const nicknames = [
     //     "Alice", "Bob", "Charlie", "David", "Eve",
     //     "Frank", "Grace", "Heidi", "Ivan", "Judy",
-    //     "Mallory", "Niaj", "Oscar", "Peggy", "Trent"
     // ];
 
     // for (let i = 0; i < peopleNum; i++) {
-
+        
     //     const angle = (i / peopleNum) * 2 * Math.PI;
     //     const x = earthRadius * Math.cos(angle) - plantWidth / 2;
     //     const y = earthRadius * Math.sin(angle) - plantHeight / 2;
@@ -110,5 +120,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //     personalPlant.appendChild(nicknameDiv);
     //     earth.appendChild(personalPlant);
-    // }
 
+    // }
+// });

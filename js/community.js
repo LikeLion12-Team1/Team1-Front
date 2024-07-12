@@ -1,8 +1,7 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
 
-let crewName = localStorage.getItem('crewName');
 const accessToken = getCookie("accessToken");
-
+const crewName = localStorage.getItem('crewName');
   /* 쿠키 관련 함수들 */
 function setCookie(name, value, days) {
     var expires = "";
@@ -37,9 +36,6 @@ let lifeButton = 1;
 let certificationButton = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-    const crewName = localStorage.getItem('crewName');
-	console.log(crewName);
-
     if (crewName) {
         fetchCrewPosts(crewName);
     } else {
@@ -62,8 +58,10 @@ function fetchCrewPosts(crewName) {
     })
     .then(data => {
         if (data.isSuccess) {
+			const postContainer = document.getElementById('post-container');
+			postContainer.innerHTML='';
             data.result.postPreviewList.forEach(post => {
-                addPost(post.authorProfileImg, post.author, post.category, post.content, post.postImg, post.createdAt);
+                addPost(post.authorProfileImg, post.author, post.category, post.content, post.postImg, post.createdA, post.postId);
             });
         } else {
             throw new Error('Failed to fetch crew posts');
@@ -73,6 +71,7 @@ function fetchCrewPosts(crewName) {
         console.error('Error fetching crew posts:', error);
     });
 }
+
 
 //인증 버튼 클릭
 document.getElementById('certification-btn').addEventListener('click', function() {
@@ -194,22 +193,19 @@ function postData() {
    	    }
 	})
 	.then(postData => {
-		if (postData.isSuccess && postData.result) {
-			let imageUrl = postData.result.postImg || '';
-			let nickname = postData.result.nickname || '알 수 없음';
-			let postCreatedAt = postData.result.postCreatedAt ? postData.result.postCreatedAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
-			
-			addPost("/img/user-profile.png", nickname, category, text, imageUrl, postCreatedAt);
-			clearInputs();
-		} else {
-			throw new Error('포스트 정보를 가져오는데 실패했습니다.');
-		}
-	})
-	.catch(error => {
+        if (postData.isSuccess) {
+            fetchCrewPosts(crewName); // Reload all posts
+            clearInputs();
+        } else {
+            throw new Error('포스트 정보를 가져오는데 실패했습니다.');
+        }
+    })
+    .catch(error => {
         console.error('Error:', error);
         alert('오류가 발생했습니다. 다시 시도해주세요.');
     });
 }
+
 function clearInputs() {
 	document.getElementById('input-text').value = '';
 	document.getElementById('open-file').value = '';
@@ -266,7 +262,10 @@ function toggleHeart(event) {
 	}
 }
 
-function addPost(userImg, userName, category, text, postImg, postCreatedAt) {
+function addPost(userImg, userName, category, text, postImg, postCreatedAt, postId) {
+	// let formattedDate = postCreatedAt.substring(0, 10);
+	let formattedDate = postCreatedAt;
+
 	let postDiv = document.createElement('div');
 	postDiv.classList.add('community-section3');
 
@@ -278,7 +277,7 @@ function addPost(userImg, userName, category, text, postImg, postCreatedAt) {
 		<img id="userImg" src="${userImg}">
 		<p id="comm-crew-name">${userName}</p>
 		<p id="small-circle3"></p>
-		<p id="post-time">${postCreatedAt}</p>
+		<p id="post-time">${formattedDate}</p>
 		<p id="slash">/</p>
 		<p id="lifeOrCertification">${category}</p>
 		<p id="report" onclick="reportFunc();">신고하기</p>
@@ -298,7 +297,7 @@ function addPost(userImg, userName, category, text, postImg, postCreatedAt) {
 	postBottomDiv.classList.add('comm-sec3-bottom');
 	postBottomDiv.innerHTML = `
 		<img class="heart" src="/img/empty-heart.png" onclick="toggleHeart(event);">
-		<img id="comment" src="/img/comment.png" onclick="postExpand(event);">
+		<img id="comment" src="/img/comment.png" postId="${postId}"  onclick="postExpand(event);">
 	`;
 	postDiv.appendChild(postBottomDiv);
 
@@ -335,7 +334,9 @@ function addComment(event) {
 }
 
 function postExpand(event) {
-	let postId = event.target.dataset.postId;
+	let postId = event.target.getAttribute('postId');
+	console.log(event.target);
+	console.log(postId);
 
 	fetchPostDetails(postId)
 	.then(data => {
@@ -347,12 +348,12 @@ function postExpand(event) {
 	})
 	.catch(error => {
 		console.error('Error fetching post details:', error);
-		alert('Failed to fetch post details. Please try again.');
 	});
 }
 
 function fetchPostDetails(postId) {
-    return fetch(`${API_SERVER_DOMAIN}/api/v1/crews/posts/details/${postId}`, {
+
+    return fetch(`${API_SERVER_DOMAIN}/api/v1/crews/${crewName}/posts/detail/${postId}`, {
         method: 'GET',
         headers: {
             Authorization: "Bearer " + accessToken
@@ -371,18 +372,28 @@ function fetchPostDetails(postId) {
 }
 
 function displayPostDetails(postDetails) {
+	console.log(postDetails);
+
     let modal = document.getElementById('post-frame');
-    modal.style.display = 'block'; // Show the modal
+    modal.style.display = 'block';
 
-    // Populate post details
-    document.getElementById('post-author-profile-img').src = postDetails.photoUrl || '/img/user-profile.png';
-    document.getElementById('post-author-nickname').textContent = postDetails.nickname || 'Unknown';
-    document.getElementById('post-content').textContent = postDetails.content || '';
+	document.getElementById('comment-input').value = '';
+    let postRightTop = document.querySelector('.post-right-top');
+    let postRightTop2 = document.querySelector('.post-right-top2');
+    let postRightMid = document.querySelector('.post-right-mid');
+    postRightMid.innerHTML = '';
 
-    // Populate replies or comments
-    let repliesContainer = document.getElementById('post-replies');
-    repliesContainer.innerHTML = ''; // Clear previous replies
-
+	let postAuthorImg = postDetails.authorProfileImg || '/img/user-profile.png';
+    let postAuthorNickname = postDetails.author || 'Unknown';
+    postRightTop.innerHTML = `
+        <img src="${postAuthorImg}" />
+        <p>${postAuthorNickname}</p>
+    `;
+	
+    postRightTop2.innerHTML = `
+        <p>${postDetails.content || ''}</p>
+    `;
+	
     if (postDetails.replies && postDetails.replies.length > 0) {
         postDetails.replies.forEach(reply => {
             let replyDiv = document.createElement('div');
@@ -401,11 +412,51 @@ function displayPostDetails(postDetails) {
         repliesContainer.appendChild(noReplyMessage);
     }
 }
+
+document.querySelectorAll('.comm-sec3-bottom img#comment').forEach(commentIcon => {
+    commentIcon.addEventListener('click', postExpand);
+});
+   
+	// //댓글
+	// let commentFrame = document.createElement('div');
+	// commentFrame.classList.add('comment-frame');
+	// commentFrame.innerHTML = `
+	// 	<img src="/img/user-profile.png" />
+	//     <p>AAA123</p>
+	//     <p></p>
+	//     `;
+
+    // document.getElementById('post-author-profile-img').src = postDetails.photoUrl || '/img/user-profile.png';
+    // document.getElementById('post-author-nickname').textContent = postDetails.nickname || 'Unknown';
+    // document.getElementById('post-content').textContent = postDetails.content || '';
+
+  
+//     let repliesContainer = document.getElementById('post-replies');
+//     repliesContainer.innerHTML = ''; 
+
+//     if (postDetails.replies && postDetails.replies.length > 0) {
+//         postDetails.replies.forEach(reply => {
+//             let replyDiv = document.createElement('div');
+//             replyDiv.classList.add('comment-frame');
+//             replyDiv.innerHTML = `
+//                 <img src="${reply.replyAuthorProfileImg || '/img/user-profile.png'}" />
+//                 <p>${reply.replyAuthorNickname || 'Unknown'}</p>
+//                 <p>${reply.content || ''}</p>
+//                 <p>${formatDate(reply.createdAt)}</p>
+//             `;
+//             repliesContainer.appendChild(replyDiv);
+//         });
+//     } else {
+//         let noReplyMessage = document.createElement('p');
+//         noReplyMessage.textContent = 'No replies yet.';
+//         repliesContainer.appendChild(noReplyMessage);
+//     }
+// }
 	
 
-// 	document.getElementById('comment-input').value = '';
-// 	let postRightMid = document.querySelector('.post-right-mid');
-//     postRightMid.innerHTML = '';
+	// document.getElementById('comment-input').value = '';
+	// let postRightMid = document.querySelector('.post-right-mid');
+    // postRightMid.innerHTML = '';
 
 // 	for (let i = 0; i < 10; i++) {
 //         let commentFrame = document.createElement('div');
@@ -422,11 +473,9 @@ function displayPostDetails(postDetails) {
 //     commentPostButton.addEventListener('click', addComment);
 // }
 
-document.querySelectorAll('.comm-sec3-bottom img#comment').forEach(commentIcon => {
-    commentIcon.addEventListener('click', postExpand);
-});
 
-function formatDate(dateString) {
-    let date = new Date(dateString);
-    return date.toLocaleString(); // Adjust format as needed
-}
+
+// function formatDate(dateString) {
+//     let date = new Date(dateString);
+//     return date.toLocaleString(); // Adjust format as needed
+// }
