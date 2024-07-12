@@ -61,7 +61,7 @@ function fetchCrewPosts(crewName) {
 			const postContainer = document.getElementById('post-container');
 			postContainer.innerHTML='';
             data.result.postPreviewList.forEach(post => {
-                addPost(post.authorProfileImg, post.author, post.category, post.content, post.postImg, post.createdA, post.postId);
+                addPost(post.authorProfileImg, post.author, post.category, post.content, post.postImg, post.createdAt, post.postId);
             });
         } else {
             throw new Error('Failed to fetch crew posts');
@@ -184,7 +184,7 @@ function postData() {
 			} 
 			else {
 				// 이미지가 없는 경우
-				let createdAt = data.result.createdAt ? data.result.createdAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
+				let createdAt = data.result.postCreatedAt ? data.result.postcreatedAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
                 let nickname = data.result.nickname;
                 return { isSuccess: true, result: { postImg: '', nickname: nickname, createdAt: createdAt } };
             }
@@ -254,6 +254,7 @@ function toggleHeart(event) {
 	let currentHeart = heartImg.src;
 	let fullHeartImg = "/img/full-heart.png";
     let emptyHeartImg = "/img/empty-heart.png";
+
 	if (currentHeart.includes(fullHeartImg)) {
 		heartImg.src = emptyHeartImg;
 	}
@@ -264,9 +265,7 @@ function toggleHeart(event) {
 
 function addPost(userImg, userName, category, text, postImg, createdAt, postId) {
 	console.log(createdAt);
-	// let formattedDate = createdAt.substring(0, 10);
-	let formattedDate = createdAt;
-
+	let formattedDate = createdAt.substring(0, 10);
 	let postDiv = document.createElement('div');
 	postDiv.classList.add('community-section3');
 
@@ -419,66 +418,3 @@ function displayPostDetails(postDetails) {
 document.querySelectorAll('.comm-sec3-bottom img#comment').forEach(commentIcon => {
     commentIcon.addEventListener('click', postExpand);
 });
-   
-	// //댓글
-	// let commentFrame = document.createElement('div');
-	// commentFrame.classList.add('comment-frame');
-	// commentFrame.innerHTML = `
-	// 	<img src="/img/user-profile.png" />
-	//     <p>AAA123</p>
-	//     <p></p>
-	//     `;
-
-    // document.getElementById('post-author-profile-img').src = postDetails.photoUrl || '/img/user-profile.png';
-    // document.getElementById('post-author-nickname').textContent = postDetails.nickname || 'Unknown';
-    // document.getElementById('post-content').textContent = postDetails.content || '';
-
-  
-//     let repliesContainer = document.getElementById('post-replies');
-//     repliesContainer.innerHTML = ''; 
-
-//     if (postDetails.replies && postDetails.replies.length > 0) {
-//         postDetails.replies.forEach(reply => {
-//             let replyDiv = document.createElement('div');
-//             replyDiv.classList.add('comment-frame');
-//             replyDiv.innerHTML = `
-//                 <img src="${reply.replyAuthorProfileImg || '/img/user-profile.png'}" />
-//                 <p>${reply.replyAuthorNickname || 'Unknown'}</p>
-//                 <p>${reply.content || ''}</p>
-//                 <p>${formatDate(reply.createdAt)}</p>
-//             `;
-//             repliesContainer.appendChild(replyDiv);
-//         });
-//     } else {
-//         let noReplyMessage = document.createElement('p');
-//         noReplyMessage.textContent = 'No replies yet.';
-//         repliesContainer.appendChild(noReplyMessage);
-//     }
-// }
-	
-
-	// document.getElementById('comment-input').value = '';
-	// let postRightMid = document.querySelector('.post-right-mid');
-    // postRightMid.innerHTML = '';
-
-// 	for (let i = 0; i < 10; i++) {
-//         let commentFrame = document.createElement('div');
-//         commentFrame.classList.add('comment-frame');
-//         commentFrame.innerHTML = `
-//             <img src="/img/user-profile.png" />
-//             <p>AAA123</p>
-//             <p>댓글 ${i + 1}</p>
-//         `;
-//         postRightMid.appendChild(commentFrame);
-//     }
-// 	let commentPostButton = document.querySelector('.comment-post');
-// 	commentPostButton.removeEventListener('click', addComment);
-//     commentPostButton.addEventListener('click', addComment);
-// }
-
-
-
-// function formatDate(dateString) {
-//     let date = new Date(dateString);
-//     return date.toLocaleString(); // Adjust format as needed
-// }

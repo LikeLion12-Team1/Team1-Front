@@ -172,12 +172,6 @@ document.getElementById('create-crew').addEventListener('click', function() {
 	})
 	.then(response => response.json())
 	.then(data => {
-		console.log('크루 생성 완료:', data);
-		console.log(data);
-		console.log(data.result);
-		console.log(image);
-
-		alert('크루 생성이 완료되었습니다.');
 		let formData = new FormData();
 		formData.append('file', image);
 		fetch(API_SERVER_DOMAIN + `/api/v1/crews/${data.result}`, {
