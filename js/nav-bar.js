@@ -1,5 +1,3 @@
-//let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-
 /* 네비게이션 링크 클릭 이벤트 */
 document.addEventListener("DOMContentLoaded", function () {
   const navLinks = document.querySelectorAll(".nav-link");
@@ -25,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .querySelector("path")
         .setAttribute("fill", isClicked ? "#fd5e53" : "#1C1C1C");
       if (isClicked) {
-        displayUserInfo(userIcon);
+        openUserInfo(userIcon);
       } else {
         closeUserInfo();
       }
@@ -33,28 +31,75 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-function fetchUserProfile() {
-  fetch(API_SERVER_DOMAIN + "/api/v1/user/profile")
-    .then((response) => response.json())
+/* 쿠키 관련 함수들 */
+function setCookie(name, value, days) {
+  var expires = "";
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var cookies = document.cookie.split(";");
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    while (cookie.charAt(0) === " ") {
+      cookie = cookie.substring(1, cookie.length);
+    }
+    if (cookie.indexOf(nameEQ) === 0) {
+      return cookie.substring(nameEQ.length, cookie.length);
+    }
+  }
+  return null;
+}
+
+function deleteCookie(name) {
+  document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
+}
+
+// 사용자 정보를 가져오고 팝업을 여는 함수
+function openUserInfo(triggerElement) {
+  let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
+  const accessToken = getCookie("accessToken");
+
+  fetch(API_SERVER_DOMAIN + "/api/v1/user/profile", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
     .then((data) => {
       if (data.isSuccess) {
-        const { nickname, profileImg, crewPreviewList } = data.result;
-        const crewName = crewPreviewList?.crewPreviewList[0]?.crewName || "";
-        const displayProfileImg = profileImg
-          ? API_SERVER_DOMAIN + profileImg
-          : "/img/user-profile.png";
+        const result = data.result;
+        const nickname = result.nickname;
+        const profileImg = result.profileImg || "/img/user-profile.png";
+        const crewName =
+          result.crewPreviewList.crewPreviewList.length > 0
+            ? result.crewPreviewList.crewPreviewList[0].crewName
+            : "";
 
-        displayUserInfo(nickname, profileImg, crewName);
+        createUserInfoPopup(triggerElement, nickname, profileImg, crewName);
       } else {
-        console.error("사용자 프로필 가져오기 실패:", data.message);
+        console.error("API request failed");
       }
     })
     .catch((error) => {
-      console.error("사용자 프로필 가져오기 에러:", error);
+      console.error("Error fetching user profile:", error);
     });
 }
 
-function displayUserInfo(nickname, profileImg, crewName) {
+// 사용자 정보를 표시하는 팝업을 생성하는 함수
+function createUserInfoPopup(triggerElement, nickname, profileImg, crewName) {
   const existingPopup = document.querySelector(".user-info-popup");
   if (existingPopup) {
     document.body.removeChild(existingPopup);
@@ -83,8 +128,8 @@ function displayUserInfo(nickname, profileImg, crewName) {
   popup.appendChild(profileImage);
 
   const nicknameElement = document.createElement("div");
-  nicknameElement.textContent = "SCREW1";
-  nicknameElement.style.fontSize = "32px";
+  nicknameElement.textContent = nickname;
+  nicknameElement.style.fontSize = "16px";
   nicknameElement.style.fontWeight = 700;
   nicknameElement.style.color = "#FD5E53";
   nicknameElement.style.marginBottom = "15px";
@@ -104,14 +149,14 @@ function displayUserInfo(nickname, profileImg, crewName) {
   linkContainer.style.width = "136px";
 
   const profileChangeLink = document.createElement("a");
-  profileChangeLink.href = API_SERVER_DOMAIN + "/html/profileChange.html";
+  profileChangeLink.href = "/html/profileChange.html";
   profileChangeLink.textContent = "프로필 변경";
   profileChangeLink.style.fontSize = "13px";
   profileChangeLink.style.color = "#666666";
   linkContainer.appendChild(profileChangeLink);
 
   const logoutLink = document.createElement("a");
-  logoutLink.href = API_SERVER_DOMAIN + "/html/login.html";
+  logoutLink.href = "/html/login.html";
   logoutLink.textContent = "로그아웃";
   logoutLink.style.fontSize = "13px";
   logoutLink.style.color = "#FD5E53";
@@ -119,7 +164,7 @@ function displayUserInfo(nickname, profileImg, crewName) {
 
   popup.appendChild(linkContainer);
 
-  const iconRect = document.querySelector(".user-icon").getBoundingClientRect();
+  const iconRect = triggerElement.getBoundingClientRect();
   const popupWidth = 204;
   const popupHeight = 270;
   const popupLeft = iconRect.left - 50 + (iconRect.width - popupWidth) / 2;
