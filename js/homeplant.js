@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     // 대표 식물 이미지 업데이트
                     const imgElement = document.querySelector('.pre-myplant-img .myplant-img');
+                    console.log(imgElement);
                     imgElement.src = `/img/plant_unlock/${mainPlantId}.png`;
                 } else {
                     console.error('Failed to fetch main plant data:', data.message);
