@@ -1,3 +1,36 @@
+let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
+const accessToken = getCookie("accessToken");
+
+  /* 쿠키 관련 함수들 */
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+    	var date = new Date();
+    	date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    	expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      	var cookie = cookies[i];
+      	while (cookie.charAt(0) === " ") {
+        	cookie = cookie.substring(1, cookie.length);
+      	}
+      	if (cookie.indexOf(nameEQ) === 0) {
+        	return cookie.substring(nameEQ.length, cookie.length);
+     	}
+    }
+    return null;
+}
+
+function deleteCookie(name) {
+    document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const earth = document.querySelector('.plants');
     const peopleNum = 19;
@@ -6,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const plantHeight = 100;
 
 
-    crewIds.forEach(async (crewId, i) => {
+    crewId.forEach(async (crewId, i) => {
         try {
             // Fetch crew nickname data
             const response = await fetch(`/api/v1/crews/${crewId}/crew-plant`);

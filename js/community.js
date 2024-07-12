@@ -1,5 +1,38 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA3MzgxNTAsImV4cCI6MTcyOTM3ODE1MH0.UGQrbpmjf-hXyBXA25EKR9VK6JnuTo3WHWoePkcVdBI";
+
+let crewName = localStorage.getItem('crewName');
+const accessToken = getCookie("accessToken");
+
+  /* 쿠키 관련 함수들 */
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+    	var date = new Date();
+    	date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    	expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      	var cookie = cookies[i];
+      	while (cookie.charAt(0) === " ") {
+        	cookie = cookie.substring(1, cookie.length);
+      	}
+      	if (cookie.indexOf(nameEQ) === 0) {
+        	return cookie.substring(nameEQ.length, cookie.length);
+     	}
+    }
+    return null;
+}
+
+function deleteCookie(name) {
+    document.cookie = name + "=; Expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;";
+}
+
 let lifeButton = 1;
 let certificationButton = 0;
 
@@ -15,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchCrewPosts(crewName) {
-    fetch(`${API_SERVER_DOMAIN}/api/v1/crews/posts/${crewName}`, {
+    fetch(API_SERVER_DOMAIN + `/api/v1/crews/${crewName}/posts`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${accessToken}`
@@ -103,6 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function postData() {
+	let crewName = localStorage.getItem('crewName');
 	let text = document.getElementById('input-text').value;
 	let image = document.getElementById('open-file').files[0];
 	let category = lifeButton ? '일상' : '인증';
@@ -117,8 +151,7 @@ function postData() {
 		category: category,
 		content: text
 	};
-
-	fetch(API_SERVER_DOMAIN + '/api/v1/crews/posts', {
+	fetch(API_SERVER_DOMAIN + `/api/v1/crews/${crewName}/posts`, {
         method: 'POST',
         headers: {
 			'Content-Type': 'application/json',
@@ -142,7 +175,7 @@ function postData() {
 				let formData = new FormData();
 				formData.append('file', image);
 
-				return fetch(API_SERVER_DOMAIN + `/api/v1/crews/posts/${postId}`, {
+				return fetch(API_SERVER_DOMAIN + `/api/v1/crews/${crewName}/posts/${postId}`, {
 					method: 'POST',
 					headers: {
 						Authorization: "Bearer " + accessToken,
