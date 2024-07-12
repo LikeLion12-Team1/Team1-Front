@@ -1,7 +1,45 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA2OTQ5NDEsImV4cCI6MTcyOTMzNDk0MX0.t6MFBkkqMJim_ib0YXOAlmRSAOEukIjwGBi73jOCItg";
+let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA3MzgxNTAsImV4cCI6MTcyOTM3ODE1MH0.UGQrbpmjf-hXyBXA25EKR9VK6JnuTo3WHWoePkcVdBI";
 let lifeButton = 1;
 let certificationButton = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+    const crewName = localStorage.getItem('crewName');
+	console.log(crewName);
+
+    if (crewName) {
+        fetchCrewPosts(crewName);
+    } else {
+        console.error('localStorage에서 crewName을 찾을 수 없습니다');
+    }
+});
+
+function fetchCrewPosts(crewName) {
+    fetch(`${API_SERVER_DOMAIN}/api/v1/crews/posts/${crewName}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch crew posts');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.isSuccess) {
+            data.result.postPreviewList.forEach(post => {
+                addPost(post.authorProfileImg, post.author, post.category, post.content, post.postImg, post.createdAt);
+            });
+        } else {
+            throw new Error('Failed to fetch crew posts');
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching crew posts:', error);
+    });
+}
 
 //인증 버튼 클릭
 document.getElementById('certification-btn').addEventListener('click', function() {
@@ -74,44 +112,71 @@ function postData() {
 		return;
 	}
 
-	let formData = new FormData();
-    formData.append('category', category);
-    formData.append('content', text);
-    if (image) {
-        formData.append('photo', image);
-    }
+	//카테고리, 글
+	let postData = {
+		category: category,
+		content: text
+	};
 
-	fetch(API_SERVER_DOMAIN + `/api/v1/crews/posts`, {
+	fetch(API_SERVER_DOMAIN + '/api/v1/crews/posts', {
         method: 'POST',
         headers: {
-            Authorization: "Bearer " + accessToken,
+			'Content-Type': 'application/json',
+			Authorization: "Bearer " + accessToken,
         },
-        body: formData
+        body: JSON.stringify(postData)
     })
 	.then(response => {
         if (!response.ok) {
-            throw new Error('Failed to create post.');
+            return response.json().then(errorData => {
+				throw new Error('Error: ' + (errorData.message || 'Failed to create post.'));
+			});
         }
         return response.json();
     })
     .then(data => {
-        if (data.isSuccess) {
-			let nickname = data.result.nickname;
-            // let postTime = '방금 전';
-            let postImg = data.result.photoUrl || '';
-			
-            addPost(userName, category, text, postImg);
-            clearInputs();
-        } else {
-			throw new Error('오류가 발생했습니다. 다시 시도해주세요.');
-        }
-    }).catch(error => {
-          console.error('Error:', error);
-          alert('오류가 발생했습니다. 다시 시도해주세요.');
-    });
-	clearInputs();
-}
+		if (data.isSuccess) {
+            let postId = data.result; 
 
+			if (image) {
+				let formData = new FormData();
+				formData.append('file', image);
+
+				return fetch(API_SERVER_DOMAIN + `/api/v1/crews/posts/${postId}`, {
+					method: 'POST',
+					headers: {
+						Authorization: "Bearer " + accessToken,
+					},
+					body: formData
+				}).then(response => response.json());
+			} 
+			else {
+				// 이미지가 없는 경우
+				let postCreatedAt = data.result.postCreatedAt ? data.result.postCreatedAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
+                let nickname = data.result.nickname;
+                return { isSuccess: true, result: { postImg: '', nickname: nickname, postCreatedAt: postCreatedAt } };
+            }
+		} else {
+    		throw new Error('오류가 발생했습니다. 다시 시도해주세요.');
+   	    }
+	})
+	.then(postData => {
+		if (postData.isSuccess && postData.result) {
+			let imageUrl = postData.result.postImg || '';
+			let nickname = postData.result.nickname || '알 수 없음';
+			let postCreatedAt = postData.result.postCreatedAt ? postData.result.postCreatedAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
+			
+			addPost("/img/user-profile.png", nickname, category, text, imageUrl, postCreatedAt);
+			clearInputs();
+		} else {
+			throw new Error('포스트 정보를 가져오는데 실패했습니다.');
+		}
+	})
+	.catch(error => {
+        console.error('Error:', error);
+        alert('오류가 발생했습니다. 다시 시도해주세요.');
+    });
+}
 function clearInputs() {
 	document.getElementById('input-text').value = '';
 	document.getElementById('open-file').value = '';
@@ -168,7 +233,7 @@ function toggleHeart(event) {
 	}
 }
 
-function addPost(userImg, userName, postTime, lifeOrCertification, text, postImg) {
+function addPost(userImg, userName, category, text, postImg, postCreatedAt) {
 	let postDiv = document.createElement('div');
 	postDiv.classList.add('community-section3');
 
@@ -180,9 +245,9 @@ function addPost(userImg, userName, postTime, lifeOrCertification, text, postImg
 		<img id="userImg" src="${userImg}">
 		<p id="comm-crew-name">${userName}</p>
 		<p id="small-circle3"></p>
-		<p id="post-time">${postTime}</p>
+		<p id="post-time">${postCreatedAt}</p>
 		<p id="slash">/</p>
-		<p id="lifeOrCertification">${lifeOrCertification}</p>
+		<p id="lifeOrCertification">${category}</p>
 		<p id="report" onclick="reportFunc();">신고하기</p>
 	`;
 	postDiv.appendChild(postTopDiv);
@@ -237,29 +302,98 @@ function addComment(event) {
 }
 
 function postExpand(event) {
-	let postFrame = document.getElementById('post-frame');
-	postFrame.style.display = 'block';
+	let postId = event.target.dataset.postId;
+
+	fetchPostDetails(postId)
+	.then(data => {
+		if (data.isSuccess) {
+			displayPostDetails(data.result);
+		} else {
+			throw new Error('Failed to fetch post details');
+		}
+	})
+	.catch(error => {
+		console.error('Error fetching post details:', error);
+		alert('Failed to fetch post details. Please try again.');
+	});
+}
+
+function fetchPostDetails(postId) {
+    return fetch(`${API_SERVER_DOMAIN}/api/v1/crews/posts/details/${postId}`, {
+        method: 'GET',
+        headers: {
+            Authorization: "Bearer " + accessToken
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch post details');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error('Error fetching post details:', error);
+        throw error;
+    });
+}
+
+function displayPostDetails(postDetails) {
+    let modal = document.getElementById('post-frame');
+    modal.style.display = 'block'; // Show the modal
+
+    // Populate post details
+    document.getElementById('post-author-profile-img').src = postDetails.photoUrl || '/img/user-profile.png';
+    document.getElementById('post-author-nickname').textContent = postDetails.nickname || 'Unknown';
+    document.getElementById('post-content').textContent = postDetails.content || '';
+
+    // Populate replies or comments
+    let repliesContainer = document.getElementById('post-replies');
+    repliesContainer.innerHTML = ''; // Clear previous replies
+
+    if (postDetails.replies && postDetails.replies.length > 0) {
+        postDetails.replies.forEach(reply => {
+            let replyDiv = document.createElement('div');
+            replyDiv.classList.add('comment-frame');
+            replyDiv.innerHTML = `
+                <img src="${reply.replyAuthorProfileImg || '/img/user-profile.png'}" />
+                <p>${reply.replyAuthorNickname || 'Unknown'}</p>
+                <p>${reply.content || ''}</p>
+                <p>${formatDate(reply.createdAt)}</p>
+            `;
+            repliesContainer.appendChild(replyDiv);
+        });
+    } else {
+        let noReplyMessage = document.createElement('p');
+        noReplyMessage.textContent = 'No replies yet.';
+        repliesContainer.appendChild(noReplyMessage);
+    }
+}
 	
 
-	document.getElementById('comment-input').value = '';
-	let postRightMid = document.querySelector('.post-right-mid');
-    postRightMid.innerHTML = '';
+// 	document.getElementById('comment-input').value = '';
+// 	let postRightMid = document.querySelector('.post-right-mid');
+//     postRightMid.innerHTML = '';
 
-	for (let i = 0; i < 10; i++) {
-        let commentFrame = document.createElement('div');
-        commentFrame.classList.add('comment-frame');
-        commentFrame.innerHTML = `
-            <img src="/img/user-profile.png" />
-            <p>AAA123</p>
-            <p>댓글 ${i + 1}</p>
-        `;
-        postRightMid.appendChild(commentFrame);
-    }
-	let commentPostButton = document.querySelector('.comment-post');
-	commentPostButton.removeEventListener('click', addComment);
-    commentPostButton.addEventListener('click', addComment);
-}
+// 	for (let i = 0; i < 10; i++) {
+//         let commentFrame = document.createElement('div');
+//         commentFrame.classList.add('comment-frame');
+//         commentFrame.innerHTML = `
+//             <img src="/img/user-profile.png" />
+//             <p>AAA123</p>
+//             <p>댓글 ${i + 1}</p>
+//         `;
+//         postRightMid.appendChild(commentFrame);
+//     }
+// 	let commentPostButton = document.querySelector('.comment-post');
+// 	commentPostButton.removeEventListener('click', addComment);
+//     commentPostButton.addEventListener('click', addComment);
+// }
 
 document.querySelectorAll('.comm-sec3-bottom img#comment').forEach(commentIcon => {
     commentIcon.addEventListener('click', postExpand);
 });
+
+function formatDate(dateString) {
+    let date = new Date(dateString);
+    return date.toLocaleString(); // Adjust format as needed
+}

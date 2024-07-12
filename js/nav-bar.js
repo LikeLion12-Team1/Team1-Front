@@ -1,4 +1,4 @@
-let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
+//let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
 
 /* 네비게이션 링크 클릭 이벤트 */
 document.addEventListener("DOMContentLoaded", function () {

@@ -1,5 +1,5 @@
 let API_SERVER_DOMAIN = "http://15.164.41.239:8080";
-let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA2ODgwMTYsImV4cCI6MTcyOTMyODAxNn0.fu1fqnyL3HNCQA7XwpquHjgT0PfP0POQdmfn-OhBxg8";
+let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJpYXQiOjE3MjA3MzgxNTAsImV4cCI6MTcyOTM3ODE1MH0.UGQrbpmjf-hXyBXA25EKR9VK6JnuTo3WHWoePkcVdBI";
 
 //파일 선택 열기
 document.getElementById('get-btn').addEventListener('click', function() {
@@ -139,17 +139,6 @@ document.getElementById('create-crew').addEventListener('click', function() {
 
 	let crewName = document.querySelector('.crewname-input').value;
 	let photoUrl = document.getElementById('show-image').style.backgroundImage.replace('url("', '').replace('")', '');
-	
-	// let regionButton = document.querySelector('.choice-all1 button.clicked');
-	// let region = regionButton ? regionButton.textContent : null;
-
-	// let sportsCategoryButton = document.querySelector('.choice-all2 button.clicked');
-	// let sportsCategory = sportsCategoryButton ? sportsCategoryButton.textContent : null;
-
-	// if (!crewName || !photoUrl || !region || !sportsCategory) {
-	// 	alert("모든 항목을 입력하고 선택해주세요.");
-	// 	return;
-	// }
 
 	fetch(API_SERVER_DOMAIN + '/api/v1/crews', {
 		method: 'POST',
