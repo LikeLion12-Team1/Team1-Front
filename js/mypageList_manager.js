@@ -40,14 +40,16 @@ function getUrlParam(param) {
 
 // 멤버 삭제 함수
 function deleteMember(crewName, userId) {
-  fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + accessToken,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ userId: userId }),
-  })
+  fetch(
+    API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}?user-id=${userId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      },
+    }
+  )
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -67,70 +69,153 @@ function deleteMember(crewName, userId) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  function fetchCrewData(crewName) {
-    fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + accessToken,
-        "Content-Type": "application/json",
-      },
+// 크루 데이터를 가져오고 화면에 표시하는 함수
+function fetchCrewData(crewName) {
+  fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.isSuccess) {
-          displayCrewData(data.result.adminMemberPreviewList); //크루 정보를 화면에 표시
-        } else {
-          console.log(`데이터 가져오기 실패: ${data.message}`);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    .then((data) => {
+      if (data.isSuccess) {
+        displayCrewData(data.result.adminMemberPreviewList);
+      } else {
+        console.log(`데이터 가져오기 실패: ${data.message}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+// 크루 정보를 화면에 표시하는 함수
+function displayCrewData(members) {
+  const memberContainer = document.querySelector(".member");
+  if (!memberContainer) {
+    console.error(".member 요소를 찾을 수 없습니다.");
+    return;
   }
 
-  // 크루 정보를 화면에 표시하는 함수
-  function displayCrewData(members) {
-    const memberContainer = document.querySelector(".member");
-    if (!memberContainer) {
-      console.error(".member 요소를 찾을 수 없습니다.");
-      return;
-    }
+  // member-list-container가 없다면 생성
+  let listContainer = memberContainer.querySelector(".member-list-container");
+  if (!listContainer) {
+    listContainer = document.createElement("div");
+    listContainer.className = "member-list-container";
+    memberContainer.appendChild(listContainer);
+  }
 
-    // member-list-container가 없다면 생성
-    let listContainer = memberContainer.querySelector(".member-list-container");
-    if (!listContainer) {
-      listContainer = document.createElement("div");
-      listContainer.className = "member-list-container";
-      memberContainer.appendChild(listContainer);
-    }
+  let crewListContainer = memberContainer.querySelector("ul");
+  if (!crewListContainer) {
+    crewListContainer = document.createElement("ul");
+    memberContainer.appendChild(crewListContainer);
+  }
 
-    let crewListContainer = memberContainer.querySelector("ul");
-    if (!crewListContainer) {
-      crewListContainer = document.createElement("ul");
-      memberContainer.appendChild(crewListContainer);
-    }
+  crewListContainer.innerHTML = "";
 
-    crewListContainer.innerHTML = "";
-
-    members.forEach((member) => {
-      const listItem = document.createElement("li");
-      listItem.className = "member-content";
-      listItem.innerHTML = `
+  members.forEach((member) => {
+    const listItem = document.createElement("li");
+    listItem.className = "member-content";
+    listItem.innerHTML = `
         <img src="/img/mypage-lightgreen.png" />
         <div class="member-content-nickname">${member.nickname}</div>
         <span class="member-delete-btn" onclick="deleteMember('${crewName}', '${member.userId}')">
           <i class="fa-solid fa-circle-xmark"></i>
         </span>
       `;
-      crewListContainer.appendChild(listItem);
+    crewListContainer.appendChild(listItem);
+  });
+}
+
+// 커뮤니티 데이터를 가져오고 화면에 표시하는 함수
+function fetchCommunityData(crewName) {
+  fetch(API_SERVER_DOMAIN + `/api/v1/user/my/crew/${crewName}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + accessToken,
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.isSuccess) {
+        displayCommunityData(data.result.adminCommunityPreviewList);
+      } else {
+        console.log(`커뮤니티 데이터 가져오기 실패: ${data.message}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
     });
+}
+
+// 커뮤니티 정보를 화면에 표시하는 함수
+function displayCommunityData(posts) {
+  const communityContainer = document.querySelector(".community");
+  if (!communityContainer) {
+    console.error(".community 요소를 찾을 수 없습니다.");
+    return;
   }
 
+  let listContainer = communityContainer.querySelector(
+    ".community-list-container"
+  );
+  if (!listContainer) {
+    listContainer = document.createElement("div");
+    listContainer.className = "community-list-container";
+    communityContainer.appendChild(listContainer);
+  }
+
+  let communityList = listContainer.querySelector("ul");
+  if (!communityList) {
+    communityList = document.createElement("ul");
+    listContainer.appendChild(communityList);
+  }
+
+  communityList.innerHTML = "";
+
+  posts.forEach((post) => {
+    const listItem = document.createElement("li");
+    listItem.className = "community-content";
+    listItem.id = `post${post.postId}`;
+    listItem.innerHTML = `
+      <img src="/img/mypage-lightgreen.png" />
+      <div class="community-content-date">${formatDate(post.createdAt)}</div>
+      <div class="community-content-msg">${post.authorId} 님이 ${
+      post.category
+    }를 인증했습니다.</div>
+      <span class="admission">
+        <i class="fa-solid fa-circle-arrow-up"></i>
+      </span>
+    `;
+    communityList.appendChild(listItem);
+
+    // 인증 완료 시 알림창 띄우기
+    listItem.querySelector(".admission").addEventListener("click", () => {
+      alert(`${post.authorId} 님이 ${post.category}를 인증했습니다.`);
+    });
+  });
+}
+
+// 날짜 포맷 함수
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
   fetchCrewData(crewName);
+  fetchCommunityData(crewName);
 });
