@@ -61,18 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  // 로컬 스토리지에서 해제된 식물 목록을 가져오기
-  let unlockedPlants = [];
-  const storedData = localStorage.getItem("unlockedPlants");
-  if (storedData && storedData !== "undefined") {
-    try {
-      unlockedPlants = JSON.parse(storedData);
-    } catch (error) {
-      console.error("Error parsing unlockedPlants from localStorage:", error);
-      // 파싱 오류가 발생하면 초기화된 빈 배열을 유지
-    }
-  }
-
   // 서버에서 사용자 보유 토큰 수와 식물 목록 가져오기
   fetch(API_SERVER_DOMAIN + "/api/v1/plants", {
     method: "GET",
@@ -87,10 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
       return response.json();
     })
     .then((data) => {
+      console.log(data);
       if (data.isSuccess) {
         updateTokenCount(data.result.userCount); // token 개수 업데이트 호출
-        unlockedPlants = data.result.unlockedPlantIds || [];
-        localStorage.setItem("unlockedPlants", JSON.stringify(unlockedPlants));
+
+        let unlockedPlants = data.result.plantPreviewDtoList;
+        console.log(unlockedPlants);
+
         populatePlants(unlockedPlants); // 식물 목록 업데이트 호출
       } else {
         console.error("데이터를 가져오는데 실패했습니다:", data.message);
@@ -98,24 +89,15 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch((error) => console.error("에러:", error));
 
-  // 잠금 해제된 식물 목록을 UI에 표시
+  // UI에 잠금 해제된 식물 목록 표시 함수
   function populatePlants(unlockedPlants) {
     const plantContainer = document.querySelector(".plant-container");
 
     unlockedPlants.forEach((plantId) => {
-      const img = document.createElement("img");
-      img.src = `/img/plant_unlock/${plantId}.png`;
-
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.setAttribute("plant_id", plantId);
-      radio.dataset.unlockSrc = img.src;
-
-      const li = document.createElement("li");
-      li.appendChild(img);
-      li.appendChild(radio);
-
-      plantContainer.appendChild(li);
+      const imgElement = document.querySelector(
+        `img[plant_id="${plantId.plantId}"]`
+      );
+      imgElement.src = "/img/plant_unlock/" + plantId.plantId + ".png";
     });
 
     // radio 버튼 이벤트 핸들러 설정
@@ -123,6 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     radios.forEach((radio) => {
       radio.addEventListener("change", function () {
+        // 사용 가능한 토큰이 있고, 데이터 언락 소스가 있으며, 식물이 해금되지 않은 상태인 경우
         if (availableTokens > 0 && this.dataset.unlockSrc && !plantUnlocked) {
           const selectedImg = this.previousElementSibling;
           selectedImg.src = this.dataset.unlockSrc;
@@ -158,12 +141,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.isSuccess) {
           console.log("식물이 성공적으로 해금되었습니다.");
           plantUnlocked = true;
-          // 해제된 식물 ID를 로컬 스토리지에 저장
-          unlockedPlants.push(parseInt(plant_id));
-          localStorage.setItem(
-            "unlockedPlants",
-            JSON.stringify(unlockedPlants)
-          );
         } else {
           console.error("식물 해금에 실패했습니다:", data.message);
           plantUnlocked = false;
