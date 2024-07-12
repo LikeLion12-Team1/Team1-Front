@@ -132,4 +132,6 @@ function joinCrew() {
     }).catch(error => {
         console.error('크루 가입 중 에러 발생:', error);
     });
+
+    //fetch
 }
