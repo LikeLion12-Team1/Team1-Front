@@ -3,6 +3,8 @@ var API_SERVER_DOMAIN = 'http://15.164.41.239:8080';
 const passwordValidationIcon4 = document.querySelector('#validation-icon-4');
 const accessToken = getCookie('accessToken');
 
+// const path = require('path');
+
 // 기존에 제공된 쿠키 설정 함수
 function setCookie(name, value, days) {
     var expires = '';

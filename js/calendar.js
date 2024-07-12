@@ -327,7 +327,7 @@ addEventSubmit.addEventListener('click', () => {
 //function to delete event when clicked on event
 eventsContainer.addEventListener('click', (e) => {
     if (e.target.classList.contains('event')) {
-        if (confirm('Are you sure you want to delete this event?')) {
+        if (confirm('일정을 완료하시겠습니까?')) {
             const eventTitle = e.target.children[0].children[1].innerHTML;
             eventsArr.forEach((event) => {
                 if (event.day === activeDay && event.month === month + 1 && event.year === year) {
@@ -474,3 +474,43 @@ editBtn.addEventListener('click', () => {
         editForm.remove();
     });
 });
+// delete-btn 요소를 가져옵니다.
+const deleteBtn = document.getElementById('delete-btn');
+let deleteMode = false; // 삭제 모드 상태를 저장합니다.
+
+// 삭제 버튼을 클릭했을 때 동작할 함수를 정의합니다.
+deleteBtn.addEventListener('click', function () {
+    deleteMode = !deleteMode; // 삭제 모드 상태를 토글합니다.
+
+    // 삭제 모드일 때만 테두리를 추가합니다.
+    if (deleteMode) {
+        document.querySelector('.right').style.border = '1px solid #fd5e53';
+
+        // 삭제할 이벤트 요소를 선택합니다. 예시로 events 클래스를 가진 요소들을 모두 선택합니다.
+        const events = document.querySelectorAll('.events .event');
+        // events NodeList를 배열로 변환합니다.
+        const eventsArray = Array.from(events);
+
+        // 반복문을 통해 각 이벤트 요소에 대해 클릭 이벤트를 추가합니다.
+        eventsArray.forEach((event) => {
+            event.addEventListener('click', deleteEvent);
+        });
+    } else {
+        document.querySelector('.right').style.border = ''; // 테두리를 제거합니다.
+
+        // 삭제할 이벤트 요소를 선택합니다. 예시로 events 클래스를 가진 요소들을 모두 선택합니다.
+        const events = document.querySelectorAll('.events .event');
+        // events NodeList를 배열로 변환합니다.
+        const eventsArray = Array.from(events);
+
+        // 반복문을 통해 각 이벤트 요소에 대해 클릭 이벤트를 제거합니다.
+        eventsArray.forEach((event) => {
+            event.removeEventListener('click', deleteEvent);
+        });
+    }
+});
+
+// 이벤트 삭제 함수
+function deleteEvent(event) {
+    event.currentTarget.remove();
+}
