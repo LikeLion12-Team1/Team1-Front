@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-                personalPlant.style.backgroundImage = `url(/img/plant_unlock/flower${plantId}.png)`; // Adjust URL as per your image path
+                personalPlant.style.backgroundImage = `url(/img/plant_unlock/${plantId}.png)`; // Adjust URL as per your image path
 
                 personalPlant.style.left = `${40 + earthRadius + x}px`;
                 personalPlant.style.top = `${40 + earthRadius + y}px`;

@@ -184,9 +184,9 @@ function postData() {
 			} 
 			else {
 				// 이미지가 없는 경우
-				let postCreatedAt = data.result.postCreatedAt ? data.result.postCreatedAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
+				let createdAt = data.result.createdAt ? data.result.createdAt.substring(0, 10) : new Date().toISOString().substring(0, 10);
                 let nickname = data.result.nickname;
-                return { isSuccess: true, result: { postImg: '', nickname: nickname, postCreatedAt: postCreatedAt } };
+                return { isSuccess: true, result: { postImg: '', nickname: nickname, createdAt: createdAt } };
             }
 		} else {
     		throw new Error('오류가 발생했습니다. 다시 시도해주세요.');
@@ -262,9 +262,10 @@ function toggleHeart(event) {
 	}
 }
 
-function addPost(userImg, userName, category, text, postImg, postCreatedAt, postId) {
-	// let formattedDate = postCreatedAt.substring(0, 10);
-	let formattedDate = postCreatedAt;
+function addPost(userImg, userName, category, text, postImg, createdAt, postId) {
+	console.log(createdAt);
+	// let formattedDate = createdAt.substring(0, 10);
+	let formattedDate = createdAt;
 
 	let postDiv = document.createElement('div');
 	postDiv.classList.add('community-section3');
@@ -332,7 +333,8 @@ function addComment(event) {
 
 	document.getElementById('comment-input').value = '';
 }
-
+ 
+//1
 function postExpand(event) {
 	let postId = event.target.getAttribute('postId');
 	console.log(event.target);
@@ -351,7 +353,9 @@ function postExpand(event) {
 	});
 }
 
+//2
 function fetchPostDetails(postId) {
+	//console.log(postId);
 
     return fetch(`${API_SERVER_DOMAIN}/api/v1/crews/${crewName}/posts/detail/${postId}`, {
         method: 'GET',
@@ -382,7 +386,6 @@ function displayPostDetails(postDetails) {
     let postRightTop2 = document.querySelector('.post-right-top2');
     let postRightMid = document.querySelector('.post-right-mid');
     postRightMid.innerHTML = '';
-
 	let postAuthorImg = postDetails.authorProfileImg || '/img/user-profile.png';
     let postAuthorNickname = postDetails.author || 'Unknown';
     postRightTop.innerHTML = `
