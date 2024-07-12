@@ -348,11 +348,28 @@
     width: 40%;
     position: relative;
 }
+
 .edit-div {
     width: 100%;
     height: 51px;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
+}
+
+.delete-btn {
+    margin-left: 10px;
+    width: 58px;
+    height: 51px;
+    border: none;
+    background-color: #eaeaea;
+    cursor: pointer;
+    color: #878895;
+    font-size: 15px;
+    margin-top: 2px;
+}
+
+.delete-btn:hover {
+    color: #114232;
 }
 
 .edit-btn {
